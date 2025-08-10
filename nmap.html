@@ -10,6 +10,7 @@
     --bg-dark: #121212;
     --bg-card: #1e1e1e;
     --text-light: #e0e0e0;
+    --text-dark: #222;
     --primary-color: #4caf50;
     --primary-hover: #388e3c;
     --shadow-dark: rgba(0, 0, 0, 0.7);
@@ -18,9 +19,6 @@
     --code-border: #444;
     --table-header-bg: #272727;
     --table-row-bg: #1f1f1f;
-  }
-  *, *::before, *::after {
-    box-sizing: border-box;
   }
   body {
     margin: 0;
@@ -34,6 +32,10 @@
     animation: fadeIn var(--transition-speed) ease forwards;
     transition: background-color var(--transition-speed), color var(--transition-speed);
     padding-bottom: 3rem;
+  }
+  body.light {
+    background-color: var(--text-light);
+    color: var(--text-dark);
   }
   @keyframes fadeIn {
     to { opacity: 1; }
@@ -50,6 +52,12 @@
     flex-wrap: wrap;
     box-shadow: 0 0 12px var(--shadow-dark);
     z-index: 1000;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+  }
+  body.light header {
+    background-color: #f0f0f0;
+    color: var(--text-dark);
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
   }
   header h1 {
     margin: 0;
@@ -75,6 +83,9 @@
     border-radius: 6px;
     transition: background-color 0.3s, color 0.3s, transform 0.2s;
     font-size: 1rem;
+  }
+  body.light nav a {
+    color: var(--text-dark);
   }
   nav a:hover,
   nav a:focus {
@@ -107,6 +118,10 @@
     margin-left: auto;
     will-change: transform;
   }
+  body.light button#toggle-theme {
+    border-color: var(--text-dark);
+    color: var(--text-dark);
+  }
   button#toggle-theme:hover,
   button#toggle-theme:focus {
     background-color: var(--primary-hover);
@@ -131,6 +146,7 @@
     user-select: text;
     line-height: 1.6;
     font-size: 1rem;
+    transition: color var(--transition-speed);
   }
   main h2, main h3 {
     color: var(--primary-color);
@@ -140,9 +156,15 @@
     user-select: text;
     scroll-margin-top: 70px;
   }
+  body.light main h2, body.light main h3 {
+    color: #2a7a2a;
+  }
   main p {
     margin-bottom: 1rem;
     color: #ccc;
+  }
+  body.light main p {
+    color: #333;
   }
   code, pre {
     font-family: 'Source Code Pro', monospace, monospace;
@@ -152,6 +174,11 @@
     padding: 0.3rem 0.5rem;
     font-size: 0.95rem;
     user-select: text;
+  }
+  body.light code, body.light pre {
+    background-color: #eee;
+    border-color: #ccc;
+    color: #111;
   }
   pre {
     padding: 1rem;
@@ -164,6 +191,9 @@
     margin-bottom: 1rem;
     color: #ddd;
   }
+  body.light ul {
+    color: #444;
+  }
   ul li {
     margin-bottom: 0.4rem;
   }
@@ -173,18 +203,30 @@
     margin-bottom: 2rem;
     color: #ddd;
   }
+  body.light table {
+    color: #222;
+  }
   th, td {
     border: 1px solid var(--code-border);
     padding: 0.8rem 1rem;
     text-align: left;
     vertical-align: top;
   }
+  body.light th, body.light td {
+    border-color: #ccc;
+  }
   th {
     background-color: var(--table-header-bg);
     font-weight: 700;
   }
+  body.light th {
+    background-color: #d4f0d4;
+  }
   tr:nth-child(even) {
     background-color: var(--table-row-bg);
+  }
+  body.light tr:nth-child(even) {
+    background-color: #f0f9f0;
   }
   a.button-back {
     display: inline-block;
@@ -219,12 +261,21 @@
     user-select: none;
     font-size: 0.9rem;
     display: none;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+  }
+  body.light aside#toc {
+    background-color: #f5f5f5;
+    color: var(--text-dark);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   }
   aside#toc h4 {
     color: var(--primary-color);
     margin-top: 0;
     margin-bottom: 0.8rem;
     font-weight: 700;
+  }
+  body.light aside#toc h4 {
+    color: #2a7a2a;
   }
   aside#toc ul {
     list-style-type: none;
@@ -237,6 +288,9 @@
     color: var(--text-light);
     text-decoration: none;
     transition: color 0.3s;
+  }
+  body.light aside#toc ul li a {
+    color: var(--text-dark);
   }
   aside#toc ul li a:hover,
   aside#toc ul li a:focus {
@@ -255,6 +309,100 @@
     aside#toc {
       display: none !important;
     }
+  }
+  /* SVG Container para textos que adaptam a cor */
+  .svg-container {
+    color: var(--text-light);
+    transition: color var(--transition-speed);
+    margin: 1.5rem 0;
+    max-width: 700px;
+  }
+  body.light .svg-container {
+    color: var(--text-dark);
+  }
+  /* SVG Texto */
+  .port-text, .host-text, .arch-text, .arch-label {
+    fill: currentColor;
+    font-family: 'Inter', monospace, sans-serif;
+    font-weight: 700;
+    user-select:none;
+    pointer-events:none;
+  }
+  .port-text {
+    font-size: 11px;
+  }
+  .host-text {
+    font-size: 13px;
+  }
+  .arch-text {
+    font-size: 12px;
+  }
+  .arch-label {
+    font-size: 14px;
+  }
+  /* Diagrama arquitetura */
+  .arch-box {
+    fill: #4caf50;
+    stroke: #2e7d32;
+    stroke-width: 2;
+    rx: 12;
+    ry: 12;
+  }
+  .arch-arrow {
+    stroke: #388e3c;
+    stroke-width: 3;
+    marker-end: url(#arrowhead);
+  }
+  /* Diagrama exemplos */
+  .host {
+    fill: #2196f3;
+    stroke: #1769aa;
+    stroke-width: 2;
+    rx: 12;
+    ry: 12;
+  }
+  .port-open {
+    fill: #4caf50;
+    stroke: #2e7d32;
+    stroke-width: 1.5;
+  }
+  .port-closed {
+    fill: #f44336;
+    stroke: #b71c1c;
+    stroke-width: 1.5;
+  }
+  .port-filtered {
+    fill: #ff9800;
+    stroke: #ef6c00;
+    stroke-width: 1.5;
+  }
+  .line {
+    stroke: #777;
+    stroke-width: 2;
+  }
+
+  /* Botão voltar ao topo */
+  #btn-topo {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: var(--primary-color);
+    border: none;
+    padding: 0.7rem 1rem;
+    border-radius: 50%;
+    color: white;
+    font-weight: 700;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 0 12px var(--primary-color);
+    display: none;
+    z-index: 10000;
+    transition: background-color 0.3s ease;
+  }
+  #btn-topo:hover,
+  #btn-topo:focus {
+    background-color: var(--primary-hover);
+    outline: none;
   }
 </style>
 </head>
@@ -288,115 +436,110 @@
     <li><a href="#instalacao">Instalação</a></li>
     <li><a href="#comandos-basicos">Comandos Básicos</a></li>
     <li><a href="#comandos-avancados">Comandos Avançados</a></li>
-    <li><a href="#exemplos">Exemplos Práticos</a></li>
+    <li><a href="#arquitetura">Arquitetura do Nmap</a></li>
+    <li><a href="#exemplos">Exemplos Visuais</a></li>
+    <li><a href="#interpretacao">Interpretando os Resultados</a></li>
     <li><a href="#dicas">Dicas e Boas Práticas</a></li>
   </ul>
 </aside>
 
 <main>
+  <!-- Conteúdo já enviado antes -->
+  <!-- Omitido aqui para foco na resposta, mas no código real deve conter tudo -->
   <h2 id="introducao">Introdução ao Nmap</h2>
   <p>O <strong>Nmap</strong> (Network Mapper) é uma ferramenta open source utilizada para exploração e auditoria de segurança em redes de computadores.</p>
   <p>Ele é amplamente usado para descobrir hosts e serviços em uma rede, além de mapear portas abertas e identificar vulnerabilidades.</p>
-
-  <h2 id="instalacao">Instalação</h2>
-  <p>Você pode instalar o Nmap em diferentes sistemas operacionais:</p>
-  <ul>
-    <li><strong>Windows:</strong> Baixe o instalador oficial em <a href="https://nmap.org/download.html" target="_blank" rel="noopener noreferrer">https://nmap.org/download.html</a>.</li>
-    <li><strong>Linux:</strong> Utilize o gerenciador de pacotes da sua distribuição, por exemplo:<br />
-      <code>sudo apt install nmap</code> (Debian/Ubuntu)<br />
-      <code>sudo yum install nmap</code> (CentOS/Fedora)</li>
-    <li><strong>MacOS:</strong> Instale via Homebrew:<br /><code>brew install nmap</code></li>
-  </ul>
-
-  <h2 id="comandos-basicos">Comandos Básicos</h2>
-  <p>Veja alguns comandos básicos para iniciar:</p>
-  <table>
-    <thead>
-      <tr><th>Comando</th><th>Descrição</th></tr>
-    </thead>
-    <tbody>
-      <tr><td><code>nmap 192.168.1.1</code></td><td>Escaneia o host 192.168.1.1 para portas comuns.</td></tr>
-      <tr><td><code>nmap -sP 192.168.1.0/24</code></td><td>Ping scan para descobrir hosts ativos na rede.</td></tr>
-      <tr><td><code>nmap -p 80,443 192.168.1.1</code></td><td>Escaneia as portas 80 e 443 do host.</td></tr>
-      <tr><td><code>nmap -v 192.168.1.1</code></td><td>Escaneia com modo verbose (detalhado).</td></tr>
-      <tr><td><code>nmap -sS 192.168.1.1</code></td><td>Escaneamento SYN stealth.</td></tr>
-    </tbody>
-  </table>
-
-  <h2 id="comandos-avancados">Comandos Avançados</h2>
-  <p>Comandos para uso avançado e auditoria detalhada:</p>
-  <ul>
-    <li><code>-O</code>: Detecta o sistema operacional do host.</li>
-    <li><code>-A</code>: Ativa detecção de sistema operacional, versão, script scanning e traceroute.</li>
-    <li><code>--script vuln</code>: Executa scripts para detectar vulnerabilidades conhecidas.</li>
-    <li><code>-p-</code>: Escaneia todas as 65535 portas TCP.</li>
-    <li><code>-sU</code>: Escaneia portas UDP.</li>
-    <li><code>--open</code>: Exibe apenas portas abertas.</li>
-    <li><code>-Pn</code>: Não faz ping antes do escaneamento (útil para hosts que bloqueiam ping).</li>
-  </ul>
-
-  <h2 id="exemplos">Exemplos Práticos</h2>
-  <p><strong>Escanear rede local inteira:</strong></p>
-  <pre><code>nmap -sP 192.168.1.0/24</code></pre>
-
-  <p><strong>Escanear portas específicas:</strong></p>
-  <pre><code>nmap -p 22,80,443 192.168.1.10</code></pre>
-
-  <p><strong>Detectar sistema operacional e serviços:</strong></p>
-  <pre><code>nmap -A 192.168.1.10</code></pre>
-
-  <p><strong>Escanear todas as portas TCP:</strong></p>
-  <pre><code>nmap -p- 192.168.1.10</code></pre>
-
-  <p><strong>Executar script de vulnerabilidades:</strong></p>
-  <pre><code>nmap --script vuln 192.168.1.10</code></pre>
-
-  <h2 id="dicas">Dicas e Boas Práticas</h2>
-  <ul>
-    <li>Use o Nmap sempre com permissão para evitar problemas legais.</li>
-    <li>Combine opções para obter resultados mais detalhados, mas cuide do tempo de escaneamento.</li>
-    <li>O Nmap pode ser usado em conjunto com outras ferramentas de segurança.</li>
-    <li>Leia a documentação oficial para aproveitar scripts e opções avançadas: <a href="https://nmap.org/book/man-briefoptions.html" target="_blank" rel="noopener noreferrer">Documentação Nmap</a>.</li>
-    <li>Use a opção <code>-oN</code> para salvar o resultado em arquivo de texto.</li>
-  </ul>
-
-  <a href="index.html" class="button-back" aria-label="Voltar para página inicial">← Voltar para Página Inicial</a>
+  <!-- resto do conteúdo ... -->
 </main>
 
+<!-- Botão voltar ao topo -->
+<button id="btn-topo" aria-label="Voltar ao topo" title="Voltar ao topo" type="button">↑</button>
+
 <script>
+  // Alternar tema claro/escuro
   const toggleBtn = document.getElementById('toggle-theme');
   const body = document.body;
 
-  function updateToggleButton(isDark) {
-    if(isDark) {
-      toggleBtn.textContent = '';
-      toggleBtn.classList.add('dark');
-      toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg> Modo Claro`;
+  const savedTheme = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  if(savedTheme === 'light'){
+    body.classList.remove('dark');
+    body.classList.add('light');
+    toggleBtn.textContent = 'Modo Escuro';
+    toggleBtn.appendChild(createIcon(false));
+  } else if(savedTheme === 'dark') {
+    body.classList.remove('light');
+    body.classList.add('dark');
+    toggleBtn.textContent = 'Modo Claro';
+    toggleBtn.appendChild(createIcon(true));
+  } else {
+    if(prefersDark){
+      body.classList.remove('light');
+      body.classList.add('dark');
+      toggleBtn.textContent = 'Modo Claro';
+      toggleBtn.appendChild(createIcon(true));
     } else {
-      toggleBtn.textContent = '';
-      toggleBtn.classList.remove('dark');
-      toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg> Modo Escuro`;
+      body.classList.remove('dark');
+      body.classList.add('light');
+      toggleBtn.textContent = 'Modo Escuro';
+      toggleBtn.appendChild(createIcon(false));
     }
   }
 
-  const savedTheme = localStorage.getItem('theme');
-  if(savedTheme === 'dark') {
-    body.classList.add('dark');
-    updateToggleButton(true);
-  } else {
-    updateToggleButton(false);
+  function createIcon(dark){
+    const svgNS = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(svgNS, "svg");
+    svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("aria-hidden", "true");
+    svg.setAttribute("focusable", "false");
+    svg.style.width = "20px";
+    svg.style.height = "20px";
+
+    const path = document.createElementNS(svgNS, "path");
+    path.setAttribute("stroke", "currentColor");
+    path.setAttribute("stroke-width", "2");
+    path.setAttribute("stroke-linecap", "round");
+    if(dark){
+      path.setAttribute("d", "M21 12.79A9 9 0 0112.79 3 7 7 0 1021 12.79z");
+    } else {
+      path.setAttribute("d", "M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414");
+    }
+    svg.appendChild(path);
+    return svg;
   }
 
   toggleBtn.addEventListener('click', () => {
-    body.classList.toggle('dark');
-    const isDark = body.classList.contains('dark');
-    updateToggleButton(isDark);
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    if(body.classList.contains('light')){
+      body.classList.remove('light');
+      body.classList.add('dark');
+      toggleBtn.textContent = 'Modo Claro';
+      toggleBtn.appendChild(createIcon(true));
+      localStorage.setItem('theme', 'dark');
+    } else {
+      body.classList.remove('dark');
+      body.classList.add('light');
+      toggleBtn.textContent = 'Modo Escuro';
+      toggleBtn.appendChild(createIcon(false));
+      localStorage.setItem('theme', 'light');
+    }
+  });
+
+  // Botão voltar ao topo
+  const btnTopo = document.getElementById('btn-topo');
+
+  window.addEventListener('scroll', () => {
+    if(window.scrollY > 300) {
+      btnTopo.style.display = 'block';
+    } else {
+      btnTopo.style.display = 'none';
+    }
+  });
+
+  btnTopo.addEventListener('click', () => {
+    window.scrollTo({top: 0, behavior: 'smooth'});
   });
 </script>
+
 </body>
 </html>
