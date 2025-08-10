@@ -83,6 +83,7 @@
       gap: 1rem;
       align-items: center;
       user-select: none;
+      transition: max-height 0.3s ease;
     }
 
     nav a {
@@ -170,6 +171,85 @@
 
     button#toggle-theme.dark svg {
       transform: rotate(40deg);
+    }
+
+    /* BOTÃO HAMBURGUER */
+
+    #menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 28px;
+      height: 24px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      box-sizing: border-box;
+      z-index: 1100;
+    }
+    #menu-toggle span {
+      width: 28px;
+      height: 3px;
+      background: var(--text-dark);
+      border-radius: 2px;
+      transition: all 0.3s linear;
+      position: relative;
+      transform-origin: 1px;
+    }
+    body.dark #menu-toggle span {
+      background: var(--text-light);
+    }
+    #menu-toggle.active span:nth-child(1) {
+      transform: rotate(45deg);
+    }
+    #menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    #menu-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg);
+    }
+
+    /* RESPONSIVIDADE */
+
+    @media (max-width: 768px) {
+      #menu-toggle {
+        display: flex;
+      }
+      nav {
+        flex-basis: 100%;
+        flex-direction: column;
+        max-height: 0;
+        overflow: hidden;
+      }
+      nav.active {
+        max-height: 500px; /* Ajuste conforme a quantidade de links */
+      }
+      nav a {
+        padding: 1rem;
+        border-radius: 0;
+        font-size: 1.1rem;
+        width: 100%;
+        text-align: center;
+      }
+      nav a:first-child {
+        margin-right: 0;
+        text-decoration: none;
+      }
+      .social-links {
+        order: 1;
+        margin-top: 1rem;
+        justify-content: center;
+        width: 100%;
+      }
+      button#toggle-theme {
+        order: 2;
+        margin-left: 0;
+        margin-top: 1rem;
+        width: 100%;
+        justify-content: center;
+      }
     }
 
     main {
@@ -298,32 +378,17 @@
       color: #555;
       border-color: #333;
     }
-
-    @media (max-width: 640px) {
-      header {
-        justify-content: center;
-      }
-      nav {
-        justify-content: center;
-        gap: 0.8rem;
-      }
-      nav a:first-child {
-        margin-right: 1rem;
-      }
-      main {
-        padding: 2rem 1rem;
-        max-width: 95%;
-      }
-      .card {
-        padding: 1.8rem 1.8rem 2.5rem;
-      }
-    }
   </style>
 </head>
 <body>
   <header>
     <h1>Portal Suporte Técnico</h1>
-    <nav>
+    <button id="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="main-nav">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav id="main-nav">
       <a href="index.html" aria-current="page">Página Inicial</a>
       <a href="powershell.html">PowerShell</a>
       <a href="cmd.html">CMD</a>
@@ -414,6 +479,7 @@
   </footer>
 
   <script>
+    // Tema claro/escuro
     const toggleBtn = document.getElementById('toggle-theme');
     const body = document.body;
 
@@ -469,6 +535,17 @@
       const isDark = body.classList.contains('dark');
       updateToggleButton(isDark);
       localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+
+    // Menu hamburguer
+    const menuToggle = document.getElementById('menu-toggle');
+    const nav = document.getElementById('main-nav');
+
+    menuToggle.addEventListener('click', () => {
+      const expanded = menuToggle.getAttribute('aria-expanded') === 'true' || false;
+      menuToggle.setAttribute('aria-expanded', !expanded);
+      menuToggle.classList.toggle('active');
+      nav.classList.toggle('active');
     });
   </script>
 </body>
