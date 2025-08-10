@@ -20,10 +20,6 @@
       --table-row-bg: #1f1f1f;
     }
 
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
-
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
@@ -38,6 +34,12 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       padding-bottom: 3rem;
+    }
+
+    /* Tema claro */
+    body:not(.dark) {
+      background-color: #f9f9f9;
+      color: #222;
     }
 
     @keyframes fadeIn {
@@ -56,6 +58,14 @@
       flex-wrap: wrap;
       box-shadow: 0 0 12px var(--shadow-dark);
       z-index: 1000;
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+    }
+
+    /* Header claro */
+    body:not(.dark) header {
+      background-color: #eee;
+      color: #222;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
     }
 
     header h1 {
@@ -84,6 +94,11 @@
       border-radius: 6px;
       transition: background-color 0.3s, color 0.3s, transform 0.2s;
       font-size: 1rem;
+    }
+
+    /* Links claros */
+    body:not(.dark) nav a {
+      color: #222;
     }
 
     nav a:hover,
@@ -120,6 +135,12 @@
       will-change: transform;
     }
 
+    /* Botão claro */
+    body:not(.dark) button#toggle-theme {
+      border-color: #222;
+      color: #222;
+    }
+
     button#toggle-theme:hover,
     button#toggle-theme:focus {
       background-color: var(--primary-hover);
@@ -147,6 +168,7 @@
       user-select: text;
       line-height: 1.6;
       font-size: 1rem;
+      transition: color var(--transition-speed);
     }
 
     main h2, main h3 {
@@ -161,6 +183,12 @@
     main p {
       margin-bottom: 1rem;
       color: #ccc;
+      transition: color var(--transition-speed);
+    }
+
+    /* Texto escuro para modo claro */
+    body:not(.dark) main p {
+      color: #333;
     }
 
     code, pre {
@@ -171,6 +199,15 @@
       padding: 0.3rem 0.5rem;
       font-size: 0.95rem;
       user-select: text;
+      transition: background-color var(--transition-speed), border-color var(--transition-speed);
+    }
+
+    /* Código claro */
+    body:not(.dark) code, 
+    body:not(.dark) pre {
+      background-color: #f0f0f0;
+      border-color: #ccc;
+      color: #222;
     }
 
     pre {
@@ -184,6 +221,11 @@
       padding-left: 1.3rem;
       margin-bottom: 1rem;
       color: #ddd;
+      transition: color var(--transition-speed);
+    }
+
+    body:not(.dark) ul {
+      color: #444;
     }
 
     ul li {
@@ -195,6 +237,11 @@
       width: 100%;
       margin-bottom: 2rem;
       color: #ddd;
+      transition: color var(--transition-speed);
+    }
+
+    body:not(.dark) table {
+      color: #444;
     }
 
     th, td {
@@ -202,6 +249,13 @@
       padding: 0.8rem 1rem;
       text-align: left;
       vertical-align: top;
+      transition: border-color var(--transition-speed);
+    }
+
+    /* Bordas claras para modo claro */
+    body:not(.dark) th, 
+    body:not(.dark) td {
+      border-color: #ccc;
     }
 
     th {
@@ -209,8 +263,18 @@
       font-weight: 700;
     }
 
+    /* Cabeçalho claro */
+    body:not(.dark) th {
+      background-color: #e0e0e0;
+    }
+
     tr:nth-child(even) {
       background-color: var(--table-row-bg);
+    }
+
+    /* Linhas claras */
+    body:not(.dark) tr:nth-child(even) {
+      background-color: #fafafa;
     }
 
     a.button-back {
@@ -232,7 +296,7 @@
       outline: none;
     }
 
-    /* Scroll suave para ancoras */
+    /* Scroll suave para âncoras */
     html {
       scroll-behavior: smooth;
     }
@@ -249,6 +313,14 @@
       user-select: none;
       font-size: 0.9rem;
       display: none;
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+    }
+
+    /* Aside claro */
+    body:not(.dark) aside#toc {
+      background-color: #eee;
+      color: #222;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
     aside#toc h4 {
@@ -271,6 +343,11 @@
       color: var(--text-light);
       text-decoration: none;
       transition: color 0.3s;
+    }
+
+    /* Links do aside claro */
+    body:not(.dark) aside#toc ul li a {
+      color: #222;
     }
 
     aside#toc ul li a:hover,
@@ -298,96 +375,6 @@
         display: none !important;
       }
     }
-
-    /* Modo claro */
-    body.dark {
-      --bg-dark: #f5f7fa;
-      --bg-card: #ffffff;
-      --text-light: #222222;
-      --primary-color: #0066cc;
-      --primary-hover: #004a99;
-      --shadow-dark: rgba(0, 0, 0, 0.15);
-      --code-bg: #e8e8e8;
-      --code-border: #ccc;
-      --table-header-bg: #dcdcdc;
-      --table-row-bg: #f0f0f0;
-      background-color: var(--bg-dark);
-      color: var(--text-light);
-    }
-
-    body.dark header {
-      background-color: var(--bg-card);
-      color: var(--text-light);
-      box-shadow: 0 0 12px var(--shadow-dark);
-    }
-
-    body.dark nav a {
-      color: var(--text-light);
-    }
-
-    body.dark nav a:hover,
-    body.dark nav a:focus {
-      background-color: var(--primary-hover);
-      color: white;
-      box-shadow: 0 0 12px var(--primary-hover);
-    }
-
-    body.dark button#toggle-theme {
-      border-color: var(--text-light);
-      color: var(--text-light);
-    }
-
-    body.dark button#toggle-theme:hover,
-    body.dark button#toggle-theme:focus {
-      background-color: var(--primary-hover);
-      color: white;
-      box-shadow: 0 0 15px var(--primary-hover);
-    }
-
-    body.dark main {
-      background-color: var(--bg-card);
-      color: var(--text-light);
-    }
-
-    body.dark table th {
-      background-color: var(--table-header-bg);
-      color: var(--text-light);
-    }
-
-    body.dark table tr:nth-child(even) {
-      background-color: var(--table-row-bg);
-    }
-
-    body.dark code, body.dark pre {
-      background-color: var(--code-bg);
-      border-color: var(--code-border);
-      color: var(--text-light);
-    }
-
-    body.dark aside#toc {
-      background-color: var(--bg-card);
-      box-shadow: 0 4px 12px var(--shadow-dark);
-      color: var(--text-light);
-    }
-
-    body.dark aside#toc ul li a {
-      color: var(--text-light);
-    }
-
-    body.dark aside#toc ul li a:hover,
-    body.dark aside#toc ul li a:focus {
-      color: var(--primary-hover);
-    }
-
-    body.dark a.button-back {
-      background-color: var(--primary-color);
-      color: white;
-    }
-
-    body.dark a.button-back:hover,
-    body.dark a.button-back:focus {
-      background-color: var(--primary-hover);
-    }
   </style>
 </head>
 <body>
@@ -409,7 +396,7 @@
       <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </svg>
-      Modo Claro
+      Modo Escuro
     </button>
   </header>
 
@@ -524,82 +511,84 @@ Restart-Service bits</pre></td>
     </table>
 
     <h2 id="scripts">Scripts PowerShell</h2>
-    <p>Automatize tarefas com scripts (<code>.ps1</code>). Veja exemplos e estrutura básica.</p>
+    <p>Automatize tarefas com scripts (<code>.ps1</code>). Veja exemplos e estrutura básica:</p>
 
-    <pre><code># Exemplo de script básico
-Write-Output "Olá, Mundo!"
-Get-Process | Where-Object { $_.CPU -gt 100 } | Sort-Object CPU -Descending</code></pre>
+    <h3>Exemplo básico</h3>
+    <pre><code># Lista processos com CPU > 50
+$processos = Get-Process | Where-Object { $_.CPU -gt 50 }
+foreach ($proc in $processos) {
+  Write-Output "Processo: $($proc.Name) - CPU: $($proc.CPU)"
+}</code></pre>
+
+    <h3>Salvar saída em arquivo</h3>
+    <pre><code>Get-Process | Out-File C:\Temp\processos.txt</code></pre>
 
     <h2 id="sintaxes">Sintaxes e Flags</h2>
-    <p>Parâmetros comuns para comandos PowerShell:</p>
+    <p>Conheça parâmetros comuns usados nos comandos PowerShell:</p>
+
     <ul>
-      <li><code>-Verbose</code>: Mostra detalhes da execução.</li>
-      <li><code>-Force</code>: Força a execução ignorando restrições.</li>
-      <li><code>-Recurse</code>: Aplica comandos em subdiretórios.</li>
-      <li><code>-WhatIf</code>: Simula a execução, sem alterações.</li>
-      <li><code>-Confirm</code>: Solicita confirmação antes de agir.</li>
+      <li><code>-Recurse</code>: inclui subdiretórios</li>
+      <li><code>-Force</code>: força a ação, mesmo em arquivos ocultos ou somente leitura</li>
+      <li><code>-WhatIf</code>: simula a ação sem executá-la</li>
+      <li><code>-Confirm</code>: pede confirmação antes da ação</li>
+      <li><code>-ErrorAction SilentlyContinue</code>: oculta mensagens de erro</li>
     </ul>
 
     <h2 id="exemplos">Exemplos Práticos</h2>
-    <p>Alguns exemplos úteis para suporte técnico:</p>
+    <p>Use PowerShell para tarefas comuns de suporte técnico, como backup, limpeza e automação.</p>
 
-    <pre><code># Listar processos que usam muita CPU
-Get-Process | Where-Object { $_.CPU -gt 50 }
+    <h3>Backup simples de arquivos</h3>
+    <pre><code>Copy-Item C:\Dados\* D:\Backup\ -Recurse -Force</code></pre>
 
-# Parar um processo pelo nome
-Stop-Process -Name "notepad" -Force
-
-# Obter informações do sistema
-Get-ComputerInfo
-
-# Verificar espaço em disco
-Get-PSDrive -PSProvider FileSystem
-
-# Listar serviços que estão parados
-Get-Service | Where-Object { $_.Status -eq "Stopped" }</code></pre>
+    <h3>Limpar arquivos temporários</h3>
+    <pre><code>Remove-Item "C:\Windows\Temp\*" -Recurse -Force</code></pre>
 
     <h2 id="suporte">Scripts Úteis para Suporte Técnico</h2>
-    <p>Exemplos para diagnosticar e solucionar problemas comuns:</p>
-
-    <pre><code># Checar o status da rede
-Test-Connection google.com -Count 4
-
-# Reiniciar serviço de rede
-Restart-Service -Name "dhcp"
-
-# Verificar logs de eventos recentes
-Get-EventLog -LogName System -Newest 20
-
-# Limpar cache DNS
-Clear-DnsClientCache</code></pre>
+    <p>Automatize tarefas diárias para agilizar seu trabalho:</p>
+    <ul>
+      <li>Verificar serviços essenciais</li>
+      <li>Monitorar processos com alto consumo</li>
+      <li>Enviar logs por email (requer configuração)</li>
+      <li>Agendar tarefas automatizadas</li>
+    </ul>
 
     <h2 id="conclusao">Conclusão</h2>
-    <p>PowerShell é indispensável para administradores e suporte técnico. Com prática, você poderá automatizar tarefas repetitivas e ganhar agilidade nas suas rotinas.</p>
+    <p>PowerShell é uma ferramenta essencial para qualquer profissional de suporte técnico. Dominar seus comandos e scripts aumenta muito sua produtividade e capacidade de resolver problemas.</p>
 
-    <a href="index.html" class="button-back">Voltar ao Início</a>
+    <a href="index.html" class="button-back" aria-label="Voltar à página inicial">Voltar ao início</a>
   </main>
 
   <script>
     const toggleBtn = document.getElementById('toggle-theme');
     const body = document.body;
 
-    // Ao carregar, checa se tem preferência salva no localStorage
-    if(localStorage.getItem('theme') === 'light'){
+    // Pega o ícone SVG do botão para reutilizar
+    const svgIcon = toggleBtn.querySelector('svg');
+
+    // Função para atualizar texto e ícone do botão conforme o tema atual
+    function updateButtonText(isDark) {
+      toggleBtn.textContent = isDark ? 'Modo Claro' : 'Modo Escuro';
+      toggleBtn.appendChild(svgIcon);
+    }
+
+    // Ao carregar a página, aplica o tema salvo no localStorage (ou padrão escuro)
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+      body.classList.remove('dark');
+      updateButtonText(false);
+    } else {
       body.classList.add('dark');
-      toggleBtn.textContent = 'Modo Escuro';
-      toggleBtn.classList.add('dark');
+      updateButtonText(true);
     }
 
     toggleBtn.addEventListener('click', () => {
-      body.classList.toggle('dark');
-      if(body.classList.contains('dark')){
-        toggleBtn.textContent = 'Modo Escuro';
-        toggleBtn.classList.add('dark');
-        localStorage.setItem('theme', 'light');
-      } else {
-        toggleBtn.textContent = 'Modo Claro';
-        toggleBtn.classList.remove('dark');
+      const isDark = body.classList.toggle('dark');
+      if (isDark) {
         localStorage.setItem('theme', 'dark');
+        updateButtonText(true);
+      } else {
+        localStorage.setItem('theme', 'light');
+        updateButtonText(false);
       }
     });
   </script>
