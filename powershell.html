@@ -171,7 +171,7 @@
       transition: color var(--transition-speed);
     }
 
-    main h2, main h3 {
+    main h2, main h3, main h4 {
       color: var(--primary-color);
       margin-top: 2.5rem;
       margin-bottom: 1rem;
@@ -200,6 +200,8 @@
       font-size: 0.95rem;
       user-select: text;
       transition: background-color var(--transition-speed), border-color var(--transition-speed);
+      white-space: pre-wrap;
+      word-break: break-word;
     }
 
     /* Código claro */
@@ -305,7 +307,7 @@
       position: fixed;
       top: 100px;
       right: 20px;
-      max-width: 220px;
+      max-width: 240px;
       background-color: var(--bg-card);
       border-radius: 10px;
       padding: 1rem 1.2rem;
@@ -314,6 +316,8 @@
       font-size: 0.9rem;
       display: none;
       transition: background-color var(--transition-speed), color var(--transition-speed);
+      max-height: 70vh;
+      overflow-y: auto;
     }
 
     /* Aside claro */
@@ -328,21 +332,24 @@
       margin-top: 0;
       margin-bottom: 0.8rem;
       font-weight: 700;
+      user-select: none;
     }
 
     aside#toc ul {
       list-style-type: none;
       padding-left: 0;
+      margin: 0;
     }
 
     aside#toc ul li {
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.6rem;
     }
 
     aside#toc ul li a {
       color: var(--text-light);
       text-decoration: none;
       transition: color 0.3s;
+      user-select: text;
     }
 
     /* Links do aside claro */
@@ -354,6 +361,7 @@
     aside#toc ul li a:focus {
       color: var(--primary-hover);
       outline: none;
+      text-decoration: underline;
     }
 
     @media (min-width: 1000px) {
@@ -361,7 +369,7 @@
         display: block;
       }
       main {
-        margin-right: 270px;
+        margin-right: 280px;
       }
     }
 
@@ -403,159 +411,229 @@
   <aside id="toc" aria-label="Índice do conteúdo">
     <h4>Conteúdo</h4>
     <ul>
+      <li><a href="#introducao">Introdução ao PowerShell</a></li>
       <li><a href="#basico">Comandos Básicos</a></li>
-      <li><a href="#avancado">Comandos Avançados</a></li>
+      <li><a href="#variaveis">Variáveis</a></li>
+      <li><a href="#controle-fluxo">Controle de Fluxo</a></li>
+      <li><a href="#funcoes">Funções</a></li>
+      <li><a href="#modulos">Módulos e Pacotes</a></li>
+      <li><a href="#erros">Tratamento de Erros</a></li>
       <li><a href="#scripts">Scripts PowerShell</a></li>
       <li><a href="#sintaxes">Sintaxes e Flags</a></li>
       <li><a href="#exemplos">Exemplos Práticos</a></li>
-      <li><a href="#suporte">Scripts Úteis para Suporte Técnico</a></li>
+      <li><a href="#suporte">Scripts para Suporte Técnico</a></li>
       <li><a href="#conclusao">Conclusão</a></li>
     </ul>
   </aside>
 
   <main>
-    <h2 id="basico">Comandos Básicos do PowerShell</h2>
-    <p>PowerShell é uma poderosa shell e linguagem de scripts da Microsoft usada para automação e gerenciamento do sistema. Começaremos com os comandos básicos que todo iniciante deve conhecer.</p>
+    <section id="introducao">
+      <h2>Introdução ao PowerShell</h2>
+      <p>PowerShell é uma poderosa shell e linguagem de scripts desenvolvida pela Microsoft, amplamente utilizada para automação, gerenciamento e administração de sistemas Windows e também multiplataforma (Linux e Mac).</p>
+      <p>Este tutorial vai guiá-lo desde conceitos básicos até comandos e scripts avançados para suportar seu dia a dia técnico.</p>
+    </section>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Comando</th>
-          <th>Descrição</th>
-          <th>Exemplo</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>Get-ChildItem</code> (ou <code>ls</code>)</td>
-          <td>Lista arquivos e pastas no diretório atual ou especificado.</td>
-          <td><pre>Get-ChildItem
+    <section id="basico">
+      <h2>Comandos Básicos do PowerShell</h2>
+      <p>Comandos fundamentais para navegação, visualização e manipulação de arquivos e processos.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Comando</th>
+            <th>Descrição</th>
+            <th>Exemplo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>Get-ChildItem</code> (ou <code>ls</code>)</td>
+            <td>Lista arquivos e pastas no diretório atual ou especificado.</td>
+            <td><pre>Get-ChildItem
 ls C:\Windows</pre></td>
-        </tr>
-        <tr>
-          <td><code>Set-Location</code> (ou <code>cd</code>)</td>
-          <td>Muda o diretório atual.</td>
-          <td><pre>Set-Location C:\Users
-cd ..
-cd "C:\Program Files"</pre></td>
-        </tr>
-        <tr>
-          <td><code>Get-Help</code></td>
-          <td>Exibe ajuda sobre um comando.</td>
-          <td><pre>Get-Help Get-ChildItem
-Get-Help Get-ChildItem -Full</pre></td>
-        </tr>
-        <tr>
-          <td><code>Get-Content</code></td>
-          <td>Mostra o conteúdo de arquivos texto.</td>
-          <td><pre>Get-Content .\arquivo.txt</pre></td>
-        </tr>
-        <tr>
-          <td><code>Copy-Item</code></td>
-          <td>Copia arquivos ou pastas.</td>
-          <td><pre>Copy-Item .\arquivo.txt D:\Backup\arquivo.txt</pre></td>
-        </tr>
-        <tr>
-          <td><code>Move-Item</code></td>
-          <td>Move arquivos ou pastas.</td>
-          <td><pre>Move-Item .\arquivo.txt D:\Backup\</pre></td>
-        </tr>
-        <tr>
-          <td><code>Remove-Item</code></td>
-          <td>Remove arquivos ou pastas.</td>
-          <td><pre>Remove-Item .\arquivo.txt</pre></td>
-        </tr>
-      </tbody>
-    </table>
+          </tr>
+          <tr>
+            <td><code>Set-Location</code> (ou <code>cd</code>)</td>
+            <td>Muda o diretório atual.</td>
+            <td><pre>Set-Location C:\Users
+cd ..</pre></td>
+          </tr>
+          <tr>
+            <td><code>Get-Help</code></td>
+            <td>Exibe ajuda detalhada de comandos.</td>
+            <td><pre>Get-Help Get-ChildItem -Full</pre></td>
+          </tr>
+          <tr>
+            <td><code>Get-Content</code></td>
+            <td>Mostra o conteúdo de arquivos texto.</td>
+            <td><pre>Get-Content .\arquivo.txt</pre></td>
+          </tr>
+          <tr>
+            <td><code>Copy-Item</code></td>
+            <td>Copia arquivos ou pastas.</td>
+            <td><pre>Copy-Item .\arquivo.txt D:\Backup\arquivo.txt</pre></td>
+          </tr>
+          <tr>
+            <td><code>Move-Item</code></td>
+            <td>Move arquivos ou pastas.</td>
+            <td><pre>Move-Item .\arquivo.txt D:\Backup\</pre></td>
+          </tr>
+          <tr>
+            <td><code>Remove-Item</code></td>
+            <td>Remove arquivos ou pastas.</td>
+            <td><pre>Remove-Item .\arquivo.txt</pre></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
 
-    <h2 id="avancado">Comandos Avançados do PowerShell</h2>
-    <p>Comandos avançados para administração, filtragem e automação.</p>
+    <section id="variaveis">
+      <h2>Variáveis</h2>
+      <p>Armazenam dados para reutilização no script ou linha de comando.</p>
+      <p>Exemplo de declaração e uso:</p>
+      <pre><code>$nome = "Felipe"
+$idade = 30
+Write-Output "Nome: $nome, Idade: $idade"</code></pre>
+    </section>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Comando</th>
-          <th>Descrição</th>
-          <th>Exemplo</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>Where-Object</code></td>
-          <td>Filtra objetos com base em uma condição.</td>
-          <td><pre>Get-Process | Where-Object { $_.CPU -gt 100 }</pre></td>
-        </tr>
-        <tr>
-          <td><code>Sort-Object</code></td>
-          <td>Ordena objetos por propriedade.</td>
-          <td><pre>Get-Service | Sort-Object Status</pre></td>
-        </tr>
-        <tr>
-          <td><code>Select-Object</code></td>
-          <td>Seleciona propriedades específicas para exibir.</td>
-          <td><pre>Get-Process | Select-Object Name, Id, CPU</pre></td>
-        </tr>
-        <tr>
-          <td><code>Invoke-Command</code></td>
-          <td>Executa comandos/scripts remotamente.</td>
-          <td><pre>Invoke-Command -ComputerName Server01 -ScriptBlock { Get-Service }</pre></td>
-        </tr>
-        <tr>
-          <td><code>Start-Service</code>, <code>Stop-Service</code>, <code>Restart-Service</code></td>
-          <td>Gerencia serviços do Windows.</td>
-          <td><pre>Start-Service spooler
-Stop-Service wuauserv
-Restart-Service bits</pre></td>
-        </tr>
-      </tbody>
-    </table>
+    <section id="controle-fluxo">
+      <h2>Controle de Fluxo</h2>
+      <p>Condicionais, loops e controle lógico.</p>
 
-    <h2 id="scripts">Scripts PowerShell</h2>
-    <p>Automatize tarefas com scripts (<code>.ps1</code>). Veja exemplos e estrutura básica:</p>
+      <h3>If / Else</h3>
+      <pre><code>$idade = 20
+if ($idade -ge 18) {
+  Write-Output "Maior de idade"
+} else {
+  Write-Output "Menor de idade"
+}</code></pre>
 
-    <h3>Exemplo básico</h3>
-    <pre><code># Lista processos com CPU > 50
+      <h3>Loops</h3>
+      <p><strong>ForEach</strong> e <strong>While</strong> são os mais comuns:</p>
+      <pre><code># ForEach
+$nomes = @("Ana", "Bruno", "Carlos")
+foreach ($nome in $nomes) {
+  Write-Output "Nome: $nome"
+}
+
+# While
+$i = 0
+while ($i -lt 3) {
+  Write-Output "Número: $i"
+  $i++
+}</code></pre>
+    </section>
+
+    <section id="funcoes">
+      <h2>Funções</h2>
+      <p>Reutilize código criando funções:</p>
+      <pre><code>function Saudacao($nome) {
+  Write-Output "Olá, $nome!"
+}
+
+Saudacao "Felipe"
+Saudacao "Maria"</code></pre>
+    </section>
+
+    <section id="modulos">
+      <h2>Módulos e Pacotes</h2>
+      <p>PowerShell permite estender funcionalidades com módulos:</p>
+      <ul>
+        <li><code>Get-Module</code>: lista módulos carregados</li>
+        <li><code>Import-Module</code>: importa módulo</li>
+        <li><code>Install-Module</code>: instala módulo da galeria PowerShell</li>
+      </ul>
+      <pre><code>Get-Module -ListAvailable
+Import-Module -Name Pester
+Install-Module -Name Az -Scope CurrentUser</code></pre>
+    </section>
+
+    <section id="erros">
+      <h2>Tratamento de Erros</h2>
+      <p>Use <code>try</code>, <code>catch</code> e <code>finally</code> para controlar erros:</p>
+      <pre><code>try {
+  Remove-Item -Path "C:\inexistente.txt" -ErrorAction Stop
+} catch {
+  Write-Output "Arquivo não encontrado: $_"
+} finally {
+  Write-Output "Finalizado"
+}</code></pre>
+    </section>
+
+    <section id="scripts">
+      <h2>Scripts PowerShell</h2>
+      <p>Automatize tarefas criando arquivos <code>.ps1</code>.</p>
+      <h3>Exemplo básico</h3>
+      <pre><code># Lista processos com CPU > 50
 $processos = Get-Process | Where-Object { $_.CPU -gt 50 }
 foreach ($proc in $processos) {
   Write-Output "Processo: $($proc.Name) - CPU: $($proc.CPU)"
 }</code></pre>
 
-    <h3>Salvar saída em arquivo</h3>
-    <pre><code>Get-Process | Out-File C:\Temp\processos.txt</code></pre>
+      <h3>Salvar saída em arquivo</h3>
+      <pre><code>Get-Process | Out-File C:\Temp\processos.txt</code></pre>
+    </section>
 
-    <h2 id="sintaxes">Sintaxes e Flags</h2>
-    <p>Conheça parâmetros comuns usados nos comandos PowerShell:</p>
+    <section id="sintaxes">
+      <h2>Sintaxes e Flags Comuns</h2>
+      <p>Parâmetros úteis para controlar execução dos comandos:</p>
+      <ul>
+        <li><code>-Recurse</code>: inclui subdiretórios</li>
+        <li><code>-Force</code>: força ação mesmo em arquivos ocultos/somente leitura</li>
+        <li><code>-WhatIf</code>: simula ação sem executá-la</li>
+        <li><code>-Confirm</code>: pede confirmação antes da ação</li>
+        <li><code>-ErrorAction SilentlyContinue</code>: oculta mensagens de erro</li>
+        <li><code>-Verbose</code>: mostra informações detalhadas da execução</li>
+      </ul>
+    </section>
 
-    <ul>
-      <li><code>-Recurse</code>: inclui subdiretórios</li>
-      <li><code>-Force</code>: força a ação, mesmo em arquivos ocultos ou somente leitura</li>
-      <li><code>-WhatIf</code>: simula a ação sem executá-la</li>
-      <li><code>-Confirm</code>: pede confirmação antes da ação</li>
-      <li><code>-ErrorAction SilentlyContinue</code>: oculta mensagens de erro</li>
-    </ul>
+    <section id="exemplos">
+      <h2>Exemplos Práticos</h2>
+      <p>Algumas tarefas comuns no suporte técnico:</p>
 
-    <h2 id="exemplos">Exemplos Práticos</h2>
-    <p>Use PowerShell para tarefas comuns de suporte técnico, como backup, limpeza e automação.</p>
+      <h3>Backup simples de arquivos</h3>
+      <pre><code>Copy-Item C:\Dados\* D:\Backup\ -Recurse -Force</code></pre>
 
-    <h3>Backup simples de arquivos</h3>
-    <pre><code>Copy-Item C:\Dados\* D:\Backup\ -Recurse -Force</code></pre>
+      <h3>Limpar arquivos temporários</h3>
+      <pre><code>Remove-Item "C:\Windows\Temp\*" -Recurse -Force</code></pre>
 
-    <h3>Limpar arquivos temporários</h3>
-    <pre><code>Remove-Item "C:\Windows\Temp\*" -Recurse -Force</code></pre>
+      <h3>Monitorar processos que usam muita CPU</h3>
+      <pre><code>Get-Process | Where-Object { $_.CPU -gt 100 } | Sort-Object CPU -Descending</code></pre>
 
-    <h2 id="suporte">Scripts Úteis para Suporte Técnico</h2>
-    <p>Automatize tarefas diárias para agilizar seu trabalho:</p>
-    <ul>
-      <li>Verificar serviços essenciais</li>
-      <li>Monitorar processos com alto consumo</li>
-      <li>Enviar logs por email (requer configuração)</li>
-      <li>Agendar tarefas automatizadas</li>
-    </ul>
+      <h3>Parar um serviço</h3>
+      <pre><code>Stop-Service -Name "wuauserv"</code></pre>
 
-    <h2 id="conclusao">Conclusão</h2>
-    <p>PowerShell é uma ferramenta essencial para qualquer profissional de suporte técnico. Dominar seus comandos e scripts aumenta muito sua produtividade e capacidade de resolver problemas.</p>
+      <h3>Iniciar um serviço</h3>
+      <pre><code>Start-Service -Name "spooler"</code></pre>
+    </section>
 
-    <a href="index.html" class="button-back" aria-label="Voltar à página inicial">Voltar ao início</a>
+    <section id="suporte">
+      <h2>Scripts Úteis para Suporte Técnico</h2>
+      <p>Automatize tarefas frequentes para agilizar o atendimento:</p>
+      <ul>
+        <li><strong>Verificar serviços essenciais rodando:</strong></li>
+        <pre><code>Get-Service -Name "wuauserv", "bits", "Spooler" | Where-Object {$_.Status -ne "Running"}</code></pre>
+        <li><strong>Enviar logs por email (requer SMTP configurado):</strong></li>
+        <pre><code>$smtpServer = "smtp.exemplo.com"
+$smtpFrom = "suporte@empresa.com"
+$smtpTo = "admin@empresa.com"
+$messageSubject = "Log do Sistema"
+$messageBody = Get-Content -Path "C:\Logs\log.txt" | Out-String
+Send-MailMessage -From $smtpFrom -To $smtpTo -Subject $messageSubject -Body $messageBody -SmtpServer $smtpServer</code></pre>
+        <li><strong>Agendar tarefa automatizada:</strong></li>
+        <pre><code>$action = New-ScheduledTaskAction -Execute 'PowerShell.exe' -Argument '-File C:\Scripts\backup.ps1'
+$trigger = New-ScheduledTaskTrigger -Daily -At 22:00
+Register-ScheduledTask -TaskName "Backup Diário" -Action $action -Trigger $trigger -Description "Backup automático diário às 22h"</code></pre>
+      </ul>
+    </section>
+
+    <section id="conclusao">
+      <h2>Conclusão</h2>
+      <p>PowerShell é uma ferramenta essencial para profissionais de suporte técnico e administração de sistemas. Dominar seus comandos, scripts e recursos permite automatizar tarefas repetitivas, diagnosticar problemas com rapidez e melhorar a eficiência no trabalho.</p>
+      <p>Continue praticando e explorando seus recursos para se tornar um especialista.</p>
+
+      <a href="index.html" class="button-back" aria-label="Voltar à página inicial">Voltar ao início</a>
+    </section>
   </main>
 
   <script>
