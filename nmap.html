@@ -7,24 +7,31 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
 <style>
   :root {
+    --bg-light: #f9f9f9;
+    --text-dark: #222222;
+    --code-bg-light: #eaeaea;
+    --code-border-light: #ccc;
+    --bg-card-light: #fff;
+
     --bg-dark: #121212;
-    --bg-card: #1e1e1e;
+    --bg-card-dark: #1e1e1e;
     --text-light: #e0e0e0;
-    --text-dark: #222;
+    --code-bg-dark: #2a2a2a;
+    --code-border-dark: #444;
+
     --primary-color: #4caf50;
     --primary-hover: #388e3c;
     --shadow-dark: rgba(0, 0, 0, 0.7);
     --transition-speed: 0.35s;
-    --code-bg: #2a2a2a;
-    --code-border: #444;
-    --table-header-bg: #272727;
-    --table-row-bg: #1f1f1f;
+  }
+  *, *::before, *::after {
+    box-sizing: border-box;
   }
   body {
     margin: 0;
     font-family: 'Inter', sans-serif;
-    background-color: var(--bg-dark);
-    color: var(--text-light);
+    background-color: var(--bg-light);
+    color: var(--text-dark);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -33,9 +40,9 @@
     transition: background-color var(--transition-speed), color var(--transition-speed);
     padding-bottom: 3rem;
   }
-  body.light {
-    background-color: var(--text-light);
-    color: var(--text-dark);
+  body.dark {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
   }
   @keyframes fadeIn {
     to { opacity: 1; }
@@ -52,12 +59,6 @@
     flex-wrap: wrap;
     box-shadow: 0 0 12px var(--shadow-dark);
     z-index: 1000;
-    transition: background-color var(--transition-speed), color var(--transition-speed);
-  }
-  body.light header {
-    background-color: #f0f0f0;
-    color: var(--text-dark);
-    box-shadow: 0 0 12px rgba(0,0,0,0.1);
   }
   header h1 {
     margin: 0;
@@ -83,9 +84,6 @@
     border-radius: 6px;
     transition: background-color 0.3s, color 0.3s, transform 0.2s;
     font-size: 1rem;
-  }
-  body.light nav a {
-    color: var(--text-dark);
   }
   nav a:hover,
   nav a:focus {
@@ -118,10 +116,6 @@
     margin-left: auto;
     will-change: transform;
   }
-  body.light button#toggle-theme {
-    border-color: var(--text-dark);
-    color: var(--text-dark);
-  }
   button#toggle-theme:hover,
   button#toggle-theme:focus {
     background-color: var(--primary-hover);
@@ -146,7 +140,6 @@
     user-select: text;
     line-height: 1.6;
     font-size: 1rem;
-    transition: color var(--transition-speed);
   }
   main h2, main h3 {
     color: var(--primary-color);
@@ -156,29 +149,28 @@
     user-select: text;
     scroll-margin-top: 70px;
   }
-  body.light main h2, body.light main h3 {
-    color: #2a7a2a;
-  }
   main p {
     margin-bottom: 1rem;
-    color: #ccc;
+    color: #444;
   }
-  body.light main p {
-    color: #333;
+  body.dark main p {
+    color: #ccc;
   }
   code, pre {
     font-family: 'Source Code Pro', monospace, monospace;
-    background-color: var(--code-bg);
-    border: 1px solid var(--code-border);
+    background-color: var(--code-bg-light);
+    border: 1px solid var(--code-border-light);
     border-radius: 6px;
     padding: 0.3rem 0.5rem;
     font-size: 0.95rem;
     user-select: text;
+    color: var(--text-dark);
+    transition: background-color 0.3s, color 0.3s;
   }
-  body.light code, body.light pre {
-    background-color: #eee;
-    border-color: #ccc;
-    color: #111;
+  body.dark code, body.dark pre {
+    background-color: var(--code-bg-dark);
+    border-color: var(--code-border-dark);
+    color: var(--text-light);
   }
   pre {
     padding: 1rem;
@@ -189,10 +181,10 @@
   ul {
     padding-left: 1.3rem;
     margin-bottom: 1rem;
-    color: #ddd;
+    color: #555;
   }
-  body.light ul {
-    color: #444;
+  body.dark ul {
+    color: #ccc;
   }
   ul li {
     margin-bottom: 0.4rem;
@@ -201,32 +193,36 @@
     border-collapse: collapse;
     width: 100%;
     margin-bottom: 2rem;
+    color: #555;
+    transition: color 0.3s;
+  }
+  body.dark table {
     color: #ddd;
   }
-  body.light table {
-    color: #222;
-  }
   th, td {
-    border: 1px solid var(--code-border);
+    border: 1px solid var(--code-border-light);
     padding: 0.8rem 1rem;
     text-align: left;
     vertical-align: top;
+    transition: border-color 0.3s;
   }
-  body.light th, body.light td {
-    border-color: #ccc;
+  body.dark th, body.dark td {
+    border-color: var(--code-border-dark);
   }
   th {
-    background-color: var(--table-header-bg);
+    background-color: #ddd;
     font-weight: 700;
+    color: var(--primary-color);
   }
-  body.light th {
-    background-color: #d4f0d4;
+  body.dark th {
+    background-color: var(--table-header-bg, #272727);
+    color: var(--primary-color);
   }
   tr:nth-child(even) {
-    background-color: var(--table-row-bg);
+    background-color: #f9f9f9;
   }
-  body.light tr:nth-child(even) {
-    background-color: #f0f9f0;
+  body.dark tr:nth-child(even) {
+    background-color: var(--table-row-bg, #1f1f1f);
   }
   a.button-back {
     display: inline-block;
@@ -245,6 +241,7 @@
     background-color: var(--primary-hover);
     outline: none;
   }
+
   /* Scroll suave para ancoras */
   html {
     scroll-behavior: smooth;
@@ -254,28 +251,25 @@
     top: 100px;
     right: 20px;
     max-width: 220px;
-    background-color: var(--bg-card);
+    background-color: var(--bg-card-light);
     border-radius: 10px;
     padding: 1rem 1.2rem;
-    box-shadow: 0 4px 12px var(--shadow-dark);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     user-select: none;
     font-size: 0.9rem;
     display: none;
-    transition: background-color var(--transition-speed), color var(--transition-speed);
+    transition: background-color 0.3s, color 0.3s;
   }
-  body.light aside#toc {
-    background-color: #f5f5f5;
-    color: var(--text-dark);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  body.dark aside#toc {
+    background-color: var(--bg-card-dark);
+    color: var(--text-light);
+    box-shadow: 0 4px 12px var(--shadow-dark);
   }
   aside#toc h4 {
     color: var(--primary-color);
     margin-top: 0;
     margin-bottom: 0.8rem;
     font-weight: 700;
-  }
-  body.light aside#toc h4 {
-    color: #2a7a2a;
   }
   aside#toc ul {
     list-style-type: none;
@@ -285,12 +279,9 @@
     margin-bottom: 0.5rem;
   }
   aside#toc ul li a {
-    color: var(--text-light);
+    color: inherit;
     text-decoration: none;
     transition: color 0.3s;
-  }
-  body.light aside#toc ul li a {
-    color: var(--text-dark);
   }
   aside#toc ul li a:hover,
   aside#toc ul li a:focus {
@@ -310,99 +301,191 @@
       display: none !important;
     }
   }
-  /* SVG Container para textos que adaptam a cor */
-  .svg-container {
-    color: var(--text-light);
-    transition: color var(--transition-speed);
-    margin: 1.5rem 0;
-    max-width: 700px;
-  }
-  body.light .svg-container {
+
+  /* ANIMAÇÕES E CORES PARA INTERPRETAÇÃO OUTPUT */
+  .animated-code {
+    animation: fadeInCode 1s ease forwards;
+    background-color: var(--code-bg-light);
+    border: 1px solid var(--code-border-light);
+    border-radius: 8px;
+    padding: 1rem;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 1rem;
+    line-height: 1.5;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
     color: var(--text-dark);
+    transition: background-color 0.3s, color 0.3s;
   }
-  /* SVG Texto */
-  .port-text, .host-text, .arch-text, .arch-label {
-    fill: currentColor;
-    font-family: 'Inter', monospace, sans-serif;
-    font-weight: 700;
-    user-select:none;
-    pointer-events:none;
+  body.dark .animated-code {
+    background-color: var(--code-bg-dark);
+    border-color: var(--code-border-dark);
+    color: var(--text-light);
   }
-  .port-text {
-    font-size: 11px;
-  }
-  .host-text {
-    font-size: 13px;
-  }
-  .arch-text {
-    font-size: 12px;
-  }
-  .arch-label {
-    font-size: 14px;
-  }
-  /* Diagrama arquitetura */
-  .arch-box {
-    fill: #4caf50;
-    stroke: #2e7d32;
-    stroke-width: 2;
-    rx: 12;
-    ry: 12;
-  }
-  .arch-arrow {
-    stroke: #388e3c;
-    stroke-width: 3;
-    marker-end: url(#arrowhead);
-  }
-  /* Diagrama exemplos */
-  .host {
-    fill: #2196f3;
-    stroke: #1769aa;
-    stroke-width: 2;
-    rx: 12;
-    ry: 12;
-  }
-  .port-open {
-    fill: #4caf50;
-    stroke: #2e7d32;
-    stroke-width: 1.5;
-  }
-  .port-closed {
-    fill: #f44336;
-    stroke: #b71c1c;
-    stroke-width: 1.5;
-  }
-  .port-filtered {
-    fill: #ff9800;
-    stroke: #ef6c00;
-    stroke-width: 1.5;
-  }
-  .line {
-    stroke: #777;
-    stroke-width: 2;
+  @keyframes fadeInCode {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
   }
 
-  /* Botão voltar ao topo */
-  #btn-topo {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color: var(--primary-color);
-    border: none;
-    padding: 0.7rem 1rem;
-    border-radius: 50%;
-    color: white;
+  .host-report {
+    color: var(--primary-color);
     font-weight: 700;
-    font-size: 1.5rem;
-    cursor: pointer;
-    box-shadow: 0 0 12px var(--primary-color);
-    display: none;
-    z-index: 10000;
-    transition: background-color 0.3s ease;
+    cursor: help;
+    position: relative;
   }
-  #btn-topo:hover,
-  #btn-topo:focus {
+  .host-report::after {
+    content: " 🕵️‍♂️";
+  }
+
+  .host-up {
+    color: #3a9d23;
+    font-weight: 700;
+  }
+
+  .latency {
+    color: #555;
+    font-style: italic;
+  }
+  body.dark .latency {
+    color: #bbb;
+  }
+
+  .filtered-ports {
+    color: #d2691e;
+    font-weight: 700;
+  }
+
+  .port-line {
+    display: block;
+    margin-top: 0.3rem;
+  }
+
+  .port {
+    font-weight: 700;
+    color: #0b5394;
+    width: 70px;
+    display: inline-block;
+  }
+
+  .state {
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border-radius: 5px;
+    color: white;
+    margin-right: 0.5rem;
+    display: inline-block;
+    min-width: 70px;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+
+  .state.open {
+    background-color: #4caf50;
+    box-shadow: 0 0 8px #4caf50;
+    animation: pulseGreen 2s infinite;
+  }
+  @keyframes pulseGreen {
+    0%, 100% { box-shadow: 0 0 8px #4caf50; }
+    50% { box-shadow: 0 0 20px #81c784; }
+  }
+
+  .state.closed {
+    background-color: #d32f2f;
+    box-shadow: 0 0 8px #d32f2f;
+    animation: pulseRed 2s infinite;
+  }
+  @keyframes pulseRed {
+    0%, 100% { box-shadow: 0 0 8px #d32f2f; }
+    50% { box-shadow: 0 0 20px #ef5350; }
+  }
+
+  .state.filtered {
+    background-color: #ff9800;
+    box-shadow: 0 0 8px #ff9800;
+    animation: pulseOrange 2s infinite;
+  }
+  @keyframes pulseOrange {
+    0%, 100% { box-shadow: 0 0 8px #ff9800; }
+    50% { box-shadow: 0 0 20px #ffb74d; }
+  }
+
+  .explanation-box {
+    background-color: var(--bg-card-light);
+    border-left: 5px solid var(--primary-color);
+    padding: 1rem 1.5rem;
+    margin-bottom: 3rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    user-select: text;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  body.dark .explanation-box {
+    background-color: var(--bg-card-dark);
+    color: var(--text-light);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+  }
+  .explanation-box h3 {
+    margin-top: 0;
+    color: var(--primary-color);
+    user-select: text;
+  }
+  .explanation-box ul {
+    margin-left: 1rem;
+    line-height: 1.5;
+    color: inherit;
+  }
+  .explanation-box ul ul {
+    margin-left: 1.5rem;
+    list-style-type: circle;
+  }
+  .explanation-box ul li strong {
+    color: var(--primary-color);
+  }
+
+  /* Botões fixos para topo e início */
+  #btn-top, #btn-home {
+    position: fixed;
+    right: 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    font-size: 22px;
+    cursor: pointer;
+    box-shadow: 0 0 10px var(--primary-color);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    z-index: 1100;
+  }
+  #btn-top:hover, #btn-home:hover,
+  #btn-top:focus, #btn-home:focus {
     background-color: var(--primary-hover);
     outline: none;
+    transform: scale(1.1);
+  }
+  #btn-top {
+    bottom: 80px;
+  }
+  #btn-home {
+    bottom: 20px;
+  }
+  body.dark #btn-top, body.dark #btn-home {
+    box-shadow: 0 0 10px var(--primary-color);
+  }
+
+  /* Ícones dos botões */
+  #btn-top::before {
+    content: "⬆";
+    line-height: 1;
+  }
+  #btn-home::before {
+    content: "🏠";
+    line-height: 1;
   }
 </style>
 </head>
@@ -434,112 +517,264 @@
   <ul>
     <li><a href="#introducao">Introdução ao Nmap</a></li>
     <li><a href="#instalacao">Instalação</a></li>
-    <li><a href="#comandos-basicos">Comandos Básicos</a></li>
-    <li><a href="#comandos-avancados">Comandos Avançados</a></li>
     <li><a href="#arquitetura">Arquitetura do Nmap</a></li>
-    <li><a href="#exemplos">Exemplos Visuais</a></li>
-    <li><a href="#interpretacao">Interpretando os Resultados</a></li>
-    <li><a href="#dicas">Dicas e Boas Práticas</a></li>
+    <li><a href="#sintaxes-flags">Sintaxes e Flags</a></li>
+    <li><a href="#interpretacao-output">Interpretação do Output</a></li>
+    <li><a href="#exemplos-praticos">Exemplos Práticos</a></li>
   </ul>
 </aside>
 
 <main>
-  <!-- Conteúdo já enviado antes -->
-  <!-- Omitido aqui para foco na resposta, mas no código real deve conter tudo -->
-  <h2 id="introducao">Introdução ao Nmap</h2>
-  <p>O <strong>Nmap</strong> (Network Mapper) é uma ferramenta open source utilizada para exploração e auditoria de segurança em redes de computadores.</p>
-  <p>Ele é amplamente usado para descobrir hosts e serviços em uma rede, além de mapear portas abertas e identificar vulnerabilidades.</p>
-  <!-- resto do conteúdo ... -->
+  <section id="introducao">
+    <h2>Introdução ao Nmap</h2>
+    <p>O <strong>Nmap</strong> (Network Mapper) é uma ferramenta open-source usada para escanear redes, identificar hosts ativos, portas abertas, serviços, sistemas operacionais e detectar vulnerabilidades.</p>
+  </section>
+
+  <section id="instalacao">
+    <h2>Instalação</h2>
+    <p>Você pode instalar o Nmap nas principais plataformas:</p>
+    <ul>
+      <li><strong>Windows:</strong> Baixe em <a href="https://nmap.org/download.html" target="_blank" rel="noopener">https://nmap.org/download.html</a></li>
+      <li><strong>Linux:</strong> Use o gerenciador de pacotes, ex: <code>sudo apt install nmap</code> no Debian/Ubuntu</li>
+      <li><strong>MacOS:</strong> Com Homebrew: <code>brew install nmap</code></li>
+    </ul>
+  </section>
+
+  <section id="arquitetura">
+    <h2>Arquitetura do Nmap</h2>
+    <p>O Nmap é composto por várias camadas e módulos que trabalham juntos para realizar scans detalhados:</p>
+    <ul>
+      <li><strong>Engine de Scan:</strong> Responsável por enviar pacotes personalizados e analisar respostas.</li>
+      <li><strong>Detecção de Portas:</strong> Identifica portas abertas, fechadas ou filtradas.</li>
+      <li><strong>Detecção de Serviços:</strong> Identifica qual serviço está rodando em cada porta.</li>
+      <li><strong>Detecção de Sistema Operacional:</strong> Usa técnicas avançadas para identificar o SO do host.</li>
+      <li><strong>Scripts NSE (Nmap Scripting Engine):</strong> Automatiza tarefas avançadas, como detecção de vulnerabilidades.</li>
+    </ul>
+    <figure style="text-align:center; margin: 2rem 0;">
+      <img src="https://nmap.org/images/nmap_architecture.png" alt="Arquitetura do Nmap" style="max-width:100%; height:auto; border-radius: 12px; box-shadow: 0 0 15px rgba(0,0,0,0.2);" />
+      <figcaption>Diagrama da arquitetura do Nmap. Fonte: nmap.org</figcaption>
+    </figure>
+  </section>
+
+  <section id="sintaxes-flags">
+    <h2>Sintaxes e Flags do Nmap</h2>
+    <p>O Nmap possui muitas opções para personalizar seus scans. Aqui estão algumas das mais usadas:</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Flag</th>
+          <th>Descrição</th>
+          <th>Exemplo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>-sS</code></td>
+          <td>Scan SYN stealth (default em muitos casos)</td>
+          <td><code>nmap -sS 192.168.1.1</code></td>
+        </tr>
+        <tr>
+          <td><code>-sT</code></td>
+          <td>Scan TCP connect (completa conexão TCP)</td>
+          <td><code>nmap -sT 192.168.1.1</code></td>
+        </tr>
+        <tr>
+          <td><code>-p</code></td>
+          <td>Especifica portas para scanear (ex: <code>-p 80,443,22</code>)</td>
+          <td><code>nmap -p 80,443 192.168.1.1</code></td>
+        </tr>
+        <tr>
+          <td><code>-O</code></td>
+          <td>Detecção do sistema operacional</td>
+          <td><code>nmap -O 192.168.1.1</code></td>
+        </tr>
+        <tr>
+          <td><code>-A</code></td>
+          <td>Detecção avançada: SO, versão, scripts NSE e traceroute</td>
+          <td><code>nmap -A 192.168.1.1</code></td>
+        </tr>
+        <tr>
+          <td><code>-T0 a -T5</code></td>
+          <td>Velocidade do scan (0 = muito lento, 5 = muito rápido)</td>
+          <td><code>nmap -T4 192.168.1.1</code></td>
+        </tr>
+        <tr>
+          <td><code>-Pn</code></td>
+          <td>Desativa o ping pré-scan (usa se host não responde a ping)</td>
+          <td><code>nmap -Pn 192.168.1.1</code></td>
+        </tr>
+        <tr>
+          <td><code>--script</code></td>
+          <td>Executa scripts NSE para detecção avançada</td>
+          <td><code>nmap --script vuln 192.168.1.1</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="interpretacao-output">
+    <h2>Interpretação do Output do Nmap</h2>
+    <p>Veja um exemplo típico do output do Nmap:</p>
+
+    <pre class="animated-code"><code>Starting Nmap 7.91 ( https://nmap.org ) at 2025-08-10 21:00
+<span class="host-report">Nmap scan report for <strong>192.168.1.1</strong></span>
+Host is up (<span class="latency">0.0050s latency</span>).
+Not shown: <span class="filtered-ports">997 filtered ports</span>
+<span class="port-line"><span class="port">22/tcp</span>  <span class="state open">open</span>   ssh</span>
+<span class="port-line"><span class="port">80/tcp</span>  <span class="state open">open</span>   http</span>
+<span class="port-line"><span class="port">443/tcp</span> <span class="state open">open</span>   https</span>
+
+Nmap done: 1 IP address (1 host up) scanned in 5.00 seconds</code></pre>
+
+    <div class="explanation-box">
+      <h3>Como interpretar cada linha?</h3>
+      <ul>
+        <li><strong><span class="host-report">Nmap scan report for IP:</span></strong> indica o alvo do scan. <em>O IP ou hostname que foi escaneado.</em></li>
+        <li><strong><span class="host-up">Host is up:</span></strong> confirma que o host respondeu e está ativo na rede.</li>
+        <li><strong><span class="latency">Latency:</span></strong> tempo de resposta, ajuda a medir velocidade da rede ou possíveis atrasos.</li>
+        <li><strong><span class="filtered-ports">Not shown: 997 filtered ports</span></strong> significa que essas portas não responderam ou estão bloqueadas (firewall).</li>
+        <li><strong><span class="port">Portas e Estados:</span></strong>
+          <ul>
+            <li><span class="state open">open</span>: porta aberta, aceita conexões.</li>
+            <li><span class="state closed">closed</span>: porta fechada, mas responde ao scan.</li>
+            <li><span class="state filtered">filtered</span>: porta filtrada, possível firewall bloqueando.</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="exemplos-praticos">
+    <h2>Exemplos Práticos e Erros Comuns</h2>
+    <p>Vamos ver alguns exemplos do Nmap rodando e entender possíveis erros de acesso:</p>
+
+    <h3>Exemplo 1: Scan básico com portas abertas</h3>
+    <pre class="animated-code"><code>nmap -sS 192.168.1.10
+
+Starting Nmap 7.91 ( https://nmap.org )
+Nmap scan report for 192.168.1.10
+Host is up (0.0031s latency).
+Not shown: 995 closed ports
+PORT    STATE SERVICE
+22/tcp  open  ssh
+80/tcp  open  http
+443/tcp open  https
+
+Nmap done: 1 IP address (1 host up) scanned in 3.00 seconds
+</code></pre>
+
+    <p><strong>Explicação:</strong> O host está respondendo, as portas 22, 80 e 443 estão abertas e aceitando conexões.</p>
+
+    <h3>Exemplo 2: Host offline / inacessível</h3>
+    <pre class="animated-code"><code>nmap 10.10.10.10
+
+Starting Nmap 7.91 ( https://nmap.org )
+Note: Host seems down. If it is really up, but blocking ICMP, try -Pn
+Nmap done: 1 IP address (0 hosts up) scanned in 3.05 seconds
+</code></pre>
+
+    <p><strong>Explicação:</strong> O host não respondeu ao ping ICMP. Pode estar offline ou filtrando pacotes ICMP.</p>
+
+    <h3>Exemplo 3: Scan com firewall bloqueando</h3>
+    <pre class="animated-code"><code>nmap -sS 192.168.1.20
+
+Starting Nmap 7.91 ( https://nmap.org )
+Nmap scan report for 192.168.1.20
+Host is up (0.0040s latency).
+All 1000 scanned ports on 192.168.1.20 are filtered
+
+Nmap done: 1 IP address (1 host up) scanned in 6.00 seconds
+</code></pre>
+
+    <p><strong>Explicação:</strong> O host respondeu ao ping, mas todas as portas parecem filtradas (firewall bloqueando).</p>
+
+    <h3>Dica:</h3>
+    <p>Se o host não responder a ping, utilize a flag <code>-Pn</code> para forçar o scan mesmo assim:</p>
+    <pre class="animated-code"><code>nmap -Pn 10.10.10.10</code></pre>
+
+  </section>
+
+  <a href="#introducao" class="button-back" aria-label="Voltar ao início do conteúdo">⬆ Voltar ao Início</a>
 </main>
 
-<!-- Botão voltar ao topo -->
-<button id="btn-topo" aria-label="Voltar ao topo" title="Voltar ao topo" type="button">↑</button>
+<!-- Botões fixos -->
+<button id="btn-top" aria-label="Voltar ao topo da página" title="Voltar ao topo"></button>
+<button id="btn-home" aria-label="Voltar ao início do conteúdo" title="Voltar ao início"></button>
 
 <script>
-  // Alternar tema claro/escuro
+  // Tema claro / escuro
   const toggleBtn = document.getElementById('toggle-theme');
   const body = document.body;
 
-  const savedTheme = localStorage.getItem('theme');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-  if(savedTheme === 'light'){
-    body.classList.remove('dark');
-    body.classList.add('light');
-    toggleBtn.textContent = 'Modo Escuro';
-    toggleBtn.appendChild(createIcon(false));
-  } else if(savedTheme === 'dark') {
-    body.classList.remove('light');
-    body.classList.add('dark');
-    toggleBtn.textContent = 'Modo Claro';
-    toggleBtn.appendChild(createIcon(true));
-  } else {
-    if(prefersDark){
-      body.classList.remove('light');
+  function setTheme(dark) {
+    if (dark) {
       body.classList.add('dark');
-      toggleBtn.textContent = 'Modo Claro';
-      toggleBtn.appendChild(createIcon(true));
+      toggleBtn.textContent = "Modo Escuro";
+      toggleBtn.classList.add('dark');
+      toggleBtn.insertAdjacentHTML('afterbegin', `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>`);
     } else {
       body.classList.remove('dark');
-      body.classList.add('light');
-      toggleBtn.textContent = 'Modo Escuro';
-      toggleBtn.appendChild(createIcon(false));
+      toggleBtn.textContent = "Modo Claro";
+      toggleBtn.classList.remove('dark');
+      toggleBtn.insertAdjacentHTML('afterbegin', `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>`);
     }
   }
 
-  function createIcon(dark){
-    const svgNS = "http://www.w3.org/2000/svg";
-    const svg = document.createElementNS(svgNS, "svg");
-    svg.setAttribute("viewBox", "0 0 24 24");
-    svg.setAttribute("aria-hidden", "true");
-    svg.setAttribute("focusable", "false");
-    svg.style.width = "20px";
-    svg.style.height = "20px";
-
-    const path = document.createElementNS(svgNS, "path");
-    path.setAttribute("stroke", "currentColor");
-    path.setAttribute("stroke-width", "2");
-    path.setAttribute("stroke-linecap", "round");
-    if(dark){
-      path.setAttribute("d", "M21 12.79A9 9 0 0112.79 3 7 7 0 1021 12.79z");
-    } else {
-      path.setAttribute("d", "M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414");
-    }
-    svg.appendChild(path);
-    return svg;
+  // Evita duplicar SVG ao clicar várias vezes
+  function resetToggleBtn() {
+    toggleBtn.innerHTML = '';
   }
 
   toggleBtn.addEventListener('click', () => {
-    if(body.classList.contains('light')){
-      body.classList.remove('light');
-      body.classList.add('dark');
-      toggleBtn.textContent = 'Modo Claro';
-      toggleBtn.appendChild(createIcon(true));
-      localStorage.setItem('theme', 'dark');
-    } else {
-      body.classList.remove('dark');
-      body.classList.add('light');
-      toggleBtn.textContent = 'Modo Escuro';
-      toggleBtn.appendChild(createIcon(false));
-      localStorage.setItem('theme', 'light');
-    }
+    const isDark = body.classList.contains('dark');
+    resetToggleBtn();
+    setTheme(!isDark);
   });
 
-  // Botão voltar ao topo
-  const btnTopo = document.getElementById('btn-topo');
+  // Seta tema inicial baseado em preferência localStorage ou sistema
+  function initTheme() {
+    const darkModePref = localStorage.getItem('darkMode');
+    if (darkModePref === 'true') {
+      setTheme(true);
+    } else if (darkModePref === 'false') {
+      setTheme(false);
+    } else {
+      // Detecta preferencia do sistema
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setTheme(prefersDark);
+    }
+  }
+  initTheme();
+
+  // Salvar preferencia
+  toggleBtn.addEventListener('click', () => {
+    localStorage.setItem('darkMode', body.classList.contains('dark'));
+  });
+
+  // Scroll suave para botão topo
+  const btnTop = document.getElementById('btn-top');
+  const btnHome = document.getElementById('btn-home');
 
   window.addEventListener('scroll', () => {
-    if(window.scrollY > 300) {
-      btnTopo.style.display = 'block';
+    if (window.scrollY > 300) {
+      btnTop.style.display = 'flex';
+      btnHome.style.display = 'flex';
     } else {
-      btnTopo.style.display = 'none';
+      btnTop.style.display = 'none';
+      btnHome.style.display = 'none';
     }
   });
 
-  btnTopo.addEventListener('click', () => {
-    window.scrollTo({top: 0, behavior: 'smooth'});
+  btnTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  btnHome.addEventListener('click', () => {
+    document.getElementById('introducao').scrollIntoView({ behavior: 'smooth' });
   });
 </script>
-
 </body>
 </html>
