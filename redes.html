@@ -1,553 +1,778 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Redes - Portal Suporte Técnico</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg-dark: #121212;
-      --bg-card: #1e1e1e;
-      --text-light: #e0e0e0;
-      --primary-color: #4caf50;
-      --primary-hover: #388e3c;
-      --shadow-dark: rgba(0, 0, 0, 0.7);
-      --transition-speed: 0.35s;
-      --code-bg: #2a2a2a;
-      --code-border: #444;
-      --table-header-bg: #272727;
-      --table-row-bg: #1f1f1f;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Guia Completo de Redes - Básico ao Avançado</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg-dark: #121212;
+    --bg-card: #1e1e1e;
+    --text-light: #e0e0e0;
+    --primary-color: #4caf50;
+    --primary-hover: #388e3c;
+    --shadow-dark: rgba(0, 0, 0, 0.7);
+    --transition-speed: 0.35s;
+    --code-bg: #2a2a2a;
+    --code-border: #444;
+    --table-header-bg: #272727;
+    --table-row-bg: #1f1f1f;
+    --highlight-color: #81c784;
+  }
 
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
 
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg-dark);
-      color: var(--text-light);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    animation: fadeIn var(--transition-speed) ease forwards;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding-bottom: 3rem;
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  header {
+    position: sticky;
+    top: 0;
+    background-color: #1a1a1a;
+    color: var(--text-light);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    box-shadow: 0 0 12px var(--shadow-dark);
+    z-index: 1000;
+  }
+
+  header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    flex: 1 0 200px;
+    font-weight: 700;
+    user-select: none;
+  }
+
+  nav {
+    flex: 2 1 500px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+    user-select: none;
+  }
+
+  nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.5rem 0.9rem;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    font-size: 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  nav a::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--primary-color);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+    border-radius: 4px;
+  }
+
+  nav a:hover::before,
+  nav a:focus::before {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  nav a:hover,
+  nav a:focus {
+    background-color: var(--primary-hover);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px var(--primary-hover);
+    outline: none;
+    z-index: 2;
+  }
+
+  nav a[href="redes.html"] {
+    text-decoration: underline;
+    font-weight: 700;
+    color: var(--highlight-color);
+  }
+
+  button#toggle-theme {
+    background: transparent;
+    border: 2px solid var(--text-light);
+    color: var(--text-light);
+    font-weight: 700;
+    padding: 0.35rem 1rem;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color var(--transition-speed), color var(--transition-speed), transform 0.35s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    user-select: none;
+    flex: 0 0 auto;
+    margin-left: auto;
+    will-change: transform;
+    position: relative;
+    overflow: hidden;
+  }
+
+  button#toggle-theme:hover,
+  button#toggle-theme:focus {
+    background-color: var(--primary-hover);
+    color: white;
+    transform: scale(1.15);
+    box-shadow: 0 0 20px var(--primary-hover);
+    outline: none;
+    z-index: 5;
+  }
+
+  button#toggle-theme svg {
+    fill: currentColor;
+    width: 20px;
+    height: 20px;
+    transition: transform 0.6s ease;
+  }
+
+  button#toggle-theme.dark svg {
+    transform: rotate(40deg);
+  }
+
+  main {
+    padding: 2rem 2rem 5rem;
+    max-width: 1000px;
+    margin: 2rem auto;
+    user-select: text;
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+
+  main h2, main h3 {
+    color: var(--primary-color);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    user-select: text;
+    scroll-margin-top: 70px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  main h2::after, main h3::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 4px;
+    background: var(--highlight-color);
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    transition: width 0.5s ease;
+  }
+
+  main h2:hover::after,
+  main h3:hover::after {
+    width: 100%;
+  }
+
+  main p {
+    margin-bottom: 1rem;
+    color: #ccc;
+    opacity: 0;
+    animation: fadeInUp 0.7s forwards;
+    animation-delay: 0.2s;
+  }
+
+  @keyframes fadeInUp {
+    from {
       opacity: 0;
-      animation: fadeIn var(--transition-speed) ease forwards;
-      transition: background-color var(--transition-speed), color var(--transition-speed);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      padding-bottom: 3rem;
+      transform: translateY(20px);
     }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
+  }
 
-    header {
-      position: sticky;
-      top: 0;
-      background-color: #1a1a1a;
-      color: var(--text-light);
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      box-shadow: 0 0 12px var(--shadow-dark);
-      z-index: 1000;
+  code, pre {
+    font-family: 'Source Code Pro', monospace, monospace;
+    background-color: var(--code-bg);
+    border: 1px solid var(--code-border);
+    border-radius: 6px;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.95rem;
+    user-select: text;
+    transition: box-shadow 0.3s ease;
+  }
+
+  pre {
+    padding: 1rem;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+    background: linear-gradient(45deg, #233, #112);
+    box-shadow: 0 0 15px #174d29 inset;
+  }
+
+  pre:hover {
+    box-shadow: 0 0 25px #4caf50 inset;
+  }
+
+  ul {
+    padding-left: 1.3rem;
+    margin-bottom: 1rem;
+    color: #ddd;
+    list-style-type: disc;
+  }
+
+  ul li {
+    margin-bottom: 0.5rem;
+    cursor: default;
+    position: relative;
+    transition: color 0.3s ease;
+  }
+
+  ul li:hover {
+    color: var(--highlight-color);
+  }
+
+  ul li::before {
+    content: "✔";
+    color: var(--primary-color);
+    position: absolute;
+    left: -1.2rem;
+    top: 0;
+    font-weight: 700;
+    opacity: 0.7;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 2rem;
+    color: #ddd;
+    box-shadow: 0 0 15px #111;
+    border-radius: 8px;
+    overflow: hidden;
+    animation: slideInLeft 0.7s ease forwards;
+  }
+
+  th, td {
+    border: 1px solid var(--code-border);
+    padding: 0.8rem 1rem;
+    text-align: left;
+    vertical-align: top;
+    user-select: text;
+  }
+
+  th {
+    background-color: var(--table-header-bg);
+    font-weight: 700;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+  tr:nth-child(even) {
+    background-color: var(--table-row-bg);
+  }
+
+  a.button-back {
+    display: inline-block;
+    margin-top: 3rem;
+    padding: 0.7rem 1.4rem;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    user-select: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+
+  a.button-back:hover,
+  a.button-back:focus {
+    background-color: var(--primary-hover);
+    outline: none;
+    transform: scale(1.05);
+  }
+
+  /* Scroll suave para ancoras */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  aside#toc {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    max-width: 250px;
+    background-color: var(--bg-card);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    box-shadow: 0 4px 12px var(--shadow-dark);
+    user-select: none;
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: translateX(50px);
+    animation: slideInRight 0.7s forwards 0.3s;
+    z-index: 100;
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+
+  aside#toc h4 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+    font-weight: 700;
+  }
+
+  aside#toc ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  aside#toc ul li {
+    margin-bottom: 0.6rem;
+  }
+
+  aside#toc ul li a {
+    color: var(--text-light);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  aside#toc ul li a:hover,
+  aside#toc ul li a:focus {
+    color: var(--primary-hover);
+    outline: none;
+    text-decoration: underline;
+  }
+
+  @keyframes slideInRight {
+    to {
+      opacity: 1;
+      transform: translateX(0);
     }
+  }
 
-    header h1 {
-      margin: 0;
-      font-size: 1.8rem;
-      flex: 1 0 200px;
-      font-weight: 700;
-      user-select: none;
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-40px);
     }
-
-    nav {
-      flex: 2 1 500px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-      align-items: center;
-      user-select: none;
+    to {
+      opacity: 1;
+      transform: translateX(0);
     }
+  }
 
-    nav a {
-      color: var(--text-light);
-      text-decoration: none;
-      font-weight: 600;
-      padding: 0.5rem 0.9rem;
-      border-radius: 6px;
-      transition: background-color 0.3s, color 0.3s, transform 0.2s;
-      font-size: 1rem;
-    }
-
-    nav a:hover,
-    nav a:focus {
-      background-color: var(--primary-hover);
-      color: white;
-      transform: scale(1.05);
-      box-shadow: 0 0 12px var(--primary-hover);
-      outline: none;
-    }
-
-    nav a[href="redes.html"] {
-      text-decoration: underline;
-      font-weight: 700;
-    }
-
-    button#toggle-theme {
-      background: transparent;
-      border: 2px solid var(--text-light);
-      color: var(--text-light);
-      font-weight: 700;
-      padding: 0.35rem 1rem;
-      cursor: pointer;
-      border-radius: 6px;
-      transition: background-color var(--transition-speed), color var(--transition-speed), transform 0.25s;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 1rem;
-      user-select: none;
-      flex: 0 0 auto;
-      margin-left: auto;
-      will-change: transform;
-    }
-
-    button#toggle-theme:hover,
-    button#toggle-theme:focus {
-      background-color: var(--primary-hover);
-      color: white;
-      transform: scale(1.1);
-      box-shadow: 0 0 15px var(--primary-hover);
-      outline: none;
-    }
-
-    button#toggle-theme svg {
-      fill: currentColor;
-      width: 20px;
-      height: 20px;
-      transition: transform 0.4s ease;
-    }
-
-    button#toggle-theme.dark svg {
-      transform: rotate(40deg);
-    }
-
-    main {
-      padding: 2rem 2rem 5rem;
-      max-width: 900px;
-      margin: 2rem auto;
-      user-select: text;
-      line-height: 1.6;
-      font-size: 1rem;
-    }
-
-    main h2, main h3 {
-      color: var(--primary-color);
-      margin-top: 2.5rem;
-      margin-bottom: 1rem;
-      font-weight: 700;
-      user-select: text;
-      scroll-margin-top: 70px;
-    }
-
-    main p {
-      margin-bottom: 1rem;
-      color: #ccc;
-    }
-
-    code, pre {
-      font-family: 'Source Code Pro', monospace, monospace;
-      background-color: var(--code-bg);
-      border: 1px solid var(--code-border);
-      border-radius: 6px;
-      padding: 0.3rem 0.5rem;
-      font-size: 0.95rem;
-      user-select: text;
-    }
-
-    pre {
-      padding: 1rem;
-      overflow-x: auto;
-      margin-bottom: 1.5rem;
-      line-height: 1.4;
-    }
-
-    ul {
-      padding-left: 1.3rem;
-      margin-bottom: 1rem;
-      color: #ddd;
-    }
-
-    ul li {
-      margin-bottom: 0.4rem;
-    }
-
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      margin-bottom: 2rem;
-      color: #ddd;
-    }
-
-    th, td {
-      border: 1px solid var(--code-border);
-      padding: 0.8rem 1rem;
-      text-align: left;
-      vertical-align: top;
-    }
-
-    th {
-      background-color: var(--table-header-bg);
-      font-weight: 700;
-    }
-
-    tr:nth-child(even) {
-      background-color: var(--table-row-bg);
-    }
-
-    a.button-back {
-      display: inline-block;
-      margin-top: 3rem;
-      padding: 0.7rem 1.4rem;
-      background-color: var(--primary-color);
-      color: white;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 700;
-      user-select: none;
-      transition: background-color 0.3s ease;
-    }
-
-    a.button-back:hover,
-    a.button-back:focus {
-      background-color: var(--primary-hover);
-      outline: none;
-    }
-
-    /* Scroll suave para ancoras */
-    html {
-      scroll-behavior: smooth;
-    }
-
+  @media (min-width: 1000px) {
     aside#toc {
-      position: fixed;
-      top: 100px;
-      right: 20px;
-      max-width: 220px;
-      background-color: var(--bg-card);
-      border-radius: 10px;
-      padding: 1rem 1.2rem;
-      box-shadow: 0 4px 12px var(--shadow-dark);
-      user-select: none;
-      font-size: 0.9rem;
-      display: none;
+      display: block;
     }
+    main {
+      margin-right: 280px;
+    }
+  }
 
-    aside#toc h4 {
-      color: var(--primary-color);
-      margin-top: 0;
-      margin-bottom: 0.8rem;
-      font-weight: 700;
+  @media (max-width: 640px) {
+    main {
+      padding: 1rem 1rem 4rem;
+      margin: 1rem auto;
+      max-width: 95%;
     }
+    aside#toc {
+      display: none !important;
+    }
+  }
 
-    aside#toc ul {
-      list-style-type: none;
-      padding-left: 0;
-    }
+  /* Tema escuro */
+  body.dark {
+    background-color: #f5f5f5;
+    color: #121212;
+  }
 
-    aside#toc ul li {
-      margin-bottom: 0.5rem;
-    }
+  body.dark header {
+    background-color: #e0e0e0;
+    color: #121212;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+  }
 
-    aside#toc ul li a {
-      color: var(--text-light);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
+  body.dark nav a {
+    color: #121212;
+  }
 
-    aside#toc ul li a:hover,
-    aside#toc ul li a:focus {
-      color: var(--primary-hover);
-      outline: none;
-    }
+  body.dark nav a:hover,
+  body.dark nav a:focus {
+    background-color: #81c784;
+    color: #121212;
+    box-shadow: 0 0 12px #81c784;
+  }
 
-    @media (min-width: 1000px) {
-      aside#toc {
-        display: block;
-      }
-      main {
-        margin-right: 270px;
-      }
-    }
+  body.dark a.button-back {
+    background-color: #388e3c;
+    color: white;
+  }
 
-    @media (max-width: 640px) {
-      main {
-        padding: 1rem 1rem 4rem;
-        margin: 1rem auto;
-        max-width: 95%;
-      }
-      aside#toc {
-        display: none !important;
-      }
+  body.dark a.button-back:hover,
+  body.dark a.button-back:focus {
+    background-color: #2e7d32;
+  }
+
+  body.dark aside#toc {
+    background-color: #f0f0f0;
+    color: #121212;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  body.dark aside#toc ul li a {
+    color: #121212;
+  }
+
+  body.dark aside#toc ul li a:hover,
+  body.dark aside#toc ul li a:focus {
+    color: #388e3c;
+  }
+
+  /* Novas práticas - dicas animadas */
+  .tips {
+    background-color: var(--bg-card);
+    border-left: 5px solid var(--primary-color);
+    padding: 1rem 1.2rem;
+    margin: 2rem 0;
+    border-radius: 6px;
+    box-shadow: 0 0 12px var(--shadow-dark);
+    font-size: 1rem;
+    color: var(--text-light);
+    user-select: text;
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      box-shadow: 0 0 10px var(--primary-color);
     }
-  </style>
+    50% {
+      box-shadow: 0 0 20px var(--highlight-color);
+    }
+  }
+
+  /* Lista de dicas interativas */
+  .tips ul {
+    list-style: inside disc;
+    padding-left: 0;
+  }
+
+  .tips ul li {
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+
+  .tips ul li:hover {
+    color: var(--highlight-color);
+    transform: scale(1.05);
+  }
+
+  /* Tooltip simples para dicas */
+  .tooltip {
+    position: relative;
+    display: inline-block;
+  }
+
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 250px;
+    background-color: var(--primary-color);
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    position: absolute;
+    z-index: 10;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -125px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    font-size: 0.85rem;
+  }
+
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+</style>
 </head>
 <body>
-  <header>
-    <h1>Redes - Portal Suporte Técnico</h1>
-    <nav>
-      <a href="index.html">Página Inicial</a>
-      <a href="powershell.html">PowerShell</a>
-      <a href="cmd.html">CMD</a>
-      <a href="redes.html" aria-current="page">Redes</a>
-      <a href="atalho.html">Atalhos</a>
-      <a href="sintaxes.html">Sintaxes</a>
-      <a href="executar.html">Executar</a>
-      <a href="nmap.html">Nmap</a>
-      <a href="linux.html">Linux</a>
-      <a href="wireshark.html">Wireshark</a>
-    </nav>
-    <button id="toggle-theme" aria-label="Alternar tema claro/escuro" title="Alternar tema claro/escuro" type="button">
-      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-      Modo Claro
-    </button>
-  </header>
+<header>
+  <h1>Guia Completo de Redes - Básico ao Avançado</h1>
+  <nav>
+    <a href="index.html">Página Inicial</a>
+    <a href="powershell.html">PowerShell</a>
+    <a href="cmd.html">CMD</a>
+    <a href="redes.html" aria-current="page">Redes</a>
+    <a href="atalho.html">Atalhos</a>
+    <a href="sintaxes.html">Sintaxes</a>
+    <a href="executar.html">Executar</a>
+    <a href="nmap.html">Nmap</a>
+    <a href="linux.html">Linux</a>
+    <a href="wireshark.html">Wireshark</a>
+  </nav>
+  <button id="toggle-theme" aria-label="Alternar tema claro/escuro" title="Alternar tema claro/escuro" type="button" >
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg> Modo Escuro
+  </button>
+</header>
 
-  <aside id="toc" aria-label="Índice do conteúdo">
-    <h4>Conteúdo</h4>
+<aside id="toc" aria-label="Índice do conteúdo">
+  <h4>Conteúdo</h4>
+  <ul>
+    <li><a href="#conceitos-basicos">Conceitos Básicos</a></li>
+    <li><a href="#modelo-tcp-ip">Modelo TCP/IP</a></li>
+    <li><a href="#protocolos-essenciais">Protocolos Essenciais</a></li>
+    <li><a href="#portas-tcp-udp">Portas TCP e UDP Comuns</a></li>
+    <li><a href="#endereco-ip">Endereçamento IP</a></li>
+    <li><a href="#roteamento">Roteamento</a></li>
+    <li><a href="#seguranca-redes">Segurança em Redes</a></li>
+    <li><a href="#diagnosticos">Diagnósticos e Práticas</a></li>
+    <li><a href="#scripts-praticos">Scripts Práticos</a></li>
+    <li><a href="#novas-praticas">Novas Práticas e Dicas</a></li>
+  </ul>
+</aside>
+
+<main role="main">
+  <section id="conceitos-basicos" tabindex="-1">
+    <h2>Conceitos Básicos de Redes</h2>
+    <p>Redes de computadores são sistemas que permitem a comunicação entre dispositivos para troca de dados, compartilhamento de recursos e acesso à internet.</p>
     <ul>
-      <li><a href="#conceitos">Conceitos Básicos de Redes</a></li>
-      <li><a href="#comandos">Comandos Úteis</a></li>
-      <li><a href="#protocolos">Principais Protocolos</a></li>
-      <li><a href="#portas">Portas TCP e UDP</a></li>
-      <li><a href="#exemplos">Exemplos Práticos</a></li>
-      <li><a href="#scripts">Scripts e Dicas para Redes</a></li>
-      <li><a href="#conclusao">Conclusão</a></li>
+      <li>Hosts: dispositivos conectados à rede (computadores, servidores, impressoras, roteadores).</li>
+      <li>Switches: dispositivos que conectam hosts dentro da mesma rede local (LAN).</li>
+      <li>Roteadores: dispositivos que conectam diferentes redes e roteiam pacotes entre elas.</li>
+      <li>Protocolo: conjunto de regras que definem como a comunicação acontece.</li>
+      <li>Endereço IP: identificação única de um dispositivo em uma rede.</li>
     </ul>
-  </aside>
+  </section>
 
-  <main>
-    <h2 id="conceitos">Conceitos Básicos de Redes</h2>
-    <p>Redes de computadores conectam dispositivos permitindo comunicação e compartilhamento de recursos. Entender os conceitos básicos é fundamental para diagnóstico e suporte técnico eficiente.</p>
-    <ul>
-      <li><strong>IP (Internet Protocol):</strong> Endereço lógico que identifica um dispositivo numa rede.</li>
-      <li><strong>MAC (Media Access Control):</strong> Identificador físico único da placa de rede.</li>
-      <li><strong>DHCP (Dynamic Host Configuration Protocol):</strong> Protocolo que atribui IPs automaticamente.</li>
-      <li><strong>DNS (Domain Name System):</strong> Sistema que converte nomes de domínio em endereços IP.</li>
-      <li><strong>Gateway:</strong> Roteador ou dispositivo que conecta redes diferentes.</li>
-      <li><strong>Subnet Mask:</strong> Máscara que define o tamanho da rede local.</li>
-    </ul>
+  <section id="modelo-tcp-ip" tabindex="-1">
+    <h2>Modelo TCP/IP - Camadas e Funções</h2>
+    <p>O modelo TCP/IP é a base da comunicação na internet, dividido em 4 camadas principais:</p>
+    <ol>
+      <li><strong>Camada de Aplicação:</strong> Protocolos que suportam aplicativos (HTTP, FTP, SMTP, DNS).</li>
+      <li><strong>Camada de Transporte:</strong> Garante a entrega de dados, controla erros e fluxos (TCP, UDP).</li>
+      <li><strong>Camada de Internet:</strong> Responsável pelo endereçamento e roteamento (IP, ICMP).</li>
+      <li><strong>Camada de Acesso à Rede:</strong> Interface física e lógica com a rede local (Ethernet, Wi-Fi).</li>
+    </ol>
+    <p>Essas camadas trabalham em conjunto para garantir que os dados sejam enviados e recebidos corretamente.</p>
+  </section>
 
-    <h2 id="comandos">Comandos Úteis para Redes</h2>
+  <section id="protocolos-essenciais" tabindex="-1">
+    <h2>Protocolos Essenciais de Rede</h2>
     <table>
       <thead>
-        <tr>
-          <th>Comando</th>
-          <th>Descrição</th>
-          <th>Exemplo</th>
-        </tr>
+        <tr><th>Protocolo</th><th>Camada</th><th>Descrição</th></tr>
       </thead>
       <tbody>
-        <tr>
-          <td><code>ipconfig</code></td>
-          <td>Exibe configuração IP da máquina.</td>
-          <td><pre>ipconfig /all</pre></td>
-        </tr>
-        <tr>
-          <td><code>ping</code></td>
-          <td>Testa conectividade com outro host.</td>
-          <td><pre>ping google.com</pre></td>
-        </tr>
-        <tr>
-          <td><code>tracert</code></td>
-          <td>Mostra o caminho até um host (rastreia rota).</td>
-          <td><pre>tracert google.com</pre></td>
-        </tr>
-        <tr>
-          <td><code>netstat</code></td>
-          <td>Exibe conexões de rede e portas abertas.</td>
-          <td><pre>netstat -an</pre></td>
-        </tr>
-        <tr>
-          <td><code>nslookup</code></td>
-          <td>Consulta DNS para resolução de nomes.</td>
-          <td><pre>nslookup google.com</pre></td>
-        </tr>
-        <tr>
-          <td><code>arp</code></td>
-          <td>Exibe cache ARP (associa IP a MAC).</td>
-          <td><pre>arp -a</pre></td>
-        </tr>
-        <tr>
-          <td><code>route</code></td>
-          <td>Exibe e manipula tabelas de roteamento.</td>
-          <td><pre>route print</pre></td>
-        </tr>
+        <tr><td>HTTP/HTTPS</td><td>Aplicação</td><td>Protocolo para transferência de páginas web (HTTPS é seguro, usa SSL/TLS)</td></tr>
+        <tr><td>FTP</td><td>Aplicação</td><td>Transferência de arquivos entre dispositivos</td></tr>
+        <tr><td>SMTP</td><td>Aplicação</td><td>Envio de e-mails</td></tr>
+        <tr><td>DNS</td><td>Aplicação</td><td>Resolução de nomes de domínio para IP</td></tr>
+        <tr><td>TCP</td><td>Transporte</td><td>Protocolo confiável, orientado a conexão</td></tr>
+        <tr><td>UDP</td><td>Transporte</td><td>Protocolo rápido, não orientado a conexão</td></tr>
+        <tr><td>IP</td><td>Internet</td><td>Endereçamento e roteamento dos pacotes</td></tr>
+        <tr><td>ICMP</td><td>Internet</td><td>Mensagens de controle e erro (ex: ping)</td></tr>
+        <tr><td>ARP</td><td>Acesso à Rede</td><td>Mapeia IP para endereço MAC na LAN</td></tr>
       </tbody>
     </table>
+  </section>
 
-    <h2 id="protocolos">Principais Protocolos de Rede</h2>
-    <ul>
-      <li><strong>TCP (Transmission Control Protocol):</strong> Protocolo orientado à conexão que garante entrega confiável de dados.</li>
-      <li><strong>UDP (User Datagram Protocol):</strong> Protocolo sem conexão, mais rápido, usado para streaming e jogos.</li>
-      <li><strong>HTTP/HTTPS:</strong> Protocolos para transferência de páginas web.</li>
-      <li><strong>FTP:</strong> Protocolo para transferência de arquivos.</li>
-      <li><strong>SSH:</strong> Protocolo para acesso remoto seguro.</li>
-      <li><strong>DHCP:</strong> Para atribuição automática de IPs.</li>
-      <li><strong>DNS:</strong> Tradução de nomes para IPs.</li>
-    </ul>
-
-    <h2 id="portas">Portas TCP e UDP - Guia Completo</h2>
-    <p>Portas são números usados para identificar serviços e aplicações dentro de um dispositivo na rede, possibilitando a comunicação adequada entre dispositivos. Elas podem ser TCP (confiáveis) ou UDP (mais rápidas, sem confirmação).</p>
-    <p>As portas são numeradas de 0 a 65535, e são divididas em:</p>
-    <ul>
-      <li><strong>Portas bem conhecidas (Well Known Ports):</strong> 0 a 1023 - Usadas por serviços padrão (HTTP, FTP, SMTP, etc).</li>
-      <li><strong>Portas registradas (Registered Ports):</strong> 1024 a 49151 - Usadas por aplicações específicas.</li>
-      <li><strong>Portas dinâmicas/privadas (Dynamic/Private Ports):</strong> 49152 a 65535 - Usadas temporariamente por aplicações clientes.</li>
-    </ul>
-
-    <h3>Portas TCP/UDP Comuns e Seus Serviços</h3>
+  <section id="portas-tcp-udp" tabindex="-1">
+    <h2>Portas TCP e UDP Comuns e Seus Serviços</h2>
+    <p>Portas são números que identificam serviços em um dispositivo. Aqui as mais importantes:</p>
     <table>
       <thead>
-        <tr>
-          <th>Porta</th>
-          <th>Protocolo</th>
-          <th>Serviço / Aplicação</th>
-          <th>Descrição</th>
-        </tr>
+        <tr><th>Porta</th><th>Protocolo</th><th>Serviço</th><th>Descrição</th></tr>
       </thead>
       <tbody>
-        <tr><td>20</td><td>TCP</td><td>FTP Data</td><td>Transferência de dados FTP</td></tr>
-        <tr><td>21</td><td>TCP</td><td>FTP Control</td><td>Comandos FTP</td></tr>
+        <tr><td>20, 21</td><td>TCP</td><td>FTP</td><td>Transferência de arquivos</td></tr>
         <tr><td>22</td><td>TCP</td><td>SSH</td><td>Acesso remoto seguro</td></tr>
-        <tr><td>23</td><td>TCP</td><td>Telnet</td><td>Terminal remoto (não seguro)</td></tr>
-        <tr><td>25</td><td>TCP</td><td>SMTP</td><td>Envio de emails</td></tr>
+        <tr><td>23</td><td>TCP</td><td>Telnet</td><td>Acesso remoto não seguro</td></tr>
+        <tr><td>25</td><td>TCP</td><td>SMTP</td><td>Envio de e-mail</td></tr>
         <tr><td>53</td><td>UDP/TCP</td><td>DNS</td><td>Resolução de nomes</td></tr>
-        <tr><td>67</td><td>UDP</td><td>DHCP Server</td><td>Servidor DHCP</td></tr>
-        <tr><td>68</td><td>UDP</td><td>DHCP Client</td><td>Cliente DHCP</td></tr>
+        <tr><td>67, 68</td><td>UDP</td><td>DHCP</td><td>Atribuição dinâmica de IP</td></tr>
         <tr><td>80</td><td>TCP</td><td>HTTP</td><td>Web sem criptografia</td></tr>
-        <tr><td>110</td><td>TCP</td><td>POP3</td><td>Recebimento de emails</td></tr>
-        <tr><td>119</td><td>TCP</td><td>NNTP</td><td>Rede de notícias Usenet</td></tr>
-        <tr><td>123</td><td>UDP</td><td>NTP</td><td>Sincronização de tempo</td></tr>
-        <tr><td>143</td><td>TCP</td><td>IMAP</td><td>Recebimento de emails</td></tr>
-        <tr><td>161</td><td>UDP</td><td>SNMP</td><td>Monitoramento de redes</td></tr>
-        <tr><td>194</td><td>TCP</td><td>IRC</td><td>Chat em tempo real</td></tr>
-        <tr><td>443</td><td>TCP</td><td>HTTPS</td><td>Web com criptografia SSL/TLS</td></tr>
+        <tr><td>110</td><td>TCP</td><td>POP3</td><td>Recebimento de email</td></tr>
+        <tr><td>143</td><td>TCP</td><td>IMAP</td><td>Recebimento de email avançado</td></tr>
+        <tr><td>443</td><td>TCP</td><td>HTTPS</td><td>Web segura (SSL/TLS)</td></tr>
         <tr><td>445</td><td>TCP</td><td>SMB</td><td>Compartilhamento de arquivos Windows</td></tr>
-        <tr><td>465</td><td>TCP</td><td>SMTP SSL</td><td>Envio de email seguro</td></tr>
-        <tr><td>514</td><td>UDP</td><td>Syslog</td><td>Registro de logs</td></tr>
-        <tr><td>993</td><td>TCP</td><td>IMAP SSL</td><td>Recebimento de email seguro</td></tr>
-        <tr><td>995</td><td>TCP</td><td>POP3 SSL</td><td>Recebimento de email seguro</td></tr>
+        <tr><td>3389</td><td>TCP</td><td>RDP</td><td>Área de trabalho remota</td></tr>
+        <tr><td>5060</td><td>UDP/TCP</td><td>SIP</td><td>Comunicação VoIP</td></tr>
         <tr><td>3306</td><td>TCP</td><td>MySQL</td><td>Banco de dados</td></tr>
-        <tr><td>3389</td><td>TCP</td><td>RDP</td><td>Acesso remoto Windows</td></tr>
         <tr><td>5432</td><td>TCP</td><td>PostgreSQL</td><td>Banco de dados</td></tr>
-        <tr><td>5900</td><td>TCP</td><td>VNC</td><td>Acesso remoto gráfico</td></tr>
-        <tr><td>8080</td><td>TCP</td><td>HTTP Alternativo</td><td>Proxy e serviços web</td></tr>
+        <tr><td>8080</td><td>TCP</td><td>HTTP Alternativo</td><td>Usado por proxies e servidores web alternativos</td></tr>
       </tbody>
     </table>
+  </section>
 
-    <h3>Como as portas funcionam no TCP/IP</h3>
-    <p>O modelo TCP/IP utiliza portas para multiplexar conexões em uma mesma máquina, permitindo que vários serviços funcionem simultaneamente usando o mesmo endereço IP. Cada pacote enviado ou recebido carrega uma porta de origem e uma porta de destino.</p>
-    <p>Por exemplo, quando você acessa um site via HTTPS, o seu navegador cria uma conexão de origem numa porta dinâmica (ex: 53215) e conecta à porta 443 (HTTPS) do servidor.</p>
-
-    <h3>Avançado: Portas, Firewall e Segurança</h3>
-    <p>É importante saber quais portas abrir no firewall para garantir que apenas os serviços necessários fiquem acessíveis. Portas abertas desnecessariamente aumentam o risco de ataques.</p>
+  <section id="endereco-ip" tabindex="-1">
+    <h2>Endereçamento IP e Máscaras de Sub-rede</h2>
+    <p>O endereço IP identifica um dispositivo numa rede. Ele pode ser:</p>
     <ul>
-      <li><strong>Scans de portas:</strong> Ferramentas como Nmap identificam portas abertas, usadas para auditoria.</li>
-      <li><strong>Firewalls:</strong> Bloqueiam ou permitem tráfego baseado em portas e protocolos.</li>
-      <li><strong>Port knocking:</strong> Técnica para abrir portas dinamicamente com sequência de pacotes.</li>
-      <li><strong>Portas padrão:</strong> Podem ser alteradas para dificultar ataques.</li>
+      <li><strong>IPv4:</strong> Formato numérico com 4 octetos (ex: 192.168.1.10)</li>
+      <li><strong>IPv6:</strong> Formato hexadecimal e mais longo (ex: 2001:0db8::1)</li>
     </ul>
+    <p><strong>Máscara de sub-rede</strong> define o tamanho da rede local, separando rede e host.</p>
+    <p>Exemplo de máscara comum: <code>255.255.255.0</code> (prefixo /24)</p>
+    <p>Isso significa que os primeiros 24 bits definem a rede, e os últimos 8 bits são para hosts.</p>
+  </section>
 
-    <h2 id="exemplos">Exemplos Práticos</h2>
+  <section id="roteamento" tabindex="-1">
+    <h2>Roteamento - Como os Pacotes Chegam ao Destino</h2>
+    <p>Roteadores decidem o melhor caminho para enviar pacotes entre redes diferentes, usando tabelas de roteamento.</p>
     <ul>
-      <li><strong>Limpar cache DNS:</strong> <code>ipconfig /flushdns</code></li>
-      <li><strong>Testar conectividade e tempo de resposta:</strong> <code>ping -n 5 google.com</code></li>
-      <li><strong>Ver rota até host:</strong> <code>tracert google.com</code></li>
-      <li><strong>Exibir conexões ativas:</strong> <code>netstat -ano</code></li>
-      <li><strong>Consulta DNS detalhada:</strong> <code>nslookup -type=mx gmail.com</code></li>
-      <li><strong>Ver portas abertas e conexões:</strong> <code>netstat -an | findstr LISTENING</code></li>
-      <li><strong>Testar porta específica (ex: 80):</strong> <code>telnet google.com 80</code></li>
+      <li><strong>Rota estática:</strong> Configurada manualmente pelo administrador.</li>
+      <li><strong>Rota dinâmica:</strong> Determinada automaticamente por protocolos (OSPF, BGP).</li>
     </ul>
+    <p>Protocolos de roteamento ajudam na escolha eficiente do caminho.</p>
+  </section>
 
-    <h2 id="scripts">Scripts e Dicas para Redes</h2>
-    <p>Automatize tarefas comuns de rede com scripts simples para diagnóstico e manutenção.</p>
+  <section id="seguranca-redes" tabindex="-1">
+    <h2>Segurança em Redes - Práticas Essenciais</h2>
+    <p>Garantir segurança é fundamental para evitar invasões, vazamento de dados e interrupções.</p>
+    <ul>
+      <li>Use <strong>firewalls</strong> para controlar o tráfego e bloquear portas não utilizadas.</li>
+      <li>Implemente <strong>VPNs</strong> para conexões seguras remotas.</li>
+      <li>Mantenha <strong>firmwares e softwares atualizados</strong> para corrigir vulnerabilidades.</li>
+      <li>Utilize <strong>senhas fortes e autenticação multifator</strong> para acesso a dispositivos.</li>
+      <li>Segmente redes usando <strong>VLANs</strong> para isolar áreas e minimizar riscos.</li>
+      <li>Configure <strong>monitoramento de logs</strong> para detectar atividades suspeitas.</li>
+      <li>Realize <strong>backup regular</strong> das configurações de rede.</li>
+      <li>Criptografe dados sensíveis em trânsito e em repouso.</li>
+    </ul>
+  </section>
 
-    <h3>1. Script para renovar IP e limpar cache DNS (Windows)</h3>
+  <section id="diagnosticos" tabindex="-1">
+    <h2>Diagnósticos e Comandos Práticos para Redes</h2>
+    <ul>
+      <li><code>ping &lt;IP ou domínio&gt;</code>: Testa conectividade e latência.</li>
+      <li><code>tracert &lt;domínio&gt;</code>: Exibe rota até o destino mostrando saltos.</li>
+      <li><code>ipconfig /all</code>: Mostra configuração IP e informações de adaptadores no Windows.</li>
+      <li><code>nslookup &lt;domínio&gt;</code>: Consulta DNS para resolução de nomes.</li>
+      <li><code>netstat -an</code>: Lista conexões e portas abertas.</li>
+      <li><code>arp -a</code>: Exibe tabela ARP local.</li>
+      <li><code>route print</code>: Mostra tabela de roteamento local.</li>
+    </ul>
+  </section>
+
+  <section id="scripts-praticos" tabindex="-1">
+    <h2>Scripts Práticos para Redes</h2>
+    <p>Exemplo de script batch para liberar e renovar IP no Windows:</p>
     <pre><code>@echo off
-echo Liberando endereço IP atual...
+echo Liberando IP atual...
 ipconfig /release
-echo Renovando endereço IP...
+timeout /t 3 /nobreak >nul
+echo Renovando IP...
 ipconfig /renew
-echo Limpando cache DNS...
-ipconfig /flushdns
-echo Operação concluída.
 pause
 </code></pre>
 
-    <h3>2. Script para monitorar conexões abertas</h3>
-    <pre><code>@echo off
-echo Monitorando conexões de rede...
-netstat -ano
-pause
+    <p>Script Bash para Linux para reiniciar a interface de rede:</p>
+    <pre><code>#!/bin/bash
+echo "Reiniciando interface eth0..."
+sudo ifconfig eth0 down
+sleep 2
+sudo ifconfig eth0 up
+echo "Interface eth0 reiniciada!"
 </code></pre>
+  </section>
 
-    <h3>3. Script para verificar a rota até um host</h3>
-    <pre><code>@echo off
-set /p host=Digite o endereço ou IP do host: 
-tracert %host%
-pause
-</code></pre>
+  <section id="novas-praticas" tabindex="-1">
+    <h2>Novas Práticas e Dicas de Segurança e Gestão de Redes</h2>
+    <div class="tips" role="region" aria-live="polite" aria-label="Dicas úteis para redes">
+      <ul>
+        <li>Não use senhas padrão em dispositivos de rede — sempre personalize.</li>
+        <li>Atualize firmware e sistemas regularmente para evitar exploits.</li>
+        <li>Implemente VLANs para segmentação e isolamento de tráfego.</li>
+        <li>Use VPNs para acesso remoto seguro.</li>
+        <li>Monitore logs para identificar tentativas de acesso não autorizado.</li>
+        <li>Configure backups automáticos das configurações.</li>
+        <li>Utilize autenticação multifator onde possível.</li>
+        <li>Documente toda a topologia e configurações da rede.</li>
+      </ul>
+    </div>
+  </section>
 
-    <h2 id="conclusao">Conclusão</h2>
-    <p>Ter um bom domínio dos conceitos, comandos, protocolos e portas de rede é essencial para o suporte técnico eficiente, facilitando diagnósticos, manutenção e segurança dos sistemas.</p>
+  <a href="index.html" class="button-back" aria-label="Voltar para página inicial">Voltar para Home</a>
+</main>
 
-    <a href="index.html" class="button-back" aria-label="Voltar para a página inicial">← Voltar para Início</a>
-  </main>
+<script>
+  const toggleBtn = document.getElementById('toggle-theme');
+  const body = document.body;
 
-  <script>
-    const toggleBtn = document.getElementById('toggle-theme');
-    const body = document.body;
-
-    function updateToggleButton(isDark) {
-      if(isDark) {
-        toggleBtn.textContent = '';
-        toggleBtn.classList.add('dark');
-        toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg> Modo Claro`;
-      } else {
-        toggleBtn.textContent = '';
-        toggleBtn.classList.remove('dark');
-        toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg> Modo Escuro`;
-      }
-    }
-
-    const savedTheme = localStorage.getItem('theme');
-    if(savedTheme === 'dark') {
-      body.classList.add('dark');
-      updateToggleButton(true);
+  function updateToggleButton(isDark) {
+    if(isDark) {
+      toggleBtn.classList.add('dark');
+      toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" style="transform: rotate(40deg); transition: transform 0.6s;">
+        <path d="M21.64 13.64A9 9 0 1112.36 2.36 7 7 0 0021.64 13.64z" fill="currentColor"/>
+      </svg> Modo Claro`;
     } else {
-      updateToggleButton(false);
+      toggleBtn.classList.remove('dark');
+      toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" style="transform: rotate(0deg); transition: transform 0.6s;">
+        <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg> Modo Escuro`;
     }
+  }
 
-    toggleBtn.addEventListener('click', () => {
-      body.classList.toggle('dark');
-      const isDark = body.classList.contains('dark');
-      updateToggleButton(isDark);
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    });
-  </script>
+  // Aplica tema salvo ou padrão (dark = fundo claro)
+  const savedTheme = localStorage.getItem('theme');
+  if(savedTheme === 'dark') {
+    body.classList.add('dark');
+    updateToggleButton(true);
+  } else {
+    updateToggleButton(false);
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    body.classList.toggle('dark');
+    const isDark = body.classList.contains('dark');
+    updateToggleButton(isDark);
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+</script>
+
 </body>
 </html>
