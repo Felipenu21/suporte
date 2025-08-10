@@ -7,42 +7,53 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --bg-dark: #121212;
-    --bg-card: #1e1e1e;
-    --text-light: #e0e0e0;
+    --bg-light: #f5f5f5;
+    --text-dark: #222222;
     --primary-color: #2196f3;
     --primary-hover: #1565c0;
     --shadow-dark: rgba(0, 0, 0, 0.7);
-    --transition-speed: 0.35s;
-    --code-bg: #2a2a2a;
-    --code-border: #444;
-    --table-header-bg: #272727;
-    --table-row-bg: #1f1f1f;
+
+    --bg-dark: #121212;
+    --bg-card-dark: #1e1e1e;
+    --text-light: #e0e0e0;
+    --code-bg-dark: #2a2a2a;
+    --code-border-dark: #444;
+    --table-header-bg-dark: #272727;
+    --table-row-bg-dark: #1f1f1f;
   }
+
   *, *::before, *::after {
     box-sizing: border-box;
   }
+
   body {
     margin: 0;
     font-family: 'Inter', sans-serif;
-    background-color: var(--bg-dark);
-    color: var(--text-light);
+    background-color: var(--bg-light);
+    color: var(--text-dark);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     opacity: 0;
-    animation: fadeIn var(--transition-speed) ease forwards;
-    transition: background-color var(--transition-speed), color var(--transition-speed);
+    animation: fadeIn 0.35s ease forwards;
+    transition: background-color 0.35s, color 0.35s;
     padding-bottom: 3rem;
   }
+
+  body.dark {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+  }
+
   @keyframes fadeIn {
     to { opacity: 1; }
   }
+
   header {
     position: sticky;
     top: 0;
-    background-color: #1a1a1a;
-    color: var(--text-light);
+    background-color: #e0e0e0;
+    color: var(--text-dark);
     padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
@@ -50,7 +61,14 @@
     flex-wrap: wrap;
     box-shadow: 0 0 12px var(--shadow-dark);
     z-index: 1000;
+    transition: background-color 0.35s, color 0.35s;
   }
+
+  body.dark header {
+    background-color: #1a1a1a;
+    color: var(--text-light);
+  }
+
   header h1 {
     margin: 0;
     font-size: 1.8rem;
@@ -58,6 +76,7 @@
     font-weight: 700;
     user-select: none;
   }
+
   nav {
     flex: 2 1 500px;
     display: flex;
@@ -67,8 +86,9 @@
     align-items: center;
     user-select: none;
   }
+
   nav a {
-    color: var(--text-light);
+    color: var(--text-dark);
     text-decoration: none;
     font-weight: 600;
     padding: 0.5rem 0.9rem;
@@ -76,6 +96,11 @@
     transition: background-color 0.3s, color 0.3s, transform 0.2s;
     font-size: 1rem;
   }
+
+  body.dark nav a {
+    color: var(--text-light);
+  }
+
   nav a:hover,
   nav a:focus {
     background-color: var(--primary-hover);
@@ -84,20 +109,22 @@
     box-shadow: 0 0 12px var(--primary-hover);
     outline: none;
   }
+
   nav a[aria-current="page"] {
     text-decoration: underline;
     font-weight: 700;
     color: var(--primary-color);
   }
+
   button#toggle-theme {
     background: transparent;
-    border: 2px solid var(--text-light);
-    color: var(--text-light);
+    border: 2px solid var(--text-dark);
+    color: var(--text-dark);
     font-weight: 700;
     padding: 0.35rem 1rem;
     cursor: pointer;
     border-radius: 6px;
-    transition: background-color var(--transition-speed), color var(--transition-speed), transform 0.25s;
+    transition: background-color 0.35s, color 0.35s, transform 0.25s;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -107,6 +134,12 @@
     margin-left: auto;
     will-change: transform;
   }
+
+  body.dark button#toggle-theme {
+    border-color: var(--text-light);
+    color: var(--text-light);
+  }
+
   button#toggle-theme:hover,
   button#toggle-theme:focus {
     background-color: var(--primary-hover);
@@ -115,15 +148,18 @@
     box-shadow: 0 0 15px var(--primary-hover);
     outline: none;
   }
+
   button#toggle-theme svg {
     fill: currentColor;
     width: 20px;
     height: 20px;
     transition: transform 0.4s ease;
   }
+
   button#toggle-theme.dark svg {
     transform: rotate(40deg);
   }
+
   main {
     padding: 2rem 2rem 5rem;
     max-width: 900px;
@@ -131,7 +167,9 @@
     user-select: text;
     line-height: 1.6;
     font-size: 1rem;
+    transition: background-color 0.35s, color 0.35s;
   }
+
   main h2, main h3 {
     color: var(--primary-color);
     margin-top: 2.5rem;
@@ -140,33 +178,49 @@
     user-select: text;
     scroll-margin-top: 70px;
   }
+
   main p {
     margin-bottom: 1rem;
+    color: #555;
+  }
+
+  body.dark main p {
     color: #ccc;
   }
+
   code, pre {
     font-family: 'Source Code Pro', monospace, monospace;
-    background-color: var(--code-bg);
-    border: 1px solid var(--code-border);
+    background-color: var(--code-bg-dark);
+    border: 1px solid var(--code-border-dark);
     border-radius: 6px;
     padding: 0.3rem 0.5rem;
     font-size: 0.95rem;
     user-select: text;
+    color: #eee;
+    transition: background-color 0.35s, color 0.35s;
   }
+
   pre {
     padding: 1rem;
     overflow-x: auto;
     margin-bottom: 1.5rem;
     line-height: 1.4;
   }
+
   ul {
     padding-left: 1.3rem;
     margin-bottom: 1rem;
-    color: #ddd;
+    color: #444;
   }
+
+  body.dark ul {
+    color: #bbb;
+  }
+
   ul li {
     margin-bottom: 0.4rem;
   }
+
   a.button-back {
     display: inline-block;
     margin-top: 3rem;
@@ -179,11 +233,13 @@
     user-select: none;
     transition: background-color 0.3s ease;
   }
+
   a.button-back:hover,
   a.button-back:focus {
     background-color: var(--primary-hover);
     outline: none;
   }
+
   html {
     scroll-behavior: smooth;
   }
@@ -204,11 +260,11 @@
     <a href="linux.html">Linux</a>
     <a href="wireshark.html" aria-current="page">Wireshark</a>
   </nav>
-  <button id="toggle-theme" aria-label="Alternar tema claro/escuro" title="Alternar tema claro/escuro" type="button">
+  <button id="toggle-theme" aria-label="Alternar tema claro/escuro" title="Alternar tema claro/escuro" type="button" aria-pressed="false">
     <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
       <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
     </svg>
-    Modo Claro
+    Modo Escuro
   </button>
 </header>
 
@@ -273,20 +329,21 @@ sudo tshark -Y "http.request"    # Filtrar pacotes HTTP na leitura</code></pre>
 
   function updateToggleButton(isDark) {
     if(isDark) {
-      toggleBtn.textContent = '';
       toggleBtn.classList.add('dark');
+      toggleBtn.setAttribute('aria-pressed', 'true');
       toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </svg> Modo Claro`;
     } else {
-      toggleBtn.textContent = '';
       toggleBtn.classList.remove('dark');
+      toggleBtn.setAttribute('aria-pressed', 'false');
       toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </svg> Modo Escuro`;
     }
   }
 
+  // Aplica o tema salvo no localStorage
   const savedTheme = localStorage.getItem('theme');
   if(savedTheme === 'dark') {
     body.classList.add('dark');
