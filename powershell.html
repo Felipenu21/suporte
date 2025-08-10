@@ -298,6 +298,96 @@
         display: none !important;
       }
     }
+
+    /* Modo claro */
+    body.dark {
+      --bg-dark: #f5f7fa;
+      --bg-card: #ffffff;
+      --text-light: #222222;
+      --primary-color: #0066cc;
+      --primary-hover: #004a99;
+      --shadow-dark: rgba(0, 0, 0, 0.15);
+      --code-bg: #e8e8e8;
+      --code-border: #ccc;
+      --table-header-bg: #dcdcdc;
+      --table-row-bg: #f0f0f0;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+    }
+
+    body.dark header {
+      background-color: var(--bg-card);
+      color: var(--text-light);
+      box-shadow: 0 0 12px var(--shadow-dark);
+    }
+
+    body.dark nav a {
+      color: var(--text-light);
+    }
+
+    body.dark nav a:hover,
+    body.dark nav a:focus {
+      background-color: var(--primary-hover);
+      color: white;
+      box-shadow: 0 0 12px var(--primary-hover);
+    }
+
+    body.dark button#toggle-theme {
+      border-color: var(--text-light);
+      color: var(--text-light);
+    }
+
+    body.dark button#toggle-theme:hover,
+    body.dark button#toggle-theme:focus {
+      background-color: var(--primary-hover);
+      color: white;
+      box-shadow: 0 0 15px var(--primary-hover);
+    }
+
+    body.dark main {
+      background-color: var(--bg-card);
+      color: var(--text-light);
+    }
+
+    body.dark table th {
+      background-color: var(--table-header-bg);
+      color: var(--text-light);
+    }
+
+    body.dark table tr:nth-child(even) {
+      background-color: var(--table-row-bg);
+    }
+
+    body.dark code, body.dark pre {
+      background-color: var(--code-bg);
+      border-color: var(--code-border);
+      color: var(--text-light);
+    }
+
+    body.dark aside#toc {
+      background-color: var(--bg-card);
+      box-shadow: 0 4px 12px var(--shadow-dark);
+      color: var(--text-light);
+    }
+
+    body.dark aside#toc ul li a {
+      color: var(--text-light);
+    }
+
+    body.dark aside#toc ul li a:hover,
+    body.dark aside#toc ul li a:focus {
+      color: var(--primary-hover);
+    }
+
+    body.dark a.button-back {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    body.dark a.button-back:hover,
+    body.dark a.button-back:focus {
+      background-color: var(--primary-hover);
+    }
   </style>
 </head>
 <body>
@@ -434,140 +524,83 @@ Restart-Service bits</pre></td>
     </table>
 
     <h2 id="scripts">Scripts PowerShell</h2>
-    <p>Automatize tarefas com scripts (<code>.ps1</code>). Veja exemplos e estrutura básica:</p>
+    <p>Automatize tarefas com scripts (<code>.ps1</code>). Veja exemplos e estrutura básica.</p>
 
-    <h3>Exemplo básico</h3>
-    <pre><code># Lista processos com CPU > 50
-$processos = Get-Process | Where-Object { $_.CPU -gt 50 }
-foreach ($proc in $processos) {
-  Write-Output "Processo: $($proc.Name) - CPU: $($proc.CPU)"
-}</code></pre>
+    <pre><code># Exemplo de script básico
+Write-Output "Olá, Mundo!"
+Get-Process | Where-Object { $_.CPU -gt 100 } | Sort-Object CPU -Descending</code></pre>
 
-    <h3>Executar script</h3>
-    <p>Execute via PowerShell:</p>
-    <pre><code>.\script.ps1</code></pre>
-    <p>Se houver erro, ajuste política de execução:</p>
-    <pre><code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</code></pre>
-
-    <h3>Parâmetros em scripts</h3>
-    <pre><code>param (
-  [string]$Nome = "Usuário",
-  [int]$Idade = 18
-)
-
-Write-Output "Nome: $Nome"
-Write-Output "Idade: $Idade"</code></pre>
-
-    <h2 id="sintaxes">Sintaxes e Flags Importantes</h2>
-    <p>Parâmetros comuns que modificam o comportamento dos comandos.</p>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Flag</th>
-          <th>Descrição</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td><code>-Recurse</code></td><td>Processa itens recursivamente (subpastas).</td></tr>
-        <tr><td><code>-Force</code></td><td>Força a execução mesmo com restrições.</td></tr>
-        <tr><td><code>-WhatIf</code></td><td>Simula o comando sem executar (teste).</td></tr>
-        <tr><td><code>-Confirm</code></td><td>Pede confirmação antes de executar.</td></tr>
-        <tr><td><code>-ErrorAction</code></td><td>Define ação em caso de erro (ex: SilentlyContinue).</td></tr>
-        <tr><td><code>-Verbose</code></td><td>Mostra detalhes da execução.</td></tr>
-      </tbody>
-    </table>
-
-    <h3>Exemplo de uso com flags</h3>
-    <pre><code>Remove-Item C:\Temp\* -Recurse -Force -WhatIf</code></pre>
-    <p>Simula remoção de tudo em <code>C:\Temp</code>, incluindo subpastas, forçando a ação, mas sem excluir realmente.</p>
-
-    <h2 id="exemplos">Exemplos Práticos</h2>
-
+    <h2 id="sintaxes">Sintaxes e Flags</h2>
+    <p>Parâmetros comuns para comandos PowerShell:</p>
     <ul>
-      <li><strong>Listar usuários locais:</strong> <code>Get-LocalUser</code></li>
-      <li><strong>Ver espaço em disco:</strong> <code>Get-PSDrive -PSProvider FileSystem</code></li>
-      <li><strong>Parar processo pelo nome:</strong> <code>Stop-Process -Name "notepad"</code></li>
-      <li><strong>Exportar processos para CSV:</strong> <code>Get-Process | Export-Csv -Path processos.csv -NoTypeInformation</code></li>
-      <li><strong>Agendar tarefa diária simples:</strong> <code>Register-ScheduledTask -TaskName "BackupDiario" -Trigger (New-ScheduledTaskTrigger -Daily -At 3am) -Action (New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-File C:\Scripts\backup.ps1")</code></li>
+      <li><code>-Verbose</code>: Mostra detalhes da execução.</li>
+      <li><code>-Force</code>: Força a execução ignorando restrições.</li>
+      <li><code>-Recurse</code>: Aplica comandos em subdiretórios.</li>
+      <li><code>-WhatIf</code>: Simula a execução, sem alterações.</li>
+      <li><code>-Confirm</code>: Solicita confirmação antes de agir.</li>
     </ul>
 
+    <h2 id="exemplos">Exemplos Práticos</h2>
+    <p>Alguns exemplos úteis para suporte técnico:</p>
+
+    <pre><code># Listar processos que usam muita CPU
+Get-Process | Where-Object { $_.CPU -gt 50 }
+
+# Parar um processo pelo nome
+Stop-Process -Name "notepad" -Force
+
+# Obter informações do sistema
+Get-ComputerInfo
+
+# Verificar espaço em disco
+Get-PSDrive -PSProvider FileSystem
+
+# Listar serviços que estão parados
+Get-Service | Where-Object { $_.Status -eq "Stopped" }</code></pre>
+
     <h2 id="suporte">Scripts Úteis para Suporte Técnico</h2>
-    <p>Scripts que facilitam tarefas comuns de suporte técnico e administração de máquinas Windows.</p>
+    <p>Exemplos para diagnosticar e solucionar problemas comuns:</p>
 
-    <h3>1. Backup simples de uma pasta</h3>
-    <pre><code># Faz backup da pasta Documentos para D:\Backup\Documentos
-$origem = "C:\Users\$env:USERNAME\Documents"
-$destino = "D:\Backup\DocumentsBackup_$(Get-Date -Format yyyyMMddHHmmss)"
-Copy-Item -Path $origem -Destination $destino -Recurse -Force
-Write-Output "Backup concluído em $destino"</code></pre>
+    <pre><code># Checar o status da rede
+Test-Connection google.com -Count 4
 
-    <h3>2. Verificar status de serviços essenciais</h3>
-    <pre><code>$servicos = @("wuauserv", "Spooler", "bits")
-foreach ($servico in $servicos) {
-  $status = Get-Service -Name $servico
-  Write-Output "$($status.DisplayName): $($status.Status)"
-}</code></pre>
+# Reiniciar serviço de rede
+Restart-Service -Name "dhcp"
 
-    <h3>3. Limpar arquivos temporários do usuário</h3>
-    <pre><code>$temp = "$env:LOCALAPPDATA\Temp\*"
-Remove-Item -Path $temp -Recurse -Force -ErrorAction SilentlyContinue
-Write-Output "Arquivos temporários removidos."</code></pre>
+# Verificar logs de eventos recentes
+Get-EventLog -LogName System -Newest 20
 
-    <h3>4. Monitorar uso de CPU e memória em tempo real</h3>
-    <pre><code>while ($true) {
-  $cpu = (Get-Counter '\Processor(_Total)\% Processor Time').CounterSamples[0].CookedValue
-  $mem = (Get-Counter '\Memory\Available MBytes').CounterSamples[0].CookedValue
-  Clear-Host
-  Write-Output ("Uso CPU: {0:N2}%" -f $cpu)
-  Write-Output ("Memória disponível: {0:N0} MB" -f $mem)
-  Start-Sleep -Seconds 3
-}</code></pre>
-
-    <h3>5. Reiniciar um serviço específico</h3>
-    <pre><code>$servico = "Spooler"
-Restart-Service -Name $servico -Force
-Write-Output "Serviço $servico reiniciado."</code></pre>
+# Limpar cache DNS
+Clear-DnsClientCache</code></pre>
 
     <h2 id="conclusao">Conclusão</h2>
-    <p>PowerShell é uma ferramenta essencial para suporte e administração Windows, combinando comandos básicos e avançados, scripts flexíveis e flags úteis para tarefas do dia a dia e automação avançada.</p>
+    <p>PowerShell é indispensável para administradores e suporte técnico. Com prática, você poderá automatizar tarefas repetitivas e ganhar agilidade nas suas rotinas.</p>
 
-    <a href="index.html" class="button-back" aria-label="Voltar para a página inicial">← Voltar para Início</a>
+    <a href="index.html" class="button-back">Voltar ao Início</a>
   </main>
 
   <script>
     const toggleBtn = document.getElementById('toggle-theme');
     const body = document.body;
 
-    function updateToggleButton(isDark) {
-      if(isDark) {
-        toggleBtn.textContent = '';
-        toggleBtn.classList.add('dark');
-        toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg> Modo Claro`;
-      } else {
-        toggleBtn.textContent = '';
-        toggleBtn.classList.remove('dark');
-        toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg> Modo Escuro`;
-      }
-    }
-
-    const savedTheme = localStorage.getItem('theme');
-    if(savedTheme === 'dark') {
+    // Ao carregar, checa se tem preferência salva no localStorage
+    if(localStorage.getItem('theme') === 'light'){
       body.classList.add('dark');
-      updateToggleButton(true);
-    } else {
-      updateToggleButton(false);
+      toggleBtn.textContent = 'Modo Escuro';
+      toggleBtn.classList.add('dark');
     }
 
     toggleBtn.addEventListener('click', () => {
       body.classList.toggle('dark');
-      const isDark = body.classList.contains('dark');
-      updateToggleButton(isDark);
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      if(body.classList.contains('dark')){
+        toggleBtn.textContent = 'Modo Escuro';
+        toggleBtn.classList.add('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        toggleBtn.textContent = 'Modo Claro';
+        toggleBtn.classList.remove('dark');
+        localStorage.setItem('theme', 'dark');
+      }
     });
   </script>
 </body>
