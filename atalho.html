@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Atalhos Windows - Portal Suporte Técnico</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg-dark: #121212;
+    --bg-card: #1e1e1e;
+    --text-light: #e0e0e0;
+    --primary-color: #4caf50;
+    --primary-hover: #388e3c;
+    --shadow-dark: rgba(0, 0, 0, 0.7);
+    --transition-speed: 0.35s;
+    --code-bg: #2a2a2a;
+    --code-border: #444;
+    --table-header-bg: #272727;
+    --table-row-bg: #1f1f1f;
+  }
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    animation: fadeIn var(--transition-speed) ease forwards;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+    padding-bottom: 3rem;
+  }
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+  header {
+    position: sticky;
+    top: 0;
+    background-color: #1a1a1a;
+    color: var(--text-light);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    box-shadow: 0 0 12px var(--shadow-dark);
+    z-index: 1000;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    flex: 1 0 200px;
+    font-weight: 700;
+    user-select: none;
+  }
+  nav {
+    flex: 2 1 500px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+    user-select: none;
+  }
+  nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.5rem 0.9rem;
+    border-radius: 6px;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    font-size: 1rem;
+  }
+  nav a:hover,
+  nav a:focus {
+    background-color: var(--primary-hover);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 0 12px var(--primary-hover);
+    outline: none;
+  }
+  nav a[aria-current="page"] {
+    text-decoration: underline;
+    font-weight: 700;
+    color: var(--primary-color);
+  }
+  button#toggle-theme {
+    background: transparent;
+    border: 2px solid var(--text-light);
+    color: var(--text-light);
+    font-weight: 700;
+    padding: 0.35rem 1rem;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color var(--transition-speed), color var(--transition-speed), transform 0.25s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    user-select: none;
+    flex: 0 0 auto;
+    margin-left: auto;
+    will-change: transform;
+  }
+  button#toggle-theme:hover,
+  button#toggle-theme:focus {
+    background-color: var(--primary-hover);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px var(--primary-hover);
+    outline: none;
+  }
+  button#toggle-theme svg {
+    fill: currentColor;
+    width: 20px;
+    height: 20px;
+    transition: transform 0.4s ease;
+  }
+  button#toggle-theme.dark svg {
+    transform: rotate(40deg);
+  }
+  main {
+    padding: 2rem 2rem 5rem;
+    max-width: 900px;
+    margin: 2rem auto;
+    user-select: text;
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+  main h2, main h3 {
+    color: var(--primary-color);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    user-select: text;
+    scroll-margin-top: 70px;
+  }
+  main p {
+    margin-bottom: 1rem;
+    color: #ccc;
+  }
+  code, pre {
+    font-family: 'Source Code Pro', monospace, monospace;
+    background-color: var(--code-bg);
+    border: 1px solid var(--code-border);
+    border-radius: 6px;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.95rem;
+    user-select: text;
+  }
+  pre {
+    padding: 1rem;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+  }
+  ul {
+    padding-left: 1.3rem;
+    margin-bottom: 1rem;
+    color: #ddd;
+  }
+  ul li {
+    margin-bottom: 0.4rem;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 2rem;
+    color: #ddd;
+  }
+  th, td {
+    border: 1px solid var(--code-border);
+    padding: 0.8rem 1rem;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background-color: var(--table-header-bg);
+    font-weight: 700;
+  }
+  tr:nth-child(even) {
+    background-color: var(--table-row-bg);
+  }
+  a.button-back {
+    display: inline-block;
+    margin-top: 3rem;
+    padding: 0.7rem 1.4rem;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    user-select: none;
+    transition: background-color 0.3s ease;
+  }
+  a.button-back:hover,
+  a.button-back:focus {
+    background-color: var(--primary-hover);
+    outline: none;
+  }
+  /* Scroll suave para ancoras */
+  html {
+    scroll-behavior: smooth;
+  }
+  aside#toc {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    max-width: 220px;
+    background-color: var(--bg-card);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    box-shadow: 0 4px 12px var(--shadow-dark);
+    user-select: none;
+    font-size: 0.9rem;
+    display: none;
+  }
+  aside#toc h4 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+    font-weight: 700;
+  }
+  aside#toc ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  aside#toc ul li {
+    margin-bottom: 0.5rem;
+  }
+  aside#toc ul li a {
+    color: var(--text-light);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  aside#toc ul li a:hover,
+  aside#toc ul li a:focus {
+    color: var(--primary-hover);
+    outline: none;
+  }
+  @media (min-width: 640px) {
+    aside#toc {
+      display: block;
+    }
+    main {
+      margin-right: 270px;
+    }
+  }
+  @media (max-width: 639px) {
+    aside#toc {
+      display: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Atalhos do Windows - Portal Suporte Técnico</h1>
+  <nav>
+    <a href="index.html">Página Inicial</a>
+    <a href="powershell.html">PowerShell</a>
+    <a href="cmd.html">CMD</a>
+    <a href="redes.html">Redes</a>
+    <a href="atalho.html" aria-current="page">Atalhos</a>
+    <a href="sintaxes.html">Sintaxes</a>
+    <a href="executar.html">Executar</a>
+    <a href="nmap.html">Nmap</a>
+    <a href="linux.html">Linux</a>
+    <a href="wireshark.html">Wireshark</a>
+  </nav>
+  <button id="toggle-theme" aria-label="Alternar tema claro/escuro" title="Alternar tema claro/escuro" type="button">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    Modo Claro
+  </button>
+</header>
+
+<aside id="toc" aria-label="Índice do conteúdo">
+  <h4>Conteúdo</h4>
+  <ul>
+    <li><a href="#gerais">Atalhos Gerais</a></li>
+    <li><a href="#explorador">Atalhos do Explorador de Arquivos</a></li>
+    <li><a href="#windows">Atalhos da Tecla Windows</a></li>
+    <li><a href="#multitarefa">Atalhos de Multitarefas</a></li>
+    <li><a href="#acessibilidade">Atalhos de Acessibilidade</a></li>
+    <li><a href="#dicas">Dicas Práticas</a></li>
+  </ul>
+</aside>
+
+<main>
+  <h2 id="gerais">Atalhos Gerais</h2>
+  <table>
+    <thead>
+      <tr><th>Atalho</th><th>Descrição</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>Ctrl + C</code></td><td>Copiar item selecionado</td></tr>
+      <tr><td><code>Ctrl + X</code></td><td>Cortar item selecionado</td></tr>
+      <tr><td><code>Ctrl + V</code></td><td>Colar item copiado/cortado</td></tr>
+      <tr><td><code>Ctrl + Z</code></td><td>Desfazer ação</td></tr>
+      <tr><td><code>Ctrl + Y</code></td><td>Refazer ação</td></tr>
+      <tr><td><code>Ctrl + A</code></td><td>Selecionar tudo</td></tr>
+      <tr><td><code>Alt + Tab</code></td><td>Alternar entre janelas abertas</td></tr>
+      <tr><td><code>Alt + F4</code></td><td>Fechar janela ativa</td></tr>
+      <tr><td><code>F2</code></td><td>Renomear arquivo ou pasta selecionada</td></tr>
+      <tr><td><code>Ctrl + Shift + Esc</code></td><td>Abrir Gerenciador de Tarefas</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="explorador">Atalhos do Explorador de Arquivos</h2>
+  <table>
+    <thead>
+      <tr><th>Atalho</th><th>Descrição</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>Win + E</code></td><td>Abrir o Explorador de Arquivos</td></tr>
+      <tr><td><code>Alt + D</code></td><td>Selecionar barra de endereço</td></tr>
+      <tr><td><code>Ctrl + N</code></td><td>Abrir nova janela do Explorador</td></tr>
+      <tr><td><code>Ctrl + Shift + N</code></td><td>Criar nova pasta</td></tr>
+      <tr><td><code>Alt + Enter</code></td><td>Exibir propriedades do item selecionado</td></tr>
+      <tr><td><code>F5</code></td><td>Atualizar janela</td></tr>
+      <tr><td><code>Backspace</code></td><td>Voltar para pasta anterior</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="windows">Atalhos da Tecla Windows</h2>
+  <table>
+    <thead>
+      <tr><th>Atalho</th><th>Descrição</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>Win</code></td><td>Abrir/fechar menu Iniciar</td></tr>
+      <tr><td><code>Win + L</code></td><td>Bloquear computador</td></tr>
+      <tr><td><code>Win + D</code></td><td>Mostrar área de trabalho</td></tr>
+      <tr><td><code>Win + R</code></td><td>Abrir Executar</td></tr>
+      <tr><td><code>Win + I</code></td><td>Abrir Configurações do Windows</td></tr>
+      <tr><td><code>Win + S</code></td><td>Abrir pesquisa</td></tr>
+      <tr><td><code>Win + E</code></td><td>Abrir Explorador de Arquivos</td></tr>
+      <tr><td><code>Win + Tab</code></td><td>Abrir Visão de Tarefas</td></tr>
+      <tr><td><code>Win + Ctrl + D</code></td><td>Criar nova área de trabalho virtual</td></tr>
+      <tr><td><code>Win + Ctrl + F4</code></td><td>Fechar área de trabalho virtual atual</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="multitarefa">Atalhos de Multitarefas</h2>
+  <table>
+    <thead>
+      <tr><th>Atalho</th><th>Descrição</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>Win + Setas Direita/Esquerda</code></td><td>Anexar janela à metade direita ou esquerda da tela</td></tr>
+      <tr><td><code>Win + Setas Cima/Baixo</code></td><td>Maximizar ou minimizar janela</td></tr>
+      <tr><td><code>Win + Ctrl + Setas Direita/Esquerda</code></td><td>Navegar entre áreas de trabalho virtuais</td></tr>
+      <tr><td><code>Alt + Esc</code></td><td>Alternar entre janelas na ordem em que foram abertas</td></tr>
+      <tr><td><code>Ctrl + Alt + Del</code></td><td>Abrir opções de segurança (bloquear, trocar usuário, gerenciador)</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="acessibilidade">Atalhos de Acessibilidade</h2>
+  <table>
+    <thead>
+      <tr><th>Atalho</th><th>Descrição</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>Win + U</code></td><td>Abrir Central de Acessibilidade</td></tr>
+      <tr><td><code>Win + +</code></td><td>Ativar Zoom (Lupa)</td></tr>
+      <tr><td><code>Win + -</code></td><td>Diminuir Zoom</td></tr>
+      <tr><td><code>Win + Esc</code></td><td>Fechar Zoom</td></tr>
+      <tr><td><code>Shift + Alt + Print Screen</code></td><td>Ativar/Desativar Alto Contraste</td></tr>
+      <tr><td><code>Win + Enter</code></td><td>Abrir Narrador (Leitor de tela)</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="dicas">Dicas Práticas</h2>
+  <ul>
+    <li><strong>Personalize seus atalhos:</strong> Você pode criar atalhos personalizados para programas e pastas clicando com o botão direito no atalho e escolhendo "Propriedades" &gt; "Atalho".</li>
+    <li><strong>Use o atalho <code>Win + X</code>:</strong> Abre o menu rápido com acesso rápido a configurações e ferramentas importantes, como o Gerenciador de Dispositivos e o Prompt de Comando.</li>
+    <li><strong>Atalhos para navegação rápida:</strong> Use <code>Alt + Tab</code> para alternar entre janelas e <code>Win + Tab</code> para visualizar todas as janelas abertas e áreas de trabalho virtuais.</li>
+    <li><strong>Captura de tela:</strong> Pressione <code>Win + Shift + S</code> para abrir a ferramenta de captura e selecionar área da tela para copiar.</li>
+  </ul>
+
+  <a href="index.html" class="button-back" aria-label="Voltar para a página inicial">← Voltar para Início</a>
+</main>
+
+<script>
+  const toggleBtn = document.getElementById('toggle-theme');
+  const body = document.body;
+
+  function updateToggleButton(isDark) {
+    if(isDark) {
+      toggleBtn.textContent = '';
+      toggleBtn.classList.add('dark');
+      toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg> Modo Claro`;
+    } else {
+      toggleBtn.textContent = '';
+      toggleBtn.classList.remove('dark');
+      toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg> Modo Escuro`;
+    }
+  }
+
+  const savedTheme = localStorage.getItem('theme');
+  if(savedTheme === 'dark') {
+    body.classList.add('dark');
+    updateToggleButton(true);
+  } else {
+    updateToggleButton(false);
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    body.classList.toggle('dark');
+    const isDark = body.classList.contains('dark');
+    updateToggleButton(isDark);
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+</script>
+</body>
+</html>

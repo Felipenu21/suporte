@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PowerShell - Portal Suporte Técnico</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-dark: #121212;
+      --bg-card: #1e1e1e;
+      --text-light: #e0e0e0;
+      --primary-color: #3399ff;
+      --primary-hover: #1a73e8;
+      --shadow-dark: rgba(0, 0, 0, 0.7);
+      --transition-speed: 0.35s;
+      --code-bg: #2a2a2a;
+      --code-border: #444;
+      --table-header-bg: #272727;
+      --table-row-bg: #1f1f1f;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      animation: fadeIn var(--transition-speed) ease forwards;
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      padding-bottom: 3rem;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      background-color: #1a1a1a;
+      color: var(--text-light);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      box-shadow: 0 0 12px var(--shadow-dark);
+      z-index: 1000;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      flex: 1 0 200px;
+      font-weight: 700;
+      user-select: none;
+    }
+
+    nav {
+      flex: 2 1 500px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      align-items: center;
+      user-select: none;
+    }
+
+    nav a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.5rem 0.9rem;
+      border-radius: 6px;
+      transition: background-color 0.3s, color 0.3s, transform 0.2s;
+      font-size: 1rem;
+    }
+
+    nav a:hover,
+    nav a:focus {
+      background-color: var(--primary-hover);
+      color: white;
+      transform: scale(1.05);
+      box-shadow: 0 0 12px var(--primary-hover);
+      outline: none;
+    }
+
+    nav a:first-child {
+      font-weight: 700;
+      margin-right: 2rem;
+      text-decoration: underline;
+    }
+
+    button#toggle-theme {
+      background: transparent;
+      border: 2px solid var(--text-light);
+      color: var(--text-light);
+      font-weight: 700;
+      padding: 0.35rem 1rem;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: background-color var(--transition-speed), color var(--transition-speed), transform 0.25s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+      user-select: none;
+      flex: 0 0 auto;
+      margin-left: auto;
+      will-change: transform;
+    }
+
+    button#toggle-theme:hover,
+    button#toggle-theme:focus {
+      background-color: var(--primary-hover);
+      color: white;
+      transform: scale(1.1);
+      box-shadow: 0 0 15px var(--primary-hover);
+      outline: none;
+    }
+
+    button#toggle-theme svg {
+      fill: currentColor;
+      width: 20px;
+      height: 20px;
+      transition: transform 0.4s ease;
+    }
+
+    button#toggle-theme.dark svg {
+      transform: rotate(40deg);
+    }
+
+    main {
+      padding: 2rem 2rem 5rem;
+      max-width: 900px;
+      margin: 2rem auto;
+      user-select: text;
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    main h2, main h3 {
+      color: var(--primary-color);
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      user-select: text;
+      scroll-margin-top: 70px;
+    }
+
+    main p {
+      margin-bottom: 1rem;
+      color: #ccc;
+    }
+
+    code, pre {
+      font-family: 'Source Code Pro', monospace, monospace;
+      background-color: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 6px;
+      padding: 0.3rem 0.5rem;
+      font-size: 0.95rem;
+      user-select: text;
+    }
+
+    pre {
+      padding: 1rem;
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+      line-height: 1.4;
+    }
+
+    ul {
+      padding-left: 1.3rem;
+      margin-bottom: 1rem;
+      color: #ddd;
+    }
+
+    ul li {
+      margin-bottom: 0.4rem;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 2rem;
+      color: #ddd;
+    }
+
+    th, td {
+      border: 1px solid var(--code-border);
+      padding: 0.8rem 1rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background-color: var(--table-header-bg);
+      font-weight: 700;
+    }
+
+    tr:nth-child(even) {
+      background-color: var(--table-row-bg);
+    }
+
+    a.button-back {
+      display: inline-block;
+      margin-top: 3rem;
+      padding: 0.7rem 1.4rem;
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+
+    a.button-back:hover,
+    a.button-back:focus {
+      background-color: var(--primary-hover);
+      outline: none;
+    }
+
+    /* Scroll suave para ancoras */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    aside#toc {
+      position: fixed;
+      top: 100px;
+      right: 20px;
+      max-width: 220px;
+      background-color: var(--bg-card);
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      box-shadow: 0 4px 12px var(--shadow-dark);
+      user-select: none;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    aside#toc h4 {
+      color: var(--primary-color);
+      margin-top: 0;
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+    }
+
+    aside#toc ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    aside#toc ul li {
+      margin-bottom: 0.5rem;
+    }
+
+    aside#toc ul li a {
+      color: var(--text-light);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    aside#toc ul li a:hover,
+    aside#toc ul li a:focus {
+      color: var(--primary-hover);
+      outline: none;
+    }
+
+    @media (min-width: 1000px) {
+      aside#toc {
+        display: block;
+      }
+      main {
+        margin-right: 270px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      main {
+        padding: 1rem 1rem 4rem;
+        margin: 1rem auto;
+        max-width: 95%;
+      }
+      aside#toc {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>PowerShell - Portal Suporte Técnico</h1>
+    <nav>
+      <a href="index.html">Página Inicial</a>
+      <a href="powershell.html" aria-current="page" style="text-decoration: underline; font-weight: 700;">PowerShell</a>
+      <a href="cmd.html">CMD</a>
+      <a href="redes.html">Redes</a>
+      <a href="atalho.html">Atalhos</a>
+      <a href="sintaxes.html">Sintaxes</a>
+      <a href="executar.html">Executar</a>
+      <a href="nmap.html">Nmap</a>
+      <a href="linux.html">Linux</a>
+      <a href="wireshark.html">Wireshark</a>
+    </nav>
+    <button id="toggle-theme" aria-label="Alternar tema claro/escuro" title="Alternar tema claro/escuro" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      Modo Claro
+    </button>
+  </header>
+
+  <aside id="toc" aria-label="Índice do conteúdo">
+    <h4>Conteúdo</h4>
+    <ul>
+      <li><a href="#basico">Comandos Básicos</a></li>
+      <li><a href="#avancado">Comandos Avançados</a></li>
+      <li><a href="#scripts">Scripts PowerShell</a></li>
+      <li><a href="#sintaxes">Sintaxes e Flags</a></li>
+      <li><a href="#exemplos">Exemplos Práticos</a></li>
+      <li><a href="#suporte">Scripts Úteis para Suporte Técnico</a></li>
+      <li><a href="#conclusao">Conclusão</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <h2 id="basico">Comandos Básicos do PowerShell</h2>
+    <p>PowerShell é uma poderosa shell e linguagem de scripts da Microsoft usada para automação e gerenciamento do sistema. Começaremos com os comandos básicos que todo iniciante deve conhecer.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Comando</th>
+          <th>Descrição</th>
+          <th>Exemplo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>Get-ChildItem</code> (ou <code>ls</code>)</td>
+          <td>Lista arquivos e pastas no diretório atual ou especificado.</td>
+          <td><pre>Get-ChildItem
+ls C:\Windows</pre></td>
+        </tr>
+        <tr>
+          <td><code>Set-Location</code> (ou <code>cd</code>)</td>
+          <td>Muda o diretório atual.</td>
+          <td><pre>Set-Location C:\Users
+cd ..
+cd "C:\Program Files"</pre></td>
+        </tr>
+        <tr>
+          <td><code>Get-Help</code></td>
+          <td>Exibe ajuda sobre um comando.</td>
+          <td><pre>Get-Help Get-ChildItem
+Get-Help Get-ChildItem -Full</pre></td>
+        </tr>
+        <tr>
+          <td><code>Get-Content</code></td>
+          <td>Mostra o conteúdo de arquivos texto.</td>
+          <td><pre>Get-Content .\arquivo.txt</pre></td>
+        </tr>
+        <tr>
+          <td><code>Copy-Item</code></td>
+          <td>Copia arquivos ou pastas.</td>
+          <td><pre>Copy-Item .\arquivo.txt D:\Backup\arquivo.txt</pre></td>
+        </tr>
+        <tr>
+          <td><code>Move-Item</code></td>
+          <td>Move arquivos ou pastas.</td>
+          <td><pre>Move-Item .\arquivo.txt D:\Backup\</pre></td>
+        </tr>
+        <tr>
+          <td><code>Remove-Item</code></td>
+          <td>Remove arquivos ou pastas.</td>
+          <td><pre>Remove-Item .\arquivo.txt</pre></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="avancado">Comandos Avançados do PowerShell</h2>
+    <p>Comandos avançados para administração, filtragem e automação.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Comando</th>
+          <th>Descrição</th>
+          <th>Exemplo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>Where-Object</code></td>
+          <td>Filtra objetos com base em uma condição.</td>
+          <td><pre>Get-Process | Where-Object { $_.CPU -gt 100 }</pre></td>
+        </tr>
+        <tr>
+          <td><code>Sort-Object</code></td>
+          <td>Ordena objetos por propriedade.</td>
+          <td><pre>Get-Service | Sort-Object Status</pre></td>
+        </tr>
+        <tr>
+          <td><code>Select-Object</code></td>
+          <td>Seleciona propriedades específicas para exibir.</td>
+          <td><pre>Get-Process | Select-Object Name, Id, CPU</pre></td>
+        </tr>
+        <tr>
+          <td><code>Invoke-Command</code></td>
+          <td>Executa comandos/scripts remotamente.</td>
+          <td><pre>Invoke-Command -ComputerName Server01 -ScriptBlock { Get-Service }</pre></td>
+        </tr>
+        <tr>
+          <td><code>Start-Service</code>, <code>Stop-Service</code>, <code>Restart-Service</code></td>
+          <td>Gerencia serviços do Windows.</td>
+          <td><pre>Start-Service spooler
+Stop-Service wuauserv
+Restart-Service bits</pre></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="scripts">Scripts PowerShell</h2>
+    <p>Automatize tarefas com scripts (<code>.ps1</code>). Veja exemplos e estrutura básica:</p>
+
+    <h3>Exemplo básico</h3>
+    <pre><code># Lista processos com CPU > 50
+$processos = Get-Process | Where-Object { $_.CPU -gt 50 }
+foreach ($proc in $processos) {
+  Write-Output "Processo: $($proc.Name) - CPU: $($proc.CPU)"
+}</code></pre>
+
+    <h3>Executar script</h3>
+    <p>Execute via PowerShell:</p>
+    <pre><code>.\script.ps1</code></pre>
+    <p>Se houver erro, ajuste política de execução:</p>
+    <pre><code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser</code></pre>
+
+    <h3>Parâmetros em scripts</h3>
+    <pre><code>param (
+  [string]$Nome = "Usuário",
+  [int]$Idade = 18
+)
+
+Write-Output "Nome: $Nome"
+Write-Output "Idade: $Idade"</code></pre>
+
+    <h2 id="sintaxes">Sintaxes e Flags Importantes</h2>
+    <p>Parâmetros comuns que modificam o comportamento dos comandos.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Flag</th>
+          <th>Descrição</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>-Recurse</code></td><td>Processa itens recursivamente (subpastas).</td></tr>
+        <tr><td><code>-Force</code></td><td>Força a execução mesmo com restrições.</td></tr>
+        <tr><td><code>-WhatIf</code></td><td>Simula o comando sem executar (teste).</td></tr>
+        <tr><td><code>-Confirm</code></td><td>Pede confirmação antes de executar.</td></tr>
+        <tr><td><code>-ErrorAction</code></td><td>Define ação em caso de erro (ex: SilentlyContinue).</td></tr>
+        <tr><td><code>-Verbose</code></td><td>Mostra detalhes da execução.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Exemplo de uso com flags</h3>
+    <pre><code>Remove-Item C:\Temp\* -Recurse -Force -WhatIf</code></pre>
+    <p>Simula remoção de tudo em <code>C:\Temp</code>, incluindo subpastas, forçando a ação, mas sem excluir realmente.</p>
+
+    <h2 id="exemplos">Exemplos Práticos</h2>
+
+    <ul>
+      <li><strong>Listar usuários locais:</strong> <code>Get-LocalUser</code></li>
+      <li><strong>Ver espaço em disco:</strong> <code>Get-PSDrive -PSProvider FileSystem</code></li>
+      <li><strong>Parar processo pelo nome:</strong> <code>Stop-Process -Name "notepad"</code></li>
+      <li><strong>Exportar processos para CSV:</strong> <code>Get-Process | Export-Csv -Path processos.csv -NoTypeInformation</code></li>
+      <li><strong>Agendar tarefa diária simples:</strong> <code>Register-ScheduledTask -TaskName "BackupDiario" -Trigger (New-ScheduledTaskTrigger -Daily -At 3am) -Action (New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-File C:\Scripts\backup.ps1")</code></li>
+    </ul>
+
+    <h2 id="suporte">Scripts Úteis para Suporte Técnico</h2>
+    <p>Scripts que facilitam tarefas comuns de suporte técnico e administração de máquinas Windows.</p>
+
+    <h3>1. Backup simples de uma pasta</h3>
+    <pre><code># Faz backup da pasta Documentos para D:\Backup\Documentos
+$origem = "C:\Users\$env:USERNAME\Documents"
+$destino = "D:\Backup\DocumentsBackup_$(Get-Date -Format yyyyMMddHHmmss)"
+Copy-Item -Path $origem -Destination $destino -Recurse -Force
+Write-Output "Backup concluído em $destino"</code></pre>
+
+    <h3>2. Verificar status de serviços essenciais</h3>
+    <pre><code>$servicos = @("wuauserv", "Spooler", "bits")
+foreach ($servico in $servicos) {
+  $status = Get-Service -Name $servico
+  Write-Output "$($status.DisplayName): $($status.Status)"
+}</code></pre>
+
+    <h3>3. Limpar arquivos temporários do usuário</h3>
+    <pre><code>$temp = "$env:LOCALAPPDATA\Temp\*"
+Remove-Item -Path $temp -Recurse -Force -ErrorAction SilentlyContinue
+Write-Output "Arquivos temporários removidos."</code></pre>
+
+    <h3>4. Monitorar uso de CPU e memória em tempo real</h3>
+    <pre><code>while ($true) {
+  $cpu = (Get-Counter '\Processor(_Total)\% Processor Time').CounterSamples[0].CookedValue
+  $mem = (Get-Counter '\Memory\Available MBytes').CounterSamples[0].CookedValue
+  Clear-Host
+  Write-Output ("Uso CPU: {0:N2}%" -f $cpu)
+  Write-Output ("Memória disponível: {0:N0} MB" -f $mem)
+  Start-Sleep -Seconds 3
+}</code></pre>
+
+    <h3>5. Reiniciar um serviço específico</h3>
+    <pre><code>$servico = "Spooler"
+Restart-Service -Name $servico -Force
+Write-Output "Serviço $servico reiniciado."</code></pre>
+
+    <h2 id="conclusao">Conclusão</h2>
+    <p>PowerShell é uma ferramenta essencial para suporte e administração Windows, combinando comandos básicos e avançados, scripts flexíveis e flags úteis para tarefas do dia a dia e automação avançada.</p>
+
+    <a href="index.html" class="button-back" aria-label="Voltar para a página inicial">← Voltar para Início</a>
+  </main>
+
+  <script>
+    const toggleBtn = document.getElementById('toggle-theme');
+    const body = document.body;
+
+    function updateToggleButton(isDark) {
+      if(isDark) {
+        toggleBtn.textContent = '';
+        toggleBtn.classList.add('dark');
+        toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg> Modo Claro`;
+      } else {
+        toggleBtn.textContent = '';
+        toggleBtn.classList.remove('dark');
+        toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg> Modo Escuro`;
+      }
+    }
+
+    const savedTheme = localStorage.getItem('theme');
+    if(savedTheme === 'dark') {
+      body.classList.add('dark');
+      updateToggleButton(true);
+    } else {
+      updateToggleButton(false);
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      body.classList.toggle('dark');
+      const isDark = body.classList.contains('dark');
+      updateToggleButton(isDark);
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

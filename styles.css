@@ -1,0 +1,195 @@
+/* styles.css */
+
+:root {
+  --bg-dark: #121212;
+  --bg-light: #f5f5f5;
+  --bg-card-dark: #1e1e1e;
+  --bg-card-light: #fff;
+  --text-light: #e0e0e0;
+  --text-dark: #222;
+  --primary-color: #2196f3;
+  --primary-hover: #1565c0;
+  --shadow-dark: rgba(0, 0, 0, 0.7);
+  --transition-speed: 0.35s;
+}
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+body.light {
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+}
+header {
+  position: sticky;
+  top: 0;
+  background-color: #1a1a1a;
+  color: var(--text-light);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  box-shadow: 0 0 12px var(--shadow-dark);
+  z-index: 1000;
+}
+body.light header {
+  background-color: #fff;
+  color: var(--text-dark);
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+}
+header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  user-select: none;
+}
+nav {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex: 1 1 auto;
+}
+nav a {
+  color: var(--text-light);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s;
+  font-size: 1rem;
+}
+body.light nav a {
+  color: var(--text-dark);
+}
+nav a:hover,
+nav a:focus {
+  background-color: var(--primary-hover);
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 0 12px var(--primary-hover);
+  outline: none;
+}
+nav a[aria-current="page"] {
+  text-decoration: underline;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+button#toggle-theme {
+  background: transparent;
+  border: 2px solid var(--text-light);
+  color: var(--text-light);
+  font-weight: 700;
+  padding: 0.35rem 1rem;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color var(--transition-speed), color var(--transition-speed), transform 0.25s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  user-select: none;
+}
+body.light button#toggle-theme {
+  border-color: var(--text-dark);
+  color: var(--text-dark);
+}
+button#toggle-theme:hover,
+button#toggle-theme:focus {
+  background-color: var(--primary-hover);
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 0 15px var(--primary-hover);
+  outline: none;
+}
+button#toggle-theme svg {
+  fill: currentColor;
+  width: 20px;
+  height: 20px;
+  transition: transform 0.4s ease;
+}
+button#toggle-theme.dark svg {
+  transform: rotate(40deg);
+}
+main {
+  padding: 3rem 2rem 5rem;
+  max-width: 900px;
+  margin: 0 auto;
+  user-select: text;
+  line-height: 1.6;
+}
+h2, h3 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+p {
+  margin-bottom: 1.5rem;
+  font-size: 1.05rem;
+  color: #ccc;
+}
+body.light p {
+  color: #333;
+}
+.highlight-section {
+  background-color: var(--bg-card-dark);
+  padding: 1.8rem 2rem;
+  margin-bottom: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(33, 150, 243, 0.15);
+  transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+body.light .highlight-section {
+  background-color: var(--bg-card-light);
+  box-shadow: 0 0 25px rgba(33, 150, 243, 0.2);
+}
+.highlight-section:hover {
+  box-shadow: 0 0 40px var(--primary-hover);
+  transform: translateY(-5px);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+body.light .highlight-section:hover {
+  box-shadow: 0 0 50px var(--primary-hover);
+}
+footer {
+  text-align: center;
+  padding: 1rem;
+  color: #888;
+  font-size: 0.9rem;
+}
+/* Contact icons */
+.contact-icons a {
+  color: var(--text-light);
+  transition: color 0.3s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+body.light .contact-icons a {
+  color: var(--text-dark);
+}
+.contact-icons a:hover, .contact-icons a:focus {
+  color: var(--primary-color);
+  outline: none;
+}
+.contact-icons svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+}

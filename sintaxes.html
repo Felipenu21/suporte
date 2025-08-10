@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sintaxes Comuns - Portal Suporte Técnico</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg-dark: #121212;
+    --bg-card: #1e1e1e;
+    --text-light: #e0e0e0;
+    --primary-color: #4caf50;
+    --primary-hover: #388e3c;
+    --shadow-dark: rgba(0, 0, 0, 0.7);
+    --transition-speed: 0.35s;
+    --code-bg: #2a2a2a;
+    --code-border: #444;
+    --table-header-bg: #272727;
+    --table-row-bg: #1f1f1f;
+  }
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    animation: fadeIn var(--transition-speed) ease forwards;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+    padding-bottom: 3rem;
+  }
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+  header {
+    position: sticky;
+    top: 0;
+    background-color: #1a1a1a;
+    color: var(--text-light);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    box-shadow: 0 0 12px var(--shadow-dark);
+    z-index: 1000;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    flex: 1 0 200px;
+    font-weight: 700;
+    user-select: none;
+  }
+  nav {
+    flex: 2 1 500px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+    user-select: none;
+  }
+  nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.5rem 0.9rem;
+    border-radius: 6px;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    font-size: 1rem;
+  }
+  nav a:hover,
+  nav a:focus {
+    background-color: var(--primary-hover);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 0 12px var(--primary-hover);
+    outline: none;
+  }
+  nav a[aria-current="page"] {
+    text-decoration: underline;
+    font-weight: 700;
+    color: var(--primary-color);
+  }
+  button#toggle-theme {
+    background: transparent;
+    border: 2px solid var(--text-light);
+    color: var(--text-light);
+    font-weight: 700;
+    padding: 0.35rem 1rem;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color var(--transition-speed), color var(--transition-speed), transform 0.25s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    user-select: none;
+    flex: 0 0 auto;
+    margin-left: auto;
+    will-change: transform;
+  }
+  button#toggle-theme:hover,
+  button#toggle-theme:focus {
+    background-color: var(--primary-hover);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px var(--primary-hover);
+    outline: none;
+  }
+  button#toggle-theme svg {
+    fill: currentColor;
+    width: 20px;
+    height: 20px;
+    transition: transform 0.4s ease;
+  }
+  button#toggle-theme.dark svg {
+    transform: rotate(40deg);
+  }
+  main {
+    padding: 2rem 2rem 5rem;
+    max-width: 900px;
+    margin: 2rem auto;
+    user-select: text;
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+  main h2, main h3 {
+    color: var(--primary-color);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    user-select: text;
+    scroll-margin-top: 70px;
+  }
+  main p {
+    margin-bottom: 1rem;
+    color: #ccc;
+  }
+  code, pre {
+    font-family: 'Source Code Pro', monospace, monospace;
+    background-color: var(--code-bg);
+    border: 1px solid var(--code-border);
+    border-radius: 6px;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.95rem;
+    user-select: text;
+  }
+  pre {
+    padding: 1rem;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+  }
+  ul {
+    padding-left: 1.3rem;
+    margin-bottom: 1rem;
+    color: #ddd;
+  }
+  ul li {
+    margin-bottom: 0.4rem;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 2rem;
+    color: #ddd;
+  }
+  th, td {
+    border: 1px solid var(--code-border);
+    padding: 0.8rem 1rem;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background-color: var(--table-header-bg);
+    font-weight: 700;
+  }
+  tr:nth-child(even) {
+    background-color: var(--table-row-bg);
+  }
+  a.button-back {
+    display: inline-block;
+    margin-top: 3rem;
+    padding: 0.7rem 1.4rem;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    user-select: none;
+    transition: background-color 0.3s ease;
+  }
+  a.button-back:hover,
+  a.button-back:focus {
+    background-color: var(--primary-hover);
+    outline: none;
+  }
+  /* Scroll suave para ancoras */
+  html {
+    scroll-behavior: smooth;
+  }
+  aside#toc {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    max-width: 220px;
+    background-color: var(--bg-card);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    box-shadow: 0 4px 12px var(--shadow-dark);
+    user-select: none;
+    font-size: 0.9rem;
+    display: none;
+  }
+  aside#toc h4 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+    font-weight: 700;
+  }
+  aside#toc ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  aside#toc ul li {
+    margin-bottom: 0.5rem;
+  }
+  aside#toc ul li a {
+    color: var(--text-light);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  aside#toc ul li a:hover,
+  aside#toc ul li a:focus {
+    color: var(--primary-hover);
+    outline: none;
+  }
+  @media (min-width: 640px) {
+    aside#toc {
+      display: block;
+    }
+    main {
+      margin-right: 270px;
+    }
+  }
+  @media (max-width: 639px) {
+    aside#toc {
+      display: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Sintaxes Comuns - Portal Suporte Técnico</h1>
+  <nav>
+    <a href="index.html">Página Inicial</a>
+    <a href="powershell.html">PowerShell</a>
+    <a href="cmd.html">CMD</a>
+    <a href="redes.html">Redes</a>
+    <a href="atalho.html">Atalhos</a>
+    <a href="sintaxes.html" aria-current="page">Sintaxes</a>
+    <a href="executar.html">Executar</a>
+    <a href="nmap.html">Nmap</a>
+    <a href="linux.html">Linux</a>
+    <a href="wireshark.html">Wireshark</a>
+  </nav>
+  <button id="toggle-theme" aria-label="Alternar tema claro/escuro" title="Alternar tema claro/escuro" type="button">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    Modo Claro
+  </button>
+</header>
+
+<aside id="toc" aria-label="Índice do conteúdo">
+  <h4>Conteúdo</h4>
+  <ul>
+    <li><a href="#cmd">Sintaxes CMD</a></li>
+    <li><a href="#powershell">Sintaxes PowerShell</a></li>
+    <li><a href="#linux">Sintaxes Linux</a></li>
+    <li><a href="#flags">Flags e Parâmetros Comuns</a></li>
+    <li><a href="#exemplos">Exemplos Práticos</a></li>
+  </ul>
+</aside>
+
+<main>
+  <h2 id="cmd">Sintaxes CMD</h2>
+  <p>O prompt de comando do Windows (CMD) utiliza comandos simples, que aceitam parâmetros para executar tarefas no sistema. A sintaxe geral é:</p>
+  <pre><code>comando [parâmetros] [opções]</code></pre>
+  <p>Exemplo de comando simples:</p>
+  <pre><code>dir /p /w</code></pre>
+  <p>Este comando lista os arquivos e pastas do diretório atual, pausando página por página e mostrando em colunas.</p>
+
+  <h3>Comandos e Sintaxes Comuns CMD</h3>
+  <table>
+    <thead>
+      <tr><th>Comando</th><th>Descrição</th><th>Sintaxe</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>dir</code></td><td>Lista arquivos e diretórios</td><td><code>dir [unidade:\][caminho] [opções]</code></td></tr>
+      <tr><td><code>copy</code></td><td>Copiar arquivos</td><td><code>copy origem destino</code></td></tr>
+      <tr><td><code>del</code></td><td>Excluir arquivos</td><td><code>del [opções] arquivo</code></td></tr>
+      <tr><td><code>move</code></td><td>Mover ou renomear arquivos</td><td><code>move origem destino</code></td></tr>
+      <tr><td><code>mkdir</code></td><td>Criar diretórios</td><td><code>mkdir nome_da_pasta</code></td></tr>
+      <tr><td><code>rmdir</code></td><td>Remover diretórios</td><td><code>rmdir /s /q nome_da_pasta</code></td></tr>
+      <tr><td><code>ipconfig</code></td><td>Mostrar configuração de rede</td><td><code>ipconfig [opções]</code></td></tr>
+      <tr><td><code>ping</code></td><td>Testar conectividade com IP ou host</td><td><code>ping endereço</code></td></tr>
+      <tr><td><code>tasklist</code></td><td>Lista processos em execução</td><td><code>tasklist</code></td></tr>
+      <tr><td><code>taskkill</code></td><td>Finalizar processo</td><td><code>taskkill /PID pid_numero /F</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="powershell">Sintaxes PowerShell</h2>
+  <p>O PowerShell é uma shell mais poderosa, orientada a objetos, que aceita cmdlets, scripts e funções. A sintaxe básica é:</p>
+  <pre><code>Cmdlet-Name [-Parâmetro Valor] [-Flag]</code></pre>
+  <p>Exemplo:</p>
+  <pre><code>Get-Process -Name "notepad"</code></pre>
+
+  <h3>Cmdlets e Sintaxes Comuns</h3>
+  <table>
+    <thead>
+      <tr><th>Cmdlet</th><th>Descrição</th><th>Sintaxe</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>Get-Process</code></td><td>Lista processos em execução</td><td><code>Get-Process [-Name <string>]</code></td></tr>
+      <tr><td><code>Stop-Process</code></td><td>Finaliza um processo</td><td><code>Stop-Process -Id <int> [-Force]</code></td></tr>
+      <tr><td><code>Get-Service</code></td><td>Lista serviços do sistema</td><td><code>Get-Service [-Name <string>]</code></td></tr>
+      <tr><td><code>Start-Service</code></td><td>Inicia um serviço</td><td><code>Start-Service -Name <string></code></td></tr>
+      <tr><td><code>Stop-Service</code></td><td>Para um serviço</td><td><code>Stop-Service -Name <string></code></td></tr>
+      <tr><td><code>Set-ExecutionPolicy</code></td><td>Define política de execução de scripts</td><td><code>Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned</code></td></tr>
+      <tr><td><code>Get-Help</code></td><td>Exibe ajuda</td><td><code>Get-Help <comando></code></td></tr>
+      <tr><td><code>Invoke-Command</code></td><td>Executa comandos remotamente</td><td><code>Invoke-Command -ComputerName <nome> -ScriptBlock { comando }</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="linux">Sintaxes Linux</h2>
+  <p>No Linux, o terminal usa comandos típicos do Unix/Linux. A sintaxe geral é:</p>
+  <pre><code>comando [opções] [argumentos]</code></pre>
+  <p>Exemplo:</p>
+  <pre><code>ls -l /home/usuario</code></pre>
+
+  <h3>Comandos e Sintaxes Comuns Linux</h3>
+  <table>
+    <thead>
+      <tr><th>Comando</th><th>Descrição</th><th>Sintaxe</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>ls</code></td><td>Lista arquivos e diretórios</td><td><code>ls [opções] [diretório]</code></td></tr>
+      <tr><td><code>cd</code></td><td>Mudar diretório</td><td><code>cd [diretório]</code></td></tr>
+      <tr><td><code>cp</code></td><td>Copiar arquivos ou diretórios</td><td><code>cp [opções] origem destino</code></td></tr>
+      <tr><td><code>mv</code></td><td>Mover ou renomear</td><td><code>mv origem destino</code></td></tr>
+      <tr><td><code>rm</code></td><td>Remover arquivos</td><td><code>rm [opções] arquivo</code></td></tr>
+      <tr><td><code>mkdir</code></td><td>Criar diretórios</td><td><code>mkdir [opções] diretório</code></td></tr>
+      <tr><td><code>rmdir</code></td><td>Remover diretórios vazios</td><td><code>rmdir diretório</code></td></tr>
+      <tr><td><code>chmod</code></td><td>Alterar permissões</td><td><code>chmod [opções] modo arquivo</code></td></tr>
+      <tr><td><code>chown</code></td><td>Alterar dono do arquivo</td><td><code>chown usuário:grupo arquivo</code></td></tr>
+      <tr><td><code>ps</code></td><td>Lista processos</td><td><code>ps aux</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="flags">Flags e Parâmetros Comuns</h2>
+  <p>Flags são opções que modificam o comportamento dos comandos, geralmente precedidas por `-` (Linux, PowerShell) ou `/` (CMD).</p>
+  <ul>
+    <li><code>-h</code> ou <code>--help</code>: exibe ajuda</li>
+    <li><code>-v</code> ou <code>--verbose</code>: mostra detalhes da execução</li>
+    <li><code>-q</code> ou <code>--quiet</code>: executa silenciosamente</li>
+    <li><code>/s</code> (CMD): aplica recursão</li>
+    <li><code>/q</code> (CMD): modo silencioso</li>
+    <li><code>-Force</code> (PowerShell): força a execução, mesmo com avisos</li>
+  </ul>
+
+  <h2 id="exemplos">Exemplos Práticos</h2>
+  <p><strong>Listar arquivos no CMD com paginação:</strong></p>
+  <pre><code>dir /p</code></pre>
+
+  <p><strong>Obter lista de processos no PowerShell:</strong></p>
+  <pre><code>Get-Process | Where-Object {$_.CPU -gt 100}</code></pre>
+
+  <p><strong>Copiar arquivos no Linux, mostrando progresso:</strong></p>
+  <pre><code>rsync -av --progress /origem/ /destino/</code></pre>
+
+  <p><strong>Remover diretório e todo conteúdo no CMD:</strong></p>
+  <pre><code>rmdir /s /q C:\PastaTeste</code></pre>
+
+  <p><strong>Alterar permissões no Linux:</strong></p>
+  <pre><code>chmod 755 script.sh</code></pre>
+
+  <a href="index.html" class="button-back" aria-label="Voltar para página inicial">← Voltar para Página Inicial</a>
+</main>
+
+<script>
+  const toggleBtn = document.getElementById('toggle-theme');
+  const body = document.body;
+
+  function updateToggleButton(isDark) {
+    if(isDark) {
+      toggleBtn.textContent = '';
+      toggleBtn.classList.add('dark');
+      toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg> Modo Claro`;
+    } else {
+      toggleBtn.textContent = '';
+      toggleBtn.classList.remove('dark');
+      toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg> Modo Escuro`;
+    }
+  }
+
+  const savedTheme = localStorage.getItem('theme');
+  if(savedTheme === 'dark') {
+    body.classList.add('dark');
+    updateToggleButton(true);
+  } else {
+    updateToggleButton(false);
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    body.classList.toggle('dark');
+    const isDark = body.classList.contains('dark');
+    updateToggleButton(isDark);
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+</script>
+</body>
+</html>

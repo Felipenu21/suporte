@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Linux - Portal Suporte Técnico</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg-dark: #121212;
+    --bg-card: #1e1e1e;
+    --text-light: #e0e0e0;
+    --primary-color: #4caf50;
+    --primary-hover: #388e3c;
+    --shadow-dark: rgba(0, 0, 0, 0.7);
+    --transition-speed: 0.35s;
+    --code-bg: #2a2a2a;
+    --code-border: #444;
+    --table-header-bg: #272727;
+    --table-row-bg: #1f1f1f;
+  }
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    animation: fadeIn var(--transition-speed) ease forwards;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+    padding-bottom: 3rem;
+  }
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+  header {
+    position: sticky;
+    top: 0;
+    background-color: #1a1a1a;
+    color: var(--text-light);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    box-shadow: 0 0 12px var(--shadow-dark);
+    z-index: 1000;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    flex: 1 0 200px;
+    font-weight: 700;
+    user-select: none;
+  }
+  nav {
+    flex: 2 1 500px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+    user-select: none;
+  }
+  nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.5rem 0.9rem;
+    border-radius: 6px;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    font-size: 1rem;
+  }
+  nav a:hover,
+  nav a:focus {
+    background-color: var(--primary-hover);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 0 12px var(--primary-hover);
+    outline: none;
+  }
+  nav a[aria-current="page"] {
+    text-decoration: underline;
+    font-weight: 700;
+    color: var(--primary-color);
+  }
+  button#toggle-theme {
+    background: transparent;
+    border: 2px solid var(--text-light);
+    color: var(--text-light);
+    font-weight: 700;
+    padding: 0.35rem 1rem;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color var(--transition-speed), color var(--transition-speed), transform 0.25s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    user-select: none;
+    flex: 0 0 auto;
+    margin-left: auto;
+    will-change: transform;
+  }
+  button#toggle-theme:hover,
+  button#toggle-theme:focus {
+    background-color: var(--primary-hover);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px var(--primary-hover);
+    outline: none;
+  }
+  button#toggle-theme svg {
+    fill: currentColor;
+    width: 20px;
+    height: 20px;
+    transition: transform 0.4s ease;
+  }
+  button#toggle-theme.dark svg {
+    transform: rotate(40deg);
+  }
+  main {
+    padding: 2rem 2rem 5rem;
+    max-width: 900px;
+    margin: 2rem auto;
+    user-select: text;
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+  main h2, main h3 {
+    color: var(--primary-color);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    user-select: text;
+    scroll-margin-top: 70px;
+  }
+  main p {
+    margin-bottom: 1rem;
+    color: #ccc;
+  }
+  code, pre {
+    font-family: 'Source Code Pro', monospace, monospace;
+    background-color: var(--code-bg);
+    border: 1px solid var(--code-border);
+    border-radius: 6px;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.95rem;
+    user-select: text;
+  }
+  pre {
+    padding: 1rem;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+  }
+  ul {
+    padding-left: 1.3rem;
+    margin-bottom: 1rem;
+    color: #ddd;
+  }
+  ul li {
+    margin-bottom: 0.4rem;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 2rem;
+    color: #ddd;
+  }
+  th, td {
+    border: 1px solid var(--code-border);
+    padding: 0.8rem 1rem;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background-color: var(--table-header-bg);
+    font-weight: 700;
+  }
+  tr:nth-child(even) {
+    background-color: var(--table-row-bg);
+  }
+  a.button-back {
+    display: inline-block;
+    margin-top: 3rem;
+    padding: 0.7rem 1.4rem;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    user-select: none;
+    transition: background-color 0.3s ease;
+  }
+  a.button-back:hover,
+  a.button-back:focus {
+    background-color: var(--primary-hover);
+    outline: none;
+  }
+  /* Scroll suave para ancoras */
+  html {
+    scroll-behavior: smooth;
+  }
+  aside#toc {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    max-width: 220px;
+    background-color: var(--bg-card);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    box-shadow: 0 4px 12px var(--shadow-dark);
+    user-select: none;
+    font-size: 0.9rem;
+    display: none;
+  }
+  aside#toc h4 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+    font-weight: 700;
+  }
+  aside#toc ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  aside#toc ul li {
+    margin-bottom: 0.5rem;
+  }
+  aside#toc ul li a {
+    color: var(--text-light);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  aside#toc ul li a:hover,
+  aside#toc ul li a:focus {
+    color: var(--primary-hover);
+    outline: none;
+  }
+  @media (min-width: 640px) {
+    aside#toc {
+      display: block;
+    }
+    main {
+      margin-right: 270px;
+    }
+  }
+  @media (max-width: 639px) {
+    aside#toc {
+      display: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Linux - Portal Suporte Técnico</h1>
+  <nav>
+    <a href="index.html">Página Inicial</a>
+    <a href="powershell.html">PowerShell</a>
+    <a href="cmd.html">CMD</a>
+    <a href="redes.html">Redes</a>
+    <a href="atalho.html">Atalhos</a>
+    <a href="sintaxes.html">Sintaxes</a>
+    <a href="executar.html">Executar</a>
+    <a href="nmap.html">Nmap</a>
+    <a href="linux.html" aria-current="page">Linux</a>
+    <a href="wireshark.html">Wireshark</a>
+  </nav>
+  <button id="toggle-theme" aria-label="Alternar tema claro/escuro" title="Alternar tema claro/escuro" type="button">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    Modo Claro
+  </button>
+</header>
+
+<aside id="toc" aria-label="Índice do conteúdo">
+  <h4>Conteúdo</h4>
+  <ul>
+    <li><a href="#introducao">Introdução ao Linux</a></li>
+    <li><a href="#comandos-basicos">Comandos Básicos</a></li>
+    <li><a href="#comandos-intermediarios">Comandos Intermediários</a></li>
+    <li><a href="#comandos-avancados">Comandos Avançados</a></li>
+    <li><a href="#ferramentas">Ferramentas Importantes</a></li>
+    <li><a href="#exemplos-praticos">Exemplos Práticos</a></li>
+    <li><a href="#dicas">Dicas e Boas Práticas</a></li>
+    <li><a href="#ataques-pentest">Tipos de Ataques e Pentest</a></li>
+    <li><a href="#uso-ferramentas">Uso Ferramentas Kali Linux</a></li>
+  </ul>
+</aside>
+
+<main>
+  <h2 id="introducao">Introdução ao Linux</h2>
+  <p>Linux é um sistema operacional open source amplamente usado em servidores, desktops, dispositivos embarcados e ambientes de desenvolvimento.</p>
+  <p>Conhecer os comandos básicos, sintaxes e ferramentas do Linux é essencial para administradores de sistemas e profissionais de suporte técnico.</p>
+
+  <h2 id="comandos-basicos">Comandos Básicos</h2>
+  <table>
+    <thead>
+      <tr><th>Comando</th><th>Descrição</th><th>Exemplo</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>ls</code></td><td>Lista arquivos e diretórios</td><td><code>ls -l /home</code></td></tr>
+      <tr><td><code>cd</code></td><td>Altera diretório atual</td><td><code>cd /var/log</code></td></tr>
+      <tr><td><code>pwd</code></td><td>Mostra o diretório atual</td><td><code>pwd</code></td></tr>
+      <tr><td><code>cp</code></td><td>Copia arquivos ou diretórios</td><td><code>cp arquivo.txt /tmp/</code></td></tr>
+      <tr><td><code>mv</code></td><td>Move ou renomeia arquivos</td><td><code>mv file1 file2</code></td></tr>
+      <tr><td><code>rm</code></td><td>Remove arquivos ou diretórios</td><td><code>rm -r pasta/</code></td></tr>
+      <tr><td><code>mkdir</code></td><td>Cria diretórios</td><td><code>mkdir nova_pasta</code></td></tr>
+      <tr><td><code>rmdir</code></td><td>Remove diretórios vazios</td><td><code>rmdir pasta_vazia</code></td></tr>
+      <tr><td><code>cat</code></td><td>Exibe o conteúdo de arquivos</td><td><code>cat arquivo.txt</code></td></tr>
+      <tr><td><code>echo</code></td><td>Exibe texto na tela</td><td><code>echo "Olá Linux"</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="comandos-intermediarios">Comandos Intermediários</h2>
+  <table>
+    <thead>
+      <tr><th>Comando</th><th>Descrição</th><th>Exemplo</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>grep</code></td><td>Busca por texto em arquivos</td><td><code>grep "erro" /var/log/syslog</code></td></tr>
+      <tr><td><code>find</code></td><td>Encontra arquivos e diretórios</td><td><code>find /home -name "*.conf"</code></td></tr>
+      <tr><td><code>chmod</code></td><td>Modifica permissões</td><td><code>chmod 755 script.sh</code></td></tr>
+      <tr><td><code>chown</code></td><td>Altera proprietário</td><td><code>chown user:group arquivo.txt</code></td></tr>
+      <tr><td><code>tar</code></td><td>Compacta e descompacta arquivos</td><td><code>tar -czvf backup.tar.gz /home/user</code></td></tr>
+      <tr><td><code>ps</code></td><td>Mostra processos em execução</td><td><code>ps aux</code></td></tr>
+      <tr><td><code>kill</code></td><td>Envia sinal para processos</td><td><code>kill -9 1234</code></td></tr>
+      <tr><td><code>df</code></td><td>Mostra uso de disco</td><td><code>df -h</code></td></tr>
+      <tr><td><code>du</code></td><td>Mostra uso de espaço em diretórios</td><td><code>du -sh /var/log</code></td></tr>
+      <tr><td><code>top</code></td><td>Monitoramento de processos em tempo real</td><td><code>top</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="comandos-avancados">Comandos Avançados</h2>
+  <table>
+    <thead>
+      <tr><th>Comando</th><th>Descrição</th><th>Exemplo</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>ssh</code></td><td>Acesso remoto seguro</td><td><code>ssh user@192.168.1.10</code></td></tr>
+      <tr><td><code>rsync</code></td><td>Sincronização de arquivos</td><td><code>rsync -avz /origem /destino</code></td></tr>
+      <tr><td><code>iptables</code></td><td>Configuração de firewall</td><td><code>sudo iptables -L</code></td></tr>
+      <tr><td><code>systemctl</code></td><td>Gerenciamento de serviços systemd</td><td><code>sudo systemctl status nginx</code></td></tr>
+      <tr><td><code>journalctl</code></td><td>Visualiza logs do systemd</td><td><code>journalctl -u nginx</code></td></tr>
+      <tr><td><code>curl</code></td><td>Faz requisições HTTP</td><td><code>curl -I https://google.com</code></td></tr>
+      <tr><td><code>wget</code></td><td>Baixa arquivos da web</td><td><code>wget https://site.com/arquivo.zip</code></td></tr>
+      <tr><td><code>dd</code></td><td>Copias e grava imagens de disco</td><td><code>sudo dd if=/dev/sda of=backup.img bs=4M</code></td></tr>
+      <tr><td><code>awk</code></td><td>Manipulação e processamento de texto</td><td><code>cat arquivo | awk '{print $1}'</code></td></tr>
+      <tr><td><code>sed</code></td><td>Editor de texto em linha de comando</td><td><code>sed 's/antigo/novo/g' arquivo.txt</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="ferramentas">Ferramentas Importantes</h2>
+  <ul>
+    <li><strong>htop:</strong> Visualização interativa dos processos, use <code>htop</code>.</li>
+    <li><strong>netstat / ss:</strong> Verifica conexões e portas abertas. Ex: <code>netstat -tulnp</code> ou <code>ss -tuln</code>.</li>
+    <li><strong>tcpdump:</strong> Captura pacotes da rede para análise. Ex: <code>sudo tcpdump -i eth0</code>.</li>
+    <li><strong>lsof:</strong> Lista arquivos abertos por processos. Ex: <code>lsof -i :80</code>.</li>
+    <li><strong>df / du:</strong> Monitoramento de espaço em disco.</li>
+    <li><strong>cron / systemd timers:</strong> Agendamento de tarefas automáticas.</li>
+  </ul>
+
+  <h2 id="exemplos-praticos">Exemplos Práticos</h2>
+  <p><strong>Listar arquivos detalhados no diretório home:</strong></p>
+  <pre><code>ls -lah /home/usuario</code></pre>
+
+  <p><strong>Buscar palavra "erro" em arquivos de log:</strong></p>
+  <pre><code>grep -i "erro" /var/log/syslog</code></pre>
+
+  <p><strong>Copiar diretório com todos arquivos e permissões:</strong></p>
+  <pre><code>cp -a /origem /destino</code></pre>
+
+  <p><strong>Alterar permissões para dono (leitura e escrita) e grupo (somente leitura):</strong></p>
+  <pre><code>chmod 640 arquivo.txt</code></pre>
+
+  <p><strong>Verificar uso de disco em human readable:</strong></p>
+  <pre><code>df -h</code></pre>
+
+  <p><strong>Conectar via SSH a um servidor remoto:</strong></p>
+  <pre><code>ssh usuario@192.168.1.10</code></pre>
+
+  <p><strong>Baixar arquivo da web:</strong></p>
+  <pre><code>wget https://exemplo.com/arquivo.zip</code></pre>
+
+  <h2 id="dicas">Dicas e Boas Práticas</h2>
+  <ul>
+    <li>Use sempre permissões mínimas necessárias para arquivos e diretórios.</li>
+    <li>Evite executar comandos com sudo sem necessidade para minimizar riscos.</li>
+    <li>Documente seus scripts e comandos para facilitar manutenção futura.</li>
+    <li>Use <code>man comando</code> para acessar a documentação local detalhada.</li>
+    <li>Mantenha o sistema atualizado e faça backups frequentes.</li>
+  </ul>
+
+  <h2 id="ataques-pentest">Tipos de Ataques e Pentest</h2>
+  <p>Conhecer os tipos de ataques é essencial para proteger sistemas e realizar testes de invasão (pentest) de forma eficaz e ética.</p>
+
+  <h3>Tipos Comuns de Ataques</h3>
+  <ul>
+    <li><strong>Phishing:</strong> Ataques que enganam usuários para obter credenciais ou informações sensíveis.</li>
+    <li><strong>SQL Injection:</strong> Inserção de código malicioso em formulários para acessar banco de dados indevidamente.</li>
+    <li><strong>Cross-Site Scripting (XSS):</strong> Injeção de scripts maliciosos em páginas web para roubar dados ou controlar sessões.</li>
+    <li><strong>Brute Force:</strong> Tentativa de descobrir senhas por força bruta, testando várias combinações.</li>
+    <li><strong>Man-in-the-Middle (MitM):</strong> Interceptação de comunicação entre duas partes sem que elas percebam.</li>
+    <li><strong>DoS/DDoS:</strong> Ataques para sobrecarregar servidores e indisponibilizar serviços.</li>
+    <li><strong>Escalada de Privilégios:</strong> Exploração para obter níveis maiores de acesso no sistema.</li>
+  </ul>
+
+  <h3>Principais Ferramentas Kali Linux para Pentest</h3>
+  <ul>
+    <li><strong>Nmap:</strong> Scanner de redes para descoberta de hosts e serviços. Exemplo: <code>nmap -sS 192.168.1.0/24</code></li>
+    <li><strong>Metasploit Framework:</strong> Plataforma para desenvolvimento e execução de exploits.</li>
+    <li><strong>Aircrack-ng:</strong> Conjunto de ferramentas para auditoria de redes Wi-Fi.</li>
+    <li><strong>Wireshark:</strong> Analisador de pacotes para captura e análise de tráfego de rede.</li>
+    <li><strong>John the Ripper:</strong> Ferramenta para quebra de senhas usando ataques de dicionário e força bruta.</li>
+    <li><strong>Burp Suite:</strong> Plataforma para testar segurança de aplicações web.</li>
+    <li><strong>Hydra:</strong> Ferramenta de força bruta para serviços de autenticação.</li>
+  </ul>
+
+  <h3>Práticas de Pentest Ético</h3>
+  <ul>
+    <li>Obtenha sempre autorização escrita antes de realizar qualquer teste.</li>
+    <li>Documente todos os passos e resultados para análise posterior.</li>
+    <li>Utilize ambientes controlados (laboratórios) para treinamento e simulações.</li>
+    <li>Conheça as ferramentas antes de usar em ambientes produtivos.</li>
+    <li>Atualize-se constantemente sobre novas vulnerabilidades e técnicas de defesa.</li>
+  </ul>
+
+  <h2 id="uso-ferramentas">Como Usar Ferramentas Kali Linux para Pentest</h2>
+
+  <h3>Nmap - Scanner de Rede</h3>
+  <p>O <code>nmap</code> é usado para descobrir hosts ativos, portas abertas e serviços em uma rede.</p>
+  <p><strong>Comando básico:</strong></p>
+  <pre><code>nmap -sS 192.168.1.0/24</code></pre>
+  <p><strong>Exemplo:</strong> Descobrir hosts ativos e portas TCP abertas na rede local.</p>
+  <p><strong>Uso Ético:</strong> Sempre obtenha permissão antes de escanear redes que não são suas.</p>
+
+  <h3>Hydra - Ataque de Força Bruta</h3>
+  <p>O <code>hydra</code> permite realizar ataques de força bruta em serviços de autenticação como SSH, FTP e HTTP.</p>
+  <p><strong>Comando básico:</strong></p>
+  <pre><code>hydra -l usuario -P lista_senhas.txt ssh://192.168.1.100</code></pre>
+  <p><strong>Explicação:</strong> Tenta logar no SSH do IP alvo usando o usuário <code>usuario</code> e uma lista de senhas do arquivo <code>lista_senhas.txt</code>.</p>
+  <p><strong>Exemplo Prático:</strong> Usado em laboratório para testar robustez de senhas.</p>
+  <p><strong>Dica:</strong> Nunca use em sistemas sem autorização explícita, é ilegal.</p>
+
+  <h3>Metasploit Framework</h3>
+  <p>O <code>msfconsole</code> é uma plataforma poderosa para criar e executar exploits contra alvos vulneráveis.</p>
+  <p><strong>Passos básicos:</strong></p>
+  <ol>
+    <li>Inicie o Metasploit: <code>msfconsole</code></li>
+    <li>Use um módulo exploit: <code>use exploit/windows/smb/ms17_010_eternalblue</code></li>
+    <li>Configure o alvo: <code>set RHOSTS 192.168.1.105</code></li>
+    <li>Execute: <code>exploit</code></li>
+  </ol>
+  <p><strong>Nota:</strong> Use sempre em ambientes controlados para aprendizado ou com permissão.</p>
+
+  <h3>Aircrack-ng - Teste de Segurança Wi-Fi</h3>
+  <p>O conjunto <code>aircrack-ng</code> é utilizado para capturar e analisar tráfego Wi-Fi e tentar quebrar chaves WEP/WPA.</p>
+  <p><strong>Passos básicos:</strong></p>
+  <ul>
+    <li>Coloque a placa wireless em modo monitor: <code>airmon-ng start wlan0</code></li>
+    <li>Capture pacotes: <code>airodump-ng wlan0mon</code></li>
+    <li>Capture handshake de uma rede alvo</li>
+    <li>Quebre a senha com o dicionário: <code>aircrack-ng -w wordlist.txt capture.cap</code></li>
+  </ul>
+  <p><strong>Aviso:</strong> Use somente em redes autorizadas.</p>
+
+  <h3>Wireshark - Análise de Pacotes</h3>
+  <p>Wireshark captura e analisa tráfego de rede em tempo real, ótimo para diagnóstico e investigação.</p>
+  <p><strong>Uso:</strong> Inicie a captura na interface desejada e use filtros para focar em pacotes específicos.</p>
+  <p><strong>Filtro exemplo:</strong> Para ver só tráfego HTTP: <code>http</code></p>
+
+  <h3>Dicas para Pentest Seguro e Ético</h3>
+  <ul>
+    <li>Sempre tenha autorização escrita antes de realizar qualquer teste.</li>
+    <li>Realize testes em ambientes controlados, como máquinas virtuais ou laboratórios isolados.</li>
+    <li>Documente tudo: passos, comandos, resultados e recomendações.</li>
+    <li>Respeite privacidade e confidencialidade dos dados.</li>
+    <li>Esteja sempre atualizado sobre leis e regulamentações locais.</li>
+  </ul>
+
+  <a href="index.html" class="button-back" aria-label="Voltar para página inicial">← Voltar para Página Inicial</a>
+</main>
+
+<script>
+  const toggleBtn = document.getElementById('toggle-theme');
+  const body = document.body;
+
+  function updateToggleButton(isDark) {
+    if(isDark) {
+      toggleBtn.textContent = '';
+      toggleBtn.classList.add('dark');
+      toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg> Modo Claro`;
+    } else {
+      toggleBtn.textContent = '';
+      toggleBtn.classList.remove('dark');
+      toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg> Modo Escuro`;
+    }
+  }
+
+  // Verifica tema salvo
+  const savedTheme = localStorage.getItem('theme');
+  if(savedTheme === 'dark') {
+    body.classList.add('dark');
+    updateToggleButton(true);
+  } else {
+    updateToggleButton(false);
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    body.classList.toggle('dark');
+    const isDark = body.classList.contains('dark');
+    updateToggleButton(isDark);
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+</script>
+
+</body>
+</html>

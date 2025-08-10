@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Título da Página - SuporteTutorial</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav role="navigation" aria-label="Menu principal">
+    <div class="logo" tabindex="0">SuporteTutorial</div>
+    <ul>
+      <li><a href="index.html" class="">Home</a></li>
+      <li><a href="powershell.html" class="">PowerShell</a></li>
+      <li><a href="cmd.html" class="">CMD</a></li>
+      <li><a href="executar.html" class="">Executar</a></li>
+      <li><a href="redes.html" class="">Redes</a></li>
+      <li><a href="sintaxes.html" class="">Sintaxes & Flags</a></li>
+      <li><a href="linux.html" class="">Linux</a></li>
+      <li><a href="nmap.html" class="">Nmap</a></li>
+    </ul>
+  </nav>
+
+  <main class="content" role="main" tabindex="-1">
+    <!-- CONTEÚDO DA PÁGINA VAI AQUI -->
+  </main>
+
+  <footer role="contentinfo">
+    <p>&copy; 2025 SuporteTutorial. Todos os direitos reservados.</p>
+    <p>Desenvolvido com ❤ por Felipe Nunes</p>
+  </footer>
+
+  <script>
+    // Script para destacar item ativo no menu
+    const path = window.location.pathname.split("/").pop();
+    const links = document.querySelectorAll("nav ul li a");
+    links.forEach(link => {
+      if (link.getAttribute("href") === path) {
+        link.classList.add("active");
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CMD - Portal Suporte Técnico</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-dark: #121212;
+      --bg-card: #1e1e1e;
+      --text-light: #e0e0e0;
+      --primary-color: #3399ff;
+      --primary-hover: #1a73e8;
+      --shadow-dark: rgba(0, 0, 0, 0.7);
+      --transition-speed: 0.35s;
+      --code-bg: #2a2a2a;
+      --code-border: #444;
+      --table-header-bg: #272727;
+      --table-row-bg: #1f1f1f;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      animation: fadeIn var(--transition-speed) ease forwards;
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      padding-bottom: 3rem;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      background-color: #1a1a1a;
+      color: var(--text-light);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      box-shadow: 0 0 12px var(--shadow-dark);
+      z-index: 1000;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      flex: 1 0 200px;
+      font-weight: 700;
+      user-select: none;
+    }
+
+    nav {
+      flex: 2 1 500px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      align-items: center;
+      user-select: none;
+    }
+
+    nav a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.5rem 0.9rem;
+      border-radius: 6px;
+      transition: background-color 0.3s, color 0.3s, transform 0.2s;
+      font-size: 1rem;
+    }
+
+    nav a:hover,
+    nav a:focus {
+      background-color: var(--primary-hover);
+      color: white;
+      transform: scale(1.05);
+      box-shadow: 0 0 12px var(--primary-hover);
+      outline: none;
+    }
+
+    nav a[href="cmd.html"] {
+      text-decoration: underline;
+      font-weight: 700;
+    }
+
+    button#toggle-theme {
+      background: transparent;
+      border: 2px solid var(--text-light);
+      color: var(--text-light);
+      font-weight: 700;
+      padding: 0.35rem 1rem;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: background-color var(--transition-speed), color var(--transition-speed), transform 0.25s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+      user-select: none;
+      flex: 0 0 auto;
+      margin-left: auto;
+      will-change: transform;
+    }
+
+    button#toggle-theme:hover,
+    button#toggle-theme:focus {
+      background-color: var(--primary-hover);
+      color: white;
+      transform: scale(1.1);
+      box-shadow: 0 0 15px var(--primary-hover);
+      outline: none;
+    }
+
+    button#toggle-theme svg {
+      fill: currentColor;
+      width: 20px;
+      height: 20px;
+      transition: transform 0.4s ease;
+    }
+
+    button#toggle-theme.dark svg {
+      transform: rotate(40deg);
+    }
+
+    main {
+      padding: 2rem 2rem 5rem;
+      max-width: 900px;
+      margin: 2rem auto;
+      user-select: text;
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    main h2, main h3 {
+      color: var(--primary-color);
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      user-select: text;
+      scroll-margin-top: 70px;
+    }
+
+    main p {
+      margin-bottom: 1rem;
+      color: #ccc;
+    }
+
+    code, pre {
+      font-family: 'Source Code Pro', monospace, monospace;
+      background-color: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 6px;
+      padding: 0.3rem 0.5rem;
+      font-size: 0.95rem;
+      user-select: text;
+    }
+
+    pre {
+      padding: 1rem;
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+      line-height: 1.4;
+    }
+
+    ul {
+      padding-left: 1.3rem;
+      margin-bottom: 1rem;
+      color: #ddd;
+    }
+
+    ul li {
+      margin-bottom: 0.4rem;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 2rem;
+      color: #ddd;
+    }
+
+    th, td {
+      border: 1px solid var(--code-border);
+      padding: 0.8rem 1rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background-color: var(--table-header-bg);
+      font-weight: 700;
+    }
+
+    tr:nth-child(even) {
+      background-color: var(--table-row-bg);
+    }
+
+    a.button-back {
+      display: inline-block;
+      margin-top: 3rem;
+      padding: 0.7rem 1.4rem;
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+
+    a.button-back:hover,
+    a.button-back:focus {
+      background-color: var(--primary-hover);
+      outline: none;
+    }
+
+    /* Scroll suave para ancoras */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    aside#toc {
+      position: fixed;
+      top: 100px;
+      right: 20px;
+      max-width: 220px;
+      background-color: var(--bg-card);
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      box-shadow: 0 4px 12px var(--shadow-dark);
+      user-select: none;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    aside#toc h4 {
+      color: var(--primary-color);
+      margin-top: 0;
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+    }
+
+    aside#toc ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    aside#toc ul li {
+      margin-bottom: 0.5rem;
+    }
+
+    aside#toc ul li a {
+      color: var(--text-light);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    aside#toc ul li a:hover,
+    aside#toc ul li a:focus {
+      color: var(--primary-hover);
+      outline: none;
+    }
+
+    @media (min-width: 1000px) {
+      aside#toc {
+        display: block;
+      }
+      main {
+        margin-right: 270px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      main {
+        padding: 1rem 1rem 4rem;
+        margin: 1rem auto;
+        max-width: 95%;
+      }
+      aside#toc {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CMD - Portal Suporte Técnico</h1>
+    <nav>
+      <a href="index.html">Página Inicial</a>
+      <a href="powershell.html">PowerShell</a>
+      <a href="cmd.html" aria-current="page">CMD</a>
+      <a href="redes.html">Redes</a>
+      <a href="atalho.html">Atalhos</a>
+      <a href="sintaxes.html">Sintaxes</a>
+      <a href="executar.html">Executar</a>
+      <a href="nmap.html">Nmap</a>
+      <a href="linux.html">Linux</a>
+      <a href="wireshark.html">Wireshark</a>
+    </nav>
+    <button id="toggle-theme" aria-label="Alternar tema claro/escuro" title="Alternar tema claro/escuro" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      Modo Claro
+    </button>
+  </header>
+
+  <aside id="toc" aria-label="Índice do conteúdo">
+    <h4>Conteúdo</h4>
+    <ul>
+      <li><a href="#basico">Comandos Básicos</a></li>
+      <li><a href="#avancado">Comandos Avançados</a></li>
+      <li><a href="#flags">Flags e Parâmetros</a></li>
+      <li><a href="#exemplos">Exemplos Práticos</a></li>
+      <li><a href="#scripts">Scripts e Dicas para Suporte Técnico</a></li>
+      <li><a href="#conclusao">Conclusão</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <h2 id="basico">Comandos Básicos do CMD</h2>
+    <p>O Prompt de Comando (CMD) é uma interface de linha de comando presente no Windows, essencial para suporte técnico, scripts simples e diagnósticos rápidos.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Comando</th>
+          <th>Descrição</th>
+          <th>Exemplo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>dir</code></td>
+          <td>Lista arquivos e pastas do diretório atual.</td>
+          <td><pre>dir
+dir C:\Windows</pre></td>
+        </tr>
+        <tr>
+          <td><code>cd</code></td>
+          <td>Altera o diretório atual.</td>
+          <td><pre>cd ..
+cd C:\Users</pre></td>
+        </tr>
+        <tr>
+          <td><code>copy</code></td>
+          <td>Copia arquivos.</td>
+          <td><pre>copy arquivo.txt D:\Backup\</pre></td>
+        </tr>
+        <tr>
+          <td><code>move</code></td>
+          <td>Move arquivos.</td>
+          <td><pre>move arquivo.txt D:\Backup\</pre></td>
+        </tr>
+        <tr>
+          <td><code>del</code></td>
+          <td>Deleta arquivos.</td>
+          <td><pre>del arquivo.txt</pre></td>
+        </tr>
+        <tr>
+          <td><code>mkdir</code></td>
+          <td>Cria diretório.</td>
+          <td><pre>mkdir NovaPasta</pre></td>
+        </tr>
+        <tr>
+          <td><code>rmdir</code></td>
+          <td>Remove diretório vazio.</td>
+          <td><pre>rmdir PastaVelha</pre></td>
+        </tr>
+        <tr>
+          <td><code>cls</code></td>
+          <td>Limpa a tela do prompt.</td>
+          <td><pre>cls</pre></td>
+        </tr>
+        <tr>
+          <td><code>ipconfig</code></td>
+          <td>Exibe configurações IP da máquina.</td>
+          <td><pre>ipconfig /all</pre></td>
+        </tr>
+        <tr>
+          <td><code>ping</code></td>
+          <td>Testa conexão com outro host.</td>
+          <td><pre>ping google.com</pre></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="avancado">Comandos Avançados do CMD</h2>
+    <p>Comandos avançados para diagnóstico, gerenciamento de rede e scripts mais complexos.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Comando</th>
+          <th>Descrição</th>
+          <th>Exemplo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>tasklist</code></td>
+          <td>Lista processos em execução.</td>
+          <td><pre>tasklist</pre></td>
+        </tr>
+        <tr>
+          <td><code>taskkill</code></td>
+          <td>Encerra processo pelo nome ou PID.</td>
+          <td><pre>taskkill /IM notepad.exe /F
+taskkill /PID 1234 /F</pre></td>
+        </tr>
+        <tr>
+          <td><code>netstat</code></td>
+          <td>Mostra conexões de rede e portas usadas.</td>
+          <td><pre>netstat -an</pre></td>
+        </tr>
+        <tr>
+          <td><code>systeminfo</code></td>
+          <td>Exibe informações do sistema.</td>
+          <td><pre>systeminfo</pre></td>
+        </tr>
+        <tr>
+          <td><code>chkdsk</code></td>
+          <td>Verifica e repara erros no disco.</td>
+          <td><pre>chkdsk C: /F /R</pre></td>
+        </tr>
+        <tr>
+          <td><code>sfc</code></td>
+          <td>Verifica e repara arquivos do sistema.</td>
+          <td><pre>sfc /scannow</pre></td>
+        </tr>
+        <tr>
+          <td><code>shutdown</code></td>
+          <td>Desliga ou reinicia o computador.</td>
+          <td><pre>shutdown /r /t 0</pre></td>
+        </tr>
+        <tr>
+          <td><code>net user</code></td>
+          <td>Gerencia usuários locais.</td>
+          <td><pre>net user
+net user username /add</pre></td>
+        </tr>
+        <tr>
+          <td><code>diskpart</code></td>
+          <td>Gerenciamento avançado de discos.</td>
+          <td>Executado interativamente:<br /><pre>diskpart</pre></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="flags">Flags e Parâmetros Importantes</h2>
+    <p>Algumas flags comuns em comandos do CMD para modificar comportamentos.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Flag</th>
+          <th>Descrição</th>
+          <th>Exemplo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>/F</code></td>
+          <td>Força a execução (ex: forçar encerramento do processo).</td>
+          <td><pre>taskkill /IM notepad.exe /F</pre></td>
+        </tr>
+        <tr>
+          <td><code>/S</code></td>
+          <td>Especifica computador remoto.</td>
+          <td><pre>shutdown /s /t 0 /m \\PC-Remoto</pre></td>
+        </tr>
+        <tr>
+          <td><code>/T</code></td>
+          <td>Define tempo para execução (em segundos).</td>
+          <td><pre>shutdown /r /t 30</pre></td>
+        </tr>
+        <tr>
+          <td><code>/Q</code></td>
+          <td>Modo silencioso (ex: desligar sem aviso).</td>
+          <td><pre>shutdown /s /t 0 /f /q</pre></td>
+        </tr>
+        <tr>
+          <td><code>/A</code></td>
+          <td>Aborta desligamento em andamento.</td>
+          <td><pre>shutdown /a</pre></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="exemplos">Exemplos Práticos</h2>
+    <ul>
+      <li><strong>Limpar cache DNS:</strong> <code>ipconfig /flushdns</code></li>
+      <li><strong>Ver conexões ativas:</strong> <code>netstat -an</code></li>
+      <li><strong>Mostrar configuração IP:</strong> <code>ipconfig /all</code></li>
+      <li><strong>Fechar o bloco de notas:</strong> <code>taskkill /IM notepad.exe /F</code></li>
+      <li><strong>Desligar o PC em 60 segundos:</strong> <code>shutdown /s /t 60</code></li>
+      <li><strong>Criar usuário local:</strong> <code>net user usuario123 senha123 /add</code></li>
+      <li><strong>Ver tarefas agendadas:</strong> <code>schtasks /query</code></li>
+    </ul>
+
+    <h2 id="scripts">Scripts e Dicas para Suporte Técnico</h2>
+    <p>Automatize tarefas comuns e resolva problemas com estes scripts simples em batch (.bat) para suporte.</p>
+
+    <h3>1. Script para limpar arquivos temporários do Windows</h3>
+    <pre><code>@echo off
+echo Limpando arquivos temporários...
+del /s /q %temp%\*
+del /s /q C:\Windows\Temp\*
+echo Limpeza concluída.
+pause
+</code></pre>
+
+    <h3>2. Script para reiniciar serviços essenciais</h3>
+    <pre><code>@echo off
+echo Reiniciando serviços essenciais...
+net stop wuauserv
+net start wuauserv
+net stop spooler
+net start spooler
+net stop bits
+net start bits
+echo Serviços reiniciados.
+pause
+</code></pre>
+
+    <h3>3. Script para verificar conectividade e salvar resultado</h3>
+    <pre><code>@echo off
+echo Testando conectividade com google.com...
+ping google.com > "%userprofile%\desktop\ping_log.txt"
+echo Resultado salvo em ping_log.txt na área de trabalho.
+pause
+</code></pre>
+
+    <h3>4. Script para backup simples de uma pasta</h3>
+    <pre><code>@echo off
+set origem=C:\Users\%username%\Documents
+set destino=D:\Backup\DocumentsBackup_%date:~6,4%%date:~3,2%%date:~0,2%
+echo Fazendo backup da pasta Documentos...
+xcopy "%origem%" "%destino%" /E /I /H /C /Y
+echo Backup concluído em %destino%
+pause
+</code></pre>
+
+    <h3>5. Script para liberar cache DNS</h3>
+    <pre><code>@echo off
+ipconfig /flushdns
+echo Cache DNS liberado.
+pause
+</code></pre>
+
+    <h2 id="conclusao">Conclusão</h2>
+    <p>O CMD é uma ferramenta poderosa para suporte técnico e administração de sistemas Windows, que com prática permite automatizar tarefas, diagnosticar problemas e controlar sistemas remotamente.</p>
+
+    <a href="index.html" class="button-back" aria-label="Voltar para a página inicial">← Voltar para Início</a>
+  </main>
+
+  <script>
+    const toggleBtn = document.getElementById('toggle-theme');
+    const body = document.body;
+
+    function updateToggleButton(isDark) {
+      if(isDark) {
+        toggleBtn.textContent = '';
+        toggleBtn.classList.add('dark');
+        toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg> Modo Claro`;
+      } else {
+        toggleBtn.textContent = '';
+        toggleBtn.classList.remove('dark');
+        toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg> Modo Escuro`;
+      }
+    }
+
+    const savedTheme = localStorage.getItem('theme');
+    if(savedTheme === 'dark') {
+      body.classList.add('dark');
+      updateToggleButton(true);
+    } else {
+      updateToggleButton(false);
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      body.classList.toggle('dark');
+      const isDark = body.classList.contains('dark');
+      updateToggleButton(isDark);
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Wireshark - Portal Suporte Técnico</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg-dark: #121212;
+    --bg-card: #1e1e1e;
+    --text-light: #e0e0e0;
+    --primary-color: #2196f3;
+    --primary-hover: #1565c0;
+    --shadow-dark: rgba(0, 0, 0, 0.7);
+    --transition-speed: 0.35s;
+    --code-bg: #2a2a2a;
+    --code-border: #444;
+    --table-header-bg: #272727;
+    --table-row-bg: #1f1f1f;
+  }
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    animation: fadeIn var(--transition-speed) ease forwards;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+    padding-bottom: 3rem;
+  }
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+  header {
+    position: sticky;
+    top: 0;
+    background-color: #1a1a1a;
+    color: var(--text-light);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    box-shadow: 0 0 12px var(--shadow-dark);
+    z-index: 1000;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    flex: 1 0 200px;
+    font-weight: 700;
+    user-select: none;
+  }
+  nav {
+    flex: 2 1 500px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+    user-select: none;
+  }
+  nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.5rem 0.9rem;
+    border-radius: 6px;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    font-size: 1rem;
+  }
+  nav a:hover,
+  nav a:focus {
+    background-color: var(--primary-hover);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 0 12px var(--primary-hover);
+    outline: none;
+  }
+  nav a[aria-current="page"] {
+    text-decoration: underline;
+    font-weight: 700;
+    color: var(--primary-color);
+  }
+  button#toggle-theme {
+    background: transparent;
+    border: 2px solid var(--text-light);
+    color: var(--text-light);
+    font-weight: 700;
+    padding: 0.35rem 1rem;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color var(--transition-speed), color var(--transition-speed), transform 0.25s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    user-select: none;
+    flex: 0 0 auto;
+    margin-left: auto;
+    will-change: transform;
+  }
+  button#toggle-theme:hover,
+  button#toggle-theme:focus {
+    background-color: var(--primary-hover);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px var(--primary-hover);
+    outline: none;
+  }
+  button#toggle-theme svg {
+    fill: currentColor;
+    width: 20px;
+    height: 20px;
+    transition: transform 0.4s ease;
+  }
+  button#toggle-theme.dark svg {
+    transform: rotate(40deg);
+  }
+  main {
+    padding: 2rem 2rem 5rem;
+    max-width: 900px;
+    margin: 2rem auto;
+    user-select: text;
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+  main h2, main h3 {
+    color: var(--primary-color);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    user-select: text;
+    scroll-margin-top: 70px;
+  }
+  main p {
+    margin-bottom: 1rem;
+    color: #ccc;
+  }
+  code, pre {
+    font-family: 'Source Code Pro', monospace, monospace;
+    background-color: var(--code-bg);
+    border: 1px solid var(--code-border);
+    border-radius: 6px;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.95rem;
+    user-select: text;
+  }
+  pre {
+    padding: 1rem;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+  }
+  ul {
+    padding-left: 1.3rem;
+    margin-bottom: 1rem;
+    color: #ddd;
+  }
+  ul li {
+    margin-bottom: 0.4rem;
+  }
+  a.button-back {
+    display: inline-block;
+    margin-top: 3rem;
+    padding: 0.7rem 1.4rem;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    user-select: none;
+    transition: background-color 0.3s ease;
+  }
+  a.button-back:hover,
+  a.button-back:focus {
+    background-color: var(--primary-hover);
+    outline: none;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Wireshark - Portal Suporte Técnico</h1>
+  <nav>
+    <a href="index.html">Página Inicial</a>
+    <a href="powershell.html">PowerShell</a>
+    <a href="cmd.html">CMD</a>
+    <a href="redes.html">Redes</a>
+    <a href="atalho.html">Atalhos</a>
+    <a href="sintaxes.html">Sintaxes</a>
+    <a href="executar.html">Executar</a>
+    <a href="nmap.html">Nmap</a>
+    <a href="linux.html">Linux</a>
+    <a href="wireshark.html" aria-current="page">Wireshark</a>
+  </nav>
+  <button id="toggle-theme" aria-label="Alternar tema claro/escuro" title="Alternar tema claro/escuro" type="button">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    Modo Claro
+  </button>
+</header>
+
+<main>
+  <h2>Introdução ao Wireshark</h2>
+  <p>Wireshark é um analisador de protocolo de rede amplamente utilizado para captura e análise de pacotes em redes de computadores. É uma ferramenta essencial para diagnóstico, segurança e análise de tráfego.</p>
+
+  <h2>Instalação</h2>
+  <p>Para instalar o Wireshark em sistemas Linux:</p>
+  <pre><code>sudo apt update
+sudo apt install wireshark</code></pre>
+  <p>Em Windows e macOS, baixe o instalador oficial em <a href="https://www.wireshark.org/" target="_blank" rel="noopener noreferrer">wireshark.org</a>.</p>
+
+  <h2>Captura de Pacotes</h2>
+  <p>Para iniciar uma captura, selecione a interface de rede correta. Exemplo no terminal:</p>
+  <pre><code>sudo wireshark</code></pre>
+  <p>Ou para capturar diretamente no terminal e salvar:</p>
+  <pre><code>sudo tshark -i eth0 -w captura.pcap</code></pre>
+
+  <h2>Filtros</h2>
+  <p>Filtros são essenciais para focar na análise dos dados relevantes.</p>
+  <h3>Filtros de captura</h3>
+  <ul>
+    <li><code>tcp port 80</code> — captura somente pacotes TCP na porta 80</li>
+    <li><code>host 192.168.1.10</code> — captura pacotes de/para o IP especificado</li>
+  </ul>
+  <h3>Filtros de exibição</h3>
+  <ul>
+    <li><code>http</code> — exibe apenas pacotes HTTP</li>
+    <li><code>ip.addr == 192.168.1.10</code> — exibe pacotes com esse IP origem ou destino</li>
+    <li><code>tcp.flags.syn == 1 and tcp.flags.ack == 0</code> — pacotes SYN (início de conexão TCP)</li>
+  </ul>
+
+  <h2>Análise de Pacotes</h2>
+  <p>Wireshark permite examinar o conteúdo dos pacotes, identificar protocolos, endereços, flags e dados transmitidos. É possível inspecionar pacotes individuais e seguir fluxos de comunicação.</p>
+
+  <h2>Exemplo Prático</h2>
+  <p>Capturando pacotes HTTP para analisar uma requisição web:</p>
+  <pre><code>sudo wireshark</code></pre>
+  <p>Abra a interface de rede, comece a captura, faça uma navegação web, e use o filtro <code>http</code> para visualizar as requisições.</p>
+
+  <h2>Dicas Importantes</h2>
+  <ul>
+    <li>Use Wireshark com privilégios adequados (sudo/root no Linux) para capturar tráfego.</li>
+    <li>Esteja ciente das implicações legais e éticas ao capturar tráfego de redes alheias.</li>
+    <li>Utilize filtros para reduzir o volume e focar na análise.</li>
+    <li>Salve capturas para análises futuras com formato <code>.pcap</code>.</li>
+  </ul>
+
+  <h2>Comandos Úteis do Tshark (versão terminal do Wireshark)</h2>
+  <pre><code>sudo tshark -D                  # Listar interfaces disponíveis
+sudo tshark -i eth0 -c 100       # Capturar 100 pacotes na interface eth0
+sudo tshark -r captura.pcap      # Ler arquivo de captura
+sudo tshark -Y "http.request"    # Filtrar pacotes HTTP na leitura</code></pre>
+
+  <a href="index.html" class="button-back" aria-label="Voltar para página inicial">← Voltar para Página Inicial</a>
+</main>
+
+<script>
+  const toggleBtn = document.getElementById('toggle-theme');
+  const body = document.body;
+
+  function updateToggleButton(isDark) {
+    if(isDark) {
+      toggleBtn.textContent = '';
+      toggleBtn.classList.add('dark');
+      toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg> Modo Claro`;
+    } else {
+      toggleBtn.textContent = '';
+      toggleBtn.classList.remove('dark');
+      toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg> Modo Escuro`;
+    }
+  }
+
+  const savedTheme = localStorage.getItem('theme');
+  if(savedTheme === 'dark') {
+    body.classList.add('dark');
+    updateToggleButton(true);
+  } else {
+    updateToggleButton(false);
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    body.classList.toggle('dark');
+    const isDark = body.classList.contains('dark');
+    updateToggleButton(isDark);
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+</script>
+</body>
+</html>

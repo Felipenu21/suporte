@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Executar - Portal Suporte Técnico</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg-dark: #121212;
+    --bg-card: #1e1e1e;
+    --text-light: #e0e0e0;
+    --primary-color: #4caf50;
+    --primary-hover: #388e3c;
+    --shadow-dark: rgba(0, 0, 0, 0.7);
+    --transition-speed: 0.35s;
+    --code-bg: #2a2a2a;
+    --code-border: #444;
+    --table-header-bg: #272727;
+    --table-row-bg: #1f1f1f;
+  }
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    animation: fadeIn var(--transition-speed) ease forwards;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+    padding-bottom: 3rem;
+  }
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+  header {
+    position: sticky;
+    top: 0;
+    background-color: #1a1a1a;
+    color: var(--text-light);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    box-shadow: 0 0 12px var(--shadow-dark);
+    z-index: 1000;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    flex: 1 0 200px;
+    font-weight: 700;
+    user-select: none;
+  }
+  nav {
+    flex: 2 1 500px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+    user-select: none;
+  }
+  nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.5rem 0.9rem;
+    border-radius: 6px;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    font-size: 1rem;
+  }
+  nav a:hover,
+  nav a:focus {
+    background-color: var(--primary-hover);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 0 12px var(--primary-hover);
+    outline: none;
+  }
+  nav a[aria-current="page"] {
+    text-decoration: underline;
+    font-weight: 700;
+    color: var(--primary-color);
+  }
+  button#toggle-theme {
+    background: transparent;
+    border: 2px solid var(--text-light);
+    color: var(--text-light);
+    font-weight: 700;
+    padding: 0.35rem 1rem;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color var(--transition-speed), color var(--transition-speed), transform 0.25s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    user-select: none;
+    flex: 0 0 auto;
+    margin-left: auto;
+    will-change: transform;
+  }
+  button#toggle-theme:hover,
+  button#toggle-theme:focus {
+    background-color: var(--primary-hover);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px var(--primary-hover);
+    outline: none;
+  }
+  button#toggle-theme svg {
+    fill: currentColor;
+    width: 20px;
+    height: 20px;
+    transition: transform 0.4s ease;
+  }
+  button#toggle-theme.dark svg {
+    transform: rotate(40deg);
+  }
+  main {
+    padding: 2rem 2rem 5rem;
+    max-width: 900px;
+    margin: 2rem auto;
+    user-select: text;
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+  main h2, main h3 {
+    color: var(--primary-color);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    user-select: text;
+    scroll-margin-top: 70px;
+  }
+  main p {
+    margin-bottom: 1rem;
+    color: #ccc;
+  }
+  code, pre {
+    font-family: 'Source Code Pro', monospace, monospace;
+    background-color: var(--code-bg);
+    border: 1px solid var(--code-border);
+    border-radius: 6px;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.95rem;
+    user-select: text;
+  }
+  pre {
+    padding: 1rem;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+  }
+  ul {
+    padding-left: 1.3rem;
+    margin-bottom: 1rem;
+    color: #ddd;
+  }
+  ul li {
+    margin-bottom: 0.4rem;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 2rem;
+    color: #ddd;
+  }
+  th, td {
+    border: 1px solid var(--code-border);
+    padding: 0.8rem 1rem;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background-color: var(--table-header-bg);
+    font-weight: 700;
+  }
+  tr:nth-child(even) {
+    background-color: var(--table-row-bg);
+  }
+  a.button-back {
+    display: inline-block;
+    margin-top: 3rem;
+    padding: 0.7rem 1.4rem;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    user-select: none;
+    transition: background-color 0.3s ease;
+  }
+  a.button-back:hover,
+  a.button-back:focus {
+    background-color: var(--primary-hover);
+    outline: none;
+  }
+  /* Scroll suave para ancoras */
+  html {
+    scroll-behavior: smooth;
+  }
+  aside#toc {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    max-width: 220px;
+    background-color: var(--bg-card);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    box-shadow: 0 4px 12px var(--shadow-dark);
+    user-select: none;
+    font-size: 0.9rem;
+    display: none;
+  }
+  aside#toc h4 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+    font-weight: 700;
+  }
+  aside#toc ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  aside#toc ul li {
+    margin-bottom: 0.5rem;
+  }
+  aside#toc ul li a {
+    color: var(--text-light);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  aside#toc ul li a:hover,
+  aside#toc ul li a:focus {
+    color: var(--primary-hover);
+    outline: none;
+  }
+  @media (min-width: 640px) {
+    aside#toc {
+      display: block;
+    }
+    main {
+      margin-right: 270px;
+    }
+  }
+  @media (max-width: 639px) {
+    aside#toc {
+      display: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Executar - Portal Suporte Técnico</h1>
+  <nav>
+    <a href="index.html">Página Inicial</a>
+    <a href="powershell.html">PowerShell</a>
+    <a href="cmd.html">CMD</a>
+    <a href="redes.html">Redes</a>
+    <a href="atalho.html">Atalhos</a>
+    <a href="sintaxes.html">Sintaxes</a>
+    <a href="executar.html" aria-current="page">Executar</a>
+    <a href="nmap.html">Nmap</a>
+    <a href="linux.html">Linux</a>
+    <a href="wireshark.html">Wireshark</a>
+  </nav>
+  <button id="toggle-theme" aria-label="Alternar tema claro/escuro" title="Alternar tema claro/escuro" type="button">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    Modo Claro
+  </button>
+</header>
+
+<aside id="toc" aria-label="Índice do conteúdo">
+  <h4>Conteúdo</h4>
+  <ul>
+    <li><a href="#o-que-e">O que é o Executar</a></li>
+    <li><a href="#como-abrir">Como Abrir</a></li>
+    <li><a href="#comandos-comuns">Comandos Comuns</a></li>
+    <li><a href="#exemplos">Exemplos Práticos</a></li>
+    <li><a href="#dicas">Dicas Extras</a></li>
+  </ul>
+</aside>
+
+<main>
+  <h2 id="o-que-e">O que é o Executar</h2>
+  <p>O recurso <strong>Executar</strong> do Windows permite executar comandos, abrir programas, pastas, documentos ou páginas da web rapidamente, digitando o nome ou caminho desejado.</p>
+  <p>Ele é muito útil para acesso rápido a configurações e ferramentas do sistema.</p>
+
+  <h2 id="como-abrir">Como Abrir o Executar</h2>
+  <ul>
+    <li>Pressione <code>Win + R</code> no teclado.</li>
+    <li>Ou clique no menu iniciar, digite "Executar" e pressione Enter.</li>
+  </ul>
+
+  <h2 id="comandos-comuns">Comandos Comuns no Executar</h2>
+  <p>Aqui está uma lista dos comandos mais usados, com descrições:</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Comando</th>
+        <th>O que faz</th>
+        <th>Descrição</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>cmd</code></td><td>Abre o Prompt de Comando</td><td>Janela do terminal CMD do Windows.</td></tr>
+      <tr><td><code>powershell</code></td><td>Abre o PowerShell</td><td>Janela do PowerShell para comandos avançados.</td></tr>
+      <tr><td><code>explorer</code></td><td>Abre o Explorador de Arquivos</td><td>Abre uma janela do gerenciador de arquivos.</td></tr>
+      <tr><td><code>control</code></td><td>Abre o Painel de Controle</td><td>Acesso às configurações do Windows.</td></tr>
+      <tr><td><code>services.msc</code></td><td>Abre o Gerenciador de Serviços</td><td>Para iniciar, parar e configurar serviços.</td></tr>
+      <tr><td><code>msconfig</code></td><td>Abre Configuração do Sistema</td><td>Configura inicialização e serviços.</td></tr>
+      <tr><td><code>regedit</code></td><td>Abre o Editor do Registro</td><td>Para editar o registro do Windows (cuidado!).</td></tr>
+      <tr><td><code>taskmgr</code></td><td>Abre o Gerenciador de Tarefas</td><td>Gerenciar processos e performance.</td></tr>
+      <tr><td><code>notepad</code></td><td>Abre o Bloco de Notas</td><td>Editor de texto simples.</td></tr>
+      <tr><td><code>mspaint</code></td><td>Abre o Paint</td><td>Editor de imagens básico.</td></tr>
+      <tr><td><code>eventvwr</code></td><td>Abre o Visualizador de Eventos</td><td>Ver logs e eventos do sistema.</td></tr>
+      <tr><td><code>dxdiag</code></td><td>Abre Diagnóstico DirectX</td><td>Informações de hardware e diagnóstico gráfico.</td></tr>
+      <tr><td><code>cleanmgr</code></td><td>Abre Limpeza de Disco</td><td>Ferramenta para liberar espaço.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="exemplos">Exemplos Práticos</h2>
+  <p><strong>Executar o Prompt de Comando como administrador:</strong></p>
+  <ol>
+    <li>Pressione <code>Win + R</code>.</li>
+    <li>Digite <code>cmd</code> e pressione <kbd>Ctrl + Shift + Enter</kbd> para abrir como administrador.</li>
+  </ol>
+
+  <p><strong>Abrir uma pasta específica:</strong></p>
+  <pre><code>explorer C:\Users\SeuUsuario\Documents</code></pre>
+
+  <p><strong>Abrir o Editor do Registro:</strong></p>
+  <pre><code>regedit</code></pre>
+
+  <h2 id="dicas">Dicas Extras</h2>
+  <ul>
+    <li>Você pode usar variáveis de ambiente no Executar, como <code>%appdata%</code>, <code>%temp%</code>, <code>%systemroot%</code>.</li>
+    <li>Use o botão de histórico no Executar para acessar comandos usados anteriormente.</li>
+    <li>É possível criar atalhos para comandos personalizados, facilitando o uso.</li>
+  </ul>
+
+  <a href="index.html" class="button-back" aria-label="Voltar para página inicial">← Voltar para Página Inicial</a>
+</main>
+
+<script>
+  const toggleBtn = document.getElementById('toggle-theme');
+  const body = document.body;
+
+  function updateToggleButton(isDark) {
+    if(isDark) {
+      toggleBtn.textContent = '';
+      toggleBtn.classList.add('dark');
+      toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg> Modo Claro`;
+    } else {
+      toggleBtn.textContent = '';
+      toggleBtn.classList.remove('dark');
+      toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg> Modo Escuro`;
+    }
+  }
+
+  const savedTheme = localStorage.getItem('theme');
+  if(savedTheme === 'dark') {
+    body.classList.add('dark');
+    updateToggleButton(true);
+  } else {
+    updateToggleButton(false);
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    body.classList.toggle('dark');
+    const isDark = body.classList.contains('dark');
+    updateToggleButton(isDark);
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+</script>
+</body>
+</html>

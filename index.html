@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portal Suporte Técnico - Início</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-light: #f0f2f5;
+      --bg-dark: #121212;
+      --bg-card-dark: #1e1e1e;
+      --text-light: #e0e0e0;
+      --text-dark: #222;
+      --primary-color: #3399ff;
+      --primary-hover: #1a73e8;
+      --shadow-dark: rgba(0, 0, 0, 0.7);
+      --transition-speed: 0.35s;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      animation: fadeIn var(--transition-speed) ease forwards;
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body.dark {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      background-color: #fff;
+      color: var(--text-dark);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      z-index: 1000;
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+    }
+
+    body.dark header {
+      background-color: #1a1a1a;
+      color: var(--text-light);
+      box-shadow: 0 0 12px var(--shadow-dark);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      flex: 1 0 200px;
+      font-weight: 700;
+      user-select: none;
+    }
+
+    nav {
+      flex: 2 1 500px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      align-items: center;
+      user-select: none;
+    }
+
+    nav a {
+      color: inherit;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.5rem 0.9rem;
+      border-radius: 6px;
+      transition: background-color 0.3s, color 0.3s, transform 0.2s;
+      font-size: 1rem;
+    }
+
+    nav a:hover,
+    nav a:focus {
+      background-color: var(--primary-hover);
+      color: white;
+      transform: scale(1.05);
+      box-shadow: 0 0 12px var(--primary-hover);
+      outline: none;
+    }
+
+    nav a:first-child {
+      font-weight: 700;
+      margin-right: 2rem;
+      text-decoration: underline;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      user-select: none;
+      flex-shrink: 0;
+    }
+
+    .social-links a {
+      font-size: 1.4rem;
+      color: inherit;
+      transition: color 0.3s;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .social-links a:hover,
+    .social-links a:focus {
+      color: var(--primary-hover);
+      outline: none;
+    }
+
+    button#toggle-theme {
+      background: transparent;
+      border: 2px solid currentColor;
+      color: inherit;
+      font-weight: 700;
+      padding: 0.35rem 1rem;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: background-color var(--transition-speed), color var(--transition-speed), transform 0.25s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+      user-select: none;
+      flex: 0 0 auto;
+      margin-left: 1rem;
+      will-change: transform;
+    }
+
+    button#toggle-theme:hover,
+    button#toggle-theme:focus {
+      background-color: var(--primary-hover);
+      color: white;
+      transform: scale(1.1);
+      box-shadow: 0 0 15px var(--primary-hover);
+      outline: none;
+    }
+
+    button#toggle-theme svg {
+      fill: currentColor;
+      width: 20px;
+      height: 20px;
+      transition: transform 0.4s ease;
+    }
+
+    button#toggle-theme.dark svg {
+      transform: rotate(40deg);
+    }
+
+    main {
+      padding: 3rem 2rem;
+      max-width: 1080px;
+      margin: 2rem auto 3rem;
+      flex-grow: 1;
+      user-select: none;
+    }
+
+    h2 {
+      color: var(--primary-color);
+      margin-bottom: 1.2rem;
+      text-align: center;
+      font-size: 2.6rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    p.intro {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 3rem;
+      font-size: 1.2rem;
+      line-height: 1.7;
+      color: #555;
+      user-select: text;
+      transition: color var(--transition-speed);
+    }
+
+    body.dark p.intro {
+      color: #bbb;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2.5rem;
+      perspective: 1200px;
+    }
+
+    .card {
+      background-color: #fff;
+      color: var(--text-dark);
+      border-radius: 16px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+      padding: 2.2rem 2.2rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      text-decoration: none;
+      transition:
+        box-shadow var(--transition-speed) ease,
+        transform var(--transition-speed) ease,
+        background-color var(--transition-speed),
+        color var(--transition-speed);
+      will-change: transform, box-shadow;
+      user-select: none;
+      transform-style: preserve-3d;
+    }
+
+    body.dark .card {
+      background-color: var(--bg-card-dark);
+      color: var(--text-light);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8);
+    }
+
+    .card:hover,
+    .card:focus-visible {
+      box-shadow: 0 30px 60px rgba(51, 153, 255, 0.8);
+      transform: translateY(-15px) rotateX(8deg) rotateY(8deg);
+      outline: none;
+    }
+
+    .card:active {
+      transform: translateY(-8px) rotateX(3deg) rotateY(3deg);
+      box-shadow: 0 20px 40px rgba(51, 153, 255, 0.6);
+      transition: none;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 1.2rem;
+      font-size: 1.6rem;
+      color: var(--primary-color);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      user-select: text;
+    }
+
+    .card p {
+      flex-grow: 1;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      user-select: text;
+      color: #666;
+      transition: color var(--transition-speed);
+    }
+
+    body.dark .card p {
+      color: #bbb;
+    }
+
+    .card .icon {
+      font-size: 3.2rem;
+      margin-bottom: 1.1rem;
+      color: var(--primary-color);
+      user-select: none;
+      transition: color 0.35s;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.2rem;
+      color: #888;
+      font-size: 0.9rem;
+      border-top: 1px solid #ddd;
+      margin-top: auto;
+      user-select: none;
+      transition: color var(--transition-speed), border-color var(--transition-speed);
+    }
+
+    body.dark footer {
+      color: #555;
+      border-color: #333;
+    }
+
+    @media (max-width: 640px) {
+      header {
+        justify-content: center;
+      }
+      nav {
+        justify-content: center;
+        gap: 0.8rem;
+      }
+      nav a:first-child {
+        margin-right: 1rem;
+      }
+      main {
+        padding: 2rem 1rem;
+        max-width: 95%;
+      }
+      .card {
+        padding: 1.8rem 1.8rem 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Portal Suporte Técnico</h1>
+    <nav>
+      <a href="index.html" aria-current="page">Página Inicial</a>
+      <a href="powershell.html">PowerShell</a>
+      <a href="cmd.html">CMD</a>
+      <a href="redes.html">Redes</a>
+      <a href="atalho.html">Atalhos</a>
+      <a href="sintaxes.html">Sintaxes</a>
+      <a href="executar.html">Executar</a>
+      <a href="nmap.html">Nmap</a>
+      <a href="linux.html">Linux</a>
+      <a href="wireshark.html">Wireshark</a>
+    </nav>
+    <div class="social-links" aria-label="Redes sociais">
+      <a href="https://wa.me/5511994444752" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">📱</a>
+      <a href="https://github.com/Felipenu21" target="_blank" rel="noopener noreferrer" aria-label="GitHub">🐙</a>
+      <a href="https://www.linkedin.com/in/felipe-nunes-222a58304/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">💼</a>
+    </div>
+    <button id="toggle-theme" aria-label="Alternar tema claro/escuro" title="Alternar tema claro/escuro" type="button" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+      Modo Escuro
+    </button>
+  </header>
+  <main>
+    <h2>Bem-vindo ao Portal Suporte Técnico</h2>
+    <p class="intro">
+      Encontre tutoriais detalhados, exemplos práticos e guias completos para dominar as ferramentas essenciais do suporte técnico e redes. Navegue pelas áreas e comece sua jornada!
+    </p>
+
+    <div class="cards" role="list">
+      <a href="powershell.html" class="card" title="PowerShell" role="listitem">
+        <div class="icon" aria-hidden="true">💻</div>
+        <h3>PowerShell</h3>
+        <p>Aprenda comandos, scripts e automação avançada para Windows com exemplos práticos e dicas essenciais.</p>
+      </a>
+      <a href="cmd.html" class="card" title="CMD" role="listitem">
+        <div class="icon" aria-hidden="true">🖥️</div>
+        <h3>CMD</h3>
+        <p>Domine os comandos básicos e avançados do prompt de comando para manutenção e suporte técnico.</p>
+      </a>
+      <a href="redes.html" class="card" title="Redes" role="listitem">
+        <div class="icon" aria-hidden="true">🌐</div>
+        <h3>Redes</h3>
+        <p>Conheça conceitos, configurações e práticas para análise e solução de problemas em redes.</p>
+      </a>
+      <a href="atalho.html" class="card" title="Atalhos" role="listitem">
+        <div class="icon" aria-hidden="true">⌨️</div>
+        <h3>Atalhos</h3>
+        <p>Descubra os principais atalhos do Windows para agilizar seu dia a dia e ganhar produtividade.</p>
+      </a>
+      <a href="sintaxes.html" class="card" title="Sintaxes" role="listitem">
+        <div class="icon" aria-hidden="true">📜</div>
+        <h3>Sintaxes</h3>
+        <p>Guia completo das principais sintaxes utilizadas em scripts, comandos e linguagens do suporte técnico.</p>
+      </a>
+      <a href="executar.html" class="card" title="Executar" role="listitem">
+        <div class="icon" aria-hidden="true">▶️</div>
+        <h3>Executar</h3>
+        <p>Comandos úteis e dicas para executar rapidamente ferramentas e configurações no Windows.</p>
+      </a>
+      <a href="nmap.html" class="card" title="Nmap" role="listitem">
+        <div class="icon" aria-hidden="true">🔍</div>
+        <h3>Nmap</h3>
+        <p>Aprenda a escanear redes, identificar hosts e vulnerabilidades com essa poderosa ferramenta.</p>
+      </a>
+      <a href="linux.html" class="card" title="Linux" role="listitem">
+        <div class="icon" aria-hidden="true">🐧</div>
+        <h3>Linux</h3>
+        <p>Comandos essenciais e administração do sistema para profissionais de suporte e infraestrutura.</p>
+      </a>
+      <a href="wireshark.html" class="card" title="Wireshark" role="listitem">
+        <div class="icon" aria-hidden="true">📡</div>
+        <h3>Wireshark</h3>
+        <p>Entenda a captura e análise de pacotes de rede com a ferramenta líder para diagnóstico avançado.</p>
+      </a>
+    </div>
+  </main>
+  <footer>
+    &copy; 2025 Portal Suporte Técnico - Todos os direitos reservados
+  </footer>
+
+  <script>
+    const toggleBtn = document.getElementById('toggle-theme');
+    const body = document.body;
+
+    function updateToggleButton(isDark) {
+      if(isDark) {
+        toggleBtn.classList.add('dark');
+        toggleBtn.setAttribute('aria-pressed', 'true');
+        toggleBtn.innerHTML = `
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          Modo Claro
+        `;
+      } else {
+        toggleBtn.classList.remove('dark');
+        toggleBtn.setAttribute('aria-pressed', 'false');
+        toggleBtn.innerHTML = `
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          Modo Escuro
+        `;
+      }
+    }
+
+    // Verifica o tema salvo no localStorage
+    const savedTheme = localStorage.getItem('theme');
+    if(savedTheme === 'dark') {
+      body.classList.add('dark');
+      updateToggleButton(true);
+    } else {
+      updateToggleButton(false);
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      body.classList.toggle('dark');
+      const isDark = body.classList.contains('dark');
+      updateToggleButton(isDark);
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>
