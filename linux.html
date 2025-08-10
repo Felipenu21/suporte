@@ -35,6 +35,10 @@
     transition: background-color var(--transition-speed), color var(--transition-speed);
     padding-bottom: 3rem;
   }
+  body.dark {
+    background-color: #f5f5f5;
+    color: #121212;
+  }
   @keyframes fadeIn {
     to { opacity: 1; }
   }
@@ -50,6 +54,11 @@
     flex-wrap: wrap;
     box-shadow: 0 0 12px var(--shadow-dark);
     z-index: 1000;
+  }
+  body.dark header {
+    background-color: #e0e0e0;
+    color: #121212;
+    box-shadow: 0 0 12px rgba(0,0,0,0.15);
   }
   header h1 {
     margin: 0;
@@ -75,6 +84,9 @@
     border-radius: 6px;
     transition: background-color 0.3s, color 0.3s, transform 0.2s;
     font-size: 1rem;
+  }
+  body.dark nav a {
+    color: #121212;
   }
   nav a:hover,
   nav a:focus {
@@ -106,6 +118,10 @@
     flex: 0 0 auto;
     margin-left: auto;
     will-change: transform;
+  }
+  body.dark button#toggle-theme {
+    border-color: #121212;
+    color: #121212;
   }
   button#toggle-theme:hover,
   button#toggle-theme:focus {
@@ -140,9 +156,15 @@
     user-select: text;
     scroll-margin-top: 70px;
   }
+  body.dark main h2, body.dark main h3 {
+    color: #388e3c;
+  }
   main p {
     margin-bottom: 1rem;
     color: #ccc;
+  }
+  body.dark main p {
+    color: #333;
   }
   code, pre {
     font-family: 'Source Code Pro', monospace, monospace;
@@ -152,6 +174,10 @@
     padding: 0.3rem 0.5rem;
     font-size: 0.95rem;
     user-select: text;
+  }
+  body.dark code, body.dark pre {
+    background-color: #eaeaea;
+    border-color: #ccc;
   }
   pre {
     padding: 1rem;
@@ -164,6 +190,9 @@
     margin-bottom: 1rem;
     color: #ddd;
   }
+  body.dark ul {
+    color: #444;
+  }
   ul li {
     margin-bottom: 0.4rem;
   }
@@ -173,18 +202,30 @@
     margin-bottom: 2rem;
     color: #ddd;
   }
+  body.dark table {
+    color: #333;
+  }
   th, td {
     border: 1px solid var(--code-border);
     padding: 0.8rem 1rem;
     text-align: left;
     vertical-align: top;
   }
+  body.dark th, body.dark td {
+    border-color: #ccc;
+  }
   th {
     background-color: var(--table-header-bg);
     font-weight: 700;
   }
+  body.dark th {
+    background-color: #d4e9d4;
+  }
   tr:nth-child(even) {
     background-color: var(--table-row-bg);
+  }
+  body.dark tr:nth-child(even) {
+    background-color: #f0f9f0;
   }
   a.button-back {
     display: inline-block;
@@ -277,7 +318,7 @@
     <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
       <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
     </svg>
-    Modo Claro
+    Modo Escuro
   </button>
 </header>
 
@@ -351,142 +392,52 @@
       <tr><td><code>systemctl</code></td><td>Gerenciamento de serviços systemd</td><td><code>sudo systemctl status nginx</code></td></tr>
       <tr><td><code>journalctl</code></td><td>Visualiza logs do systemd</td><td><code>journalctl -u nginx</code></td></tr>
       <tr><td><code>curl</code></td><td>Faz requisições HTTP</td><td><code>curl -I https://google.com</code></td></tr>
-      <tr><td><code>wget</code></td><td>Baixa arquivos da web</td><td><code>wget https://site.com/arquivo.zip</code></td></tr>
-      <tr><td><code>dd</code></td><td>Copias e grava imagens de disco</td><td><code>sudo dd if=/dev/sda of=backup.img bs=4M</code></td></tr>
-      <tr><td><code>awk</code></td><td>Manipulação e processamento de texto</td><td><code>cat arquivo | awk '{print $1}'</code></td></tr>
-      <tr><td><code>sed</code></td><td>Editor de texto em linha de comando</td><td><code>sed 's/antigo/novo/g' arquivo.txt</code></td></tr>
+      <tr><td><code>wget</code></td><td>Baixa arquivos da web</td><td><code>wget http://site.com/arquivo.zip</code></td></tr>
+      <tr><td><code>mount</code></td><td>Montagem de sistemas de arquivos</td><td><code>mount /dev/sdb1 /mnt/usb</code></td></tr>
+      <tr><td><code>umount</code></td><td>Desmonta sistemas de arquivos</td><td><code>umount /mnt/usb</code></td></tr>
+      <tr><td><code>netstat</code></td><td>Mostra conexões de rede</td><td><code>netstat -tulnp</code></td></tr>
     </tbody>
   </table>
 
   <h2 id="ferramentas">Ferramentas Importantes</h2>
   <ul>
-    <li><strong>htop:</strong> Visualização interativa dos processos, use <code>htop</code>.</li>
-    <li><strong>netstat / ss:</strong> Verifica conexões e portas abertas. Ex: <code>netstat -tulnp</code> ou <code>ss -tuln</code>.</li>
-    <li><strong>tcpdump:</strong> Captura pacotes da rede para análise. Ex: <code>sudo tcpdump -i eth0</code>.</li>
-    <li><strong>lsof:</strong> Lista arquivos abertos por processos. Ex: <code>lsof -i :80</code>.</li>
-    <li><strong>df / du:</strong> Monitoramento de espaço em disco.</li>
-    <li><strong>cron / systemd timers:</strong> Agendamento de tarefas automáticas.</li>
+    <li><strong>nmap:</strong> Scanner de rede para descoberta e auditoria.</li>
+    <li><strong>Wireshark:</strong> Analisador de pacotes de rede.</li>
+    <li><strong>tcpdump:</strong> Captura de pacotes via linha de comando.</li>
+    <li><strong>Metasploit:</strong> Framework para testes de penetração.</li>
+    <li><strong>Aircrack-ng:</strong> Análise e quebra de redes Wi-Fi.</li>
   </ul>
 
   <h2 id="exemplos-praticos">Exemplos Práticos</h2>
-  <p><strong>Listar arquivos detalhados no diretório home:</strong></p>
-  <pre><code>ls -lah /home/usuario</code></pre>
-
-  <p><strong>Buscar palavra "erro" em arquivos de log:</strong></p>
-  <pre><code>grep -i "erro" /var/log/syslog</code></pre>
-
-  <p><strong>Copiar diretório com todos arquivos e permissões:</strong></p>
-  <pre><code>cp -a /origem /destino</code></pre>
-
-  <p><strong>Alterar permissões para dono (leitura e escrita) e grupo (somente leitura):</strong></p>
-  <pre><code>chmod 640 arquivo.txt</code></pre>
-
-  <p><strong>Verificar uso de disco em human readable:</strong></p>
-  <pre><code>df -h</code></pre>
-
-  <p><strong>Conectar via SSH a um servidor remoto:</strong></p>
-  <pre><code>ssh usuario@192.168.1.10</code></pre>
-
-  <p><strong>Baixar arquivo da web:</strong></p>
-  <pre><code>wget https://exemplo.com/arquivo.zip</code></pre>
+  <pre><code>sudo apt update
+sudo apt install nmap
+nmap -sS 192.168.1.0/24
+sudo tcpdump -i eth0
+</code></pre>
 
   <h2 id="dicas">Dicas e Boas Práticas</h2>
   <ul>
-    <li>Use sempre permissões mínimas necessárias para arquivos e diretórios.</li>
-    <li>Evite executar comandos com sudo sem necessidade para minimizar riscos.</li>
-    <li>Documente seus scripts e comandos para facilitar manutenção futura.</li>
-    <li>Use <code>man comando</code> para acessar a documentação local detalhada.</li>
-    <li>Mantenha o sistema atualizado e faça backups frequentes.</li>
+    <li>Mantenha seu sistema sempre atualizado.</li>
+    <li>Use usuários sem privilégios para tarefas diárias.</li>
+    <li>Configure firewall e monitore logs regularmente.</li>
+    <li>Faça backups periódicos e teste-os.</li>
+    <li>Use criptografia para dados sensíveis.</li>
   </ul>
 
   <h2 id="ataques-pentest">Tipos de Ataques e Pentest</h2>
-  <p>Conhecer os tipos de ataques é essencial para proteger sistemas e realizar testes de invasão (pentest) de forma eficaz e ética.</p>
-
-  <h3>Tipos Comuns de Ataques</h3>
+  <p>Conheça os tipos mais comuns de ataques e como proteger seu ambiente:</p>
   <ul>
-    <li><strong>Phishing:</strong> Ataques que enganam usuários para obter credenciais ou informações sensíveis.</li>
-    <li><strong>SQL Injection:</strong> Inserção de código malicioso em formulários para acessar banco de dados indevidamente.</li>
-    <li><strong>Cross-Site Scripting (XSS):</strong> Injeção de scripts maliciosos em páginas web para roubar dados ou controlar sessões.</li>
-    <li><strong>Brute Force:</strong> Tentativa de descobrir senhas por força bruta, testando várias combinações.</li>
-    <li><strong>Man-in-the-Middle (MitM):</strong> Interceptação de comunicação entre duas partes sem que elas percebam.</li>
-    <li><strong>DoS/DDoS:</strong> Ataques para sobrecarregar servidores e indisponibilizar serviços.</li>
-    <li><strong>Escalada de Privilégios:</strong> Exploração para obter níveis maiores de acesso no sistema.</li>
+    <li>Phishing</li>
+    <li>SQL Injection</li>
+    <li>Cross-Site Scripting (XSS)</li>
+    <li>Ataques de força bruta</li>
+    <li>Escaneamento de portas</li>
   </ul>
 
-  <h3>Principais Ferramentas Kali Linux para Pentest</h3>
-  <ul>
-    <li><strong>Nmap:</strong> Scanner de redes para descoberta de hosts e serviços. Exemplo: <code>nmap -sS 192.168.1.0/24</code></li>
-    <li><strong>Metasploit Framework:</strong> Plataforma para desenvolvimento e execução de exploits.</li>
-    <li><strong>Aircrack-ng:</strong> Conjunto de ferramentas para auditoria de redes Wi-Fi.</li>
-    <li><strong>Wireshark:</strong> Analisador de pacotes para captura e análise de tráfego de rede.</li>
-    <li><strong>John the Ripper:</strong> Ferramenta para quebra de senhas usando ataques de dicionário e força bruta.</li>
-    <li><strong>Burp Suite:</strong> Plataforma para testar segurança de aplicações web.</li>
-    <li><strong>Hydra:</strong> Ferramenta de força bruta para serviços de autenticação.</li>
-  </ul>
+  <h2 id="uso-ferramentas">Uso Ferramentas Kali Linux</h2>
+  <p>O Kali Linux oferece diversas ferramentas para segurança da informação, como Nmap, Metasploit e Wireshark, essenciais para análises e pentests.</p>
 
-  <h3>Práticas de Pentest Ético</h3>
-  <ul>
-    <li>Obtenha sempre autorização escrita antes de realizar qualquer teste.</li>
-    <li>Documente todos os passos e resultados para análise posterior.</li>
-    <li>Utilize ambientes controlados (laboratórios) para treinamento e simulações.</li>
-    <li>Conheça as ferramentas antes de usar em ambientes produtivos.</li>
-    <li>Atualize-se constantemente sobre novas vulnerabilidades e técnicas de defesa.</li>
-  </ul>
-
-  <h2 id="uso-ferramentas">Como Usar Ferramentas Kali Linux para Pentest</h2>
-
-  <h3>Nmap - Scanner de Rede</h3>
-  <p>O <code>nmap</code> é usado para descobrir hosts ativos, portas abertas e serviços em uma rede.</p>
-  <p><strong>Comando básico:</strong></p>
-  <pre><code>nmap -sS 192.168.1.0/24</code></pre>
-  <p><strong>Exemplo:</strong> Descobrir hosts ativos e portas TCP abertas na rede local.</p>
-  <p><strong>Uso Ético:</strong> Sempre obtenha permissão antes de escanear redes que não são suas.</p>
-
-  <h3>Hydra - Ataque de Força Bruta</h3>
-  <p>O <code>hydra</code> permite realizar ataques de força bruta em serviços de autenticação como SSH, FTP e HTTP.</p>
-  <p><strong>Comando básico:</strong></p>
-  <pre><code>hydra -l usuario -P lista_senhas.txt ssh://192.168.1.100</code></pre>
-  <p><strong>Explicação:</strong> Tenta logar no SSH do IP alvo usando o usuário <code>usuario</code> e uma lista de senhas do arquivo <code>lista_senhas.txt</code>.</p>
-  <p><strong>Exemplo Prático:</strong> Usado em laboratório para testar robustez de senhas.</p>
-  <p><strong>Dica:</strong> Nunca use em sistemas sem autorização explícita, é ilegal.</p>
-
-  <h3>Metasploit Framework</h3>
-  <p>O <code>msfconsole</code> é uma plataforma poderosa para criar e executar exploits contra alvos vulneráveis.</p>
-  <p><strong>Passos básicos:</strong></p>
-  <ol>
-    <li>Inicie o Metasploit: <code>msfconsole</code></li>
-    <li>Use um módulo exploit: <code>use exploit/windows/smb/ms17_010_eternalblue</code></li>
-    <li>Configure o alvo: <code>set RHOSTS 192.168.1.105</code></li>
-    <li>Execute: <code>exploit</code></li>
-  </ol>
-  <p><strong>Nota:</strong> Use sempre em ambientes controlados para aprendizado ou com permissão.</p>
-
-  <h3>Aircrack-ng - Teste de Segurança Wi-Fi</h3>
-  <p>O conjunto <code>aircrack-ng</code> é utilizado para capturar e analisar tráfego Wi-Fi e tentar quebrar chaves WEP/WPA.</p>
-  <p><strong>Passos básicos:</strong></p>
-  <ul>
-    <li>Coloque a placa wireless em modo monitor: <code>airmon-ng start wlan0</code></li>
-    <li>Capture pacotes: <code>airodump-ng wlan0mon</code></li>
-    <li>Capture handshake de uma rede alvo</li>
-    <li>Quebre a senha com o dicionário: <code>aircrack-ng -w wordlist.txt capture.cap</code></li>
-  </ul>
-  <p><strong>Aviso:</strong> Use somente em redes autorizadas.</p>
-
-  <h3>Wireshark - Análise de Pacotes</h3>
-  <p>Wireshark captura e analisa tráfego de rede em tempo real, ótimo para diagnóstico e investigação.</p>
-  <p><strong>Uso:</strong> Inicie a captura na interface desejada e use filtros para focar em pacotes específicos.</p>
-  <p><strong>Filtro exemplo:</strong> Para ver só tráfego HTTP: <code>http</code></p>
-
-  <h3>Dicas para Pentest Seguro e Ético</h3>
-  <ul>
-    <li>Sempre tenha autorização escrita antes de realizar qualquer teste.</li>
-    <li>Realize testes em ambientes controlados, como máquinas virtuais ou laboratórios isolados.</li>
-    <li>Documente tudo: passos, comandos, resultados e recomendações.</li>
-    <li>Respeite privacidade e confidencialidade dos dados.</li>
-    <li>Esteja sempre atualizado sobre leis e regulamentações locais.</li>
-  </ul>
-
-  <a href="index.html" class="button-back" aria-label="Voltar para página inicial">← Voltar para Página Inicial</a>
+  <a href="index.html" class="button-back" aria-label="Voltar à página inicial">Voltar ao Início</a>
 </main>
 
 <script>
@@ -494,24 +445,16 @@
   const body = document.body;
 
   function updateToggleButton(isDark) {
-    if(isDark) {
-      toggleBtn.textContent = '';
-      toggleBtn.classList.add('dark');
-      toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    toggleBtn.classList.toggle('dark', isDark);
+    toggleBtn.innerHTML = `
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg> Modo Claro`;
-    } else {
-      toggleBtn.textContent = '';
-      toggleBtn.classList.remove('dark');
-      toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg> Modo Escuro`;
-    }
+      </svg> ${isDark ? 'Modo Claro' : 'Modo Escuro'}
+    `;
   }
 
-  // Verifica tema salvo
   const savedTheme = localStorage.getItem('theme');
-  if(savedTheme === 'dark') {
+  if (savedTheme === 'dark') {
     body.classList.add('dark');
     updateToggleButton(true);
   } else {
@@ -519,12 +462,10 @@
   }
 
   toggleBtn.addEventListener('click', () => {
-    body.classList.toggle('dark');
-    const isDark = body.classList.contains('dark');
+    const isDark = body.classList.toggle('dark');
     updateToggleButton(isDark);
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
   });
 </script>
-
 </body>
 </html>
