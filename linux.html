@@ -7,26 +7,37 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
 <style>
   :root {
+    /* Cores modo escuro */
     --bg-dark: #121212;
-    --bg-card: #1e1e1e;
+    --bg-card-dark: #1e1e1e;
     --text-light: #e0e0e0;
     --primary-color: #4caf50;
     --primary-hover: #388e3c;
     --shadow-dark: rgba(0, 0, 0, 0.7);
     --transition-speed: 0.35s;
-    --code-bg: #2a2a2a;
-    --code-border: #444;
-    --table-header-bg: #272727;
-    --table-row-bg: #1f1f1f;
+    --code-bg-dark: #2a2a2a;
+    --code-border-dark: #444;
+    --table-header-bg-dark: #272727;
+    --table-row-bg-dark: #1f1f1f;
+
+    /* Cores modo claro */
+    --bg-light: #f5f5f5;
+    --bg-card-light: #ffffff;
+    --text-dark: #121212;
+    --code-bg-light: #eaeaea;
+    --code-border-light: #ccc;
+    --table-header-bg-light: #d4e9d4;
+    --table-row-bg-light: #f0f9f0;
   }
+
   *, *::before, *::after {
     box-sizing: border-box;
   }
   body {
     margin: 0;
     font-family: 'Inter', sans-serif;
-    background-color: var(--bg-dark);
-    color: var(--text-light);
+    background-color: var(--bg-light);
+    color: var(--text-dark);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -36,8 +47,8 @@
     padding-bottom: 3rem;
   }
   body.dark {
-    background-color: #f5f5f5;
-    color: #121212;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
   }
   @keyframes fadeIn {
     to { opacity: 1; }
@@ -45,8 +56,8 @@
   header {
     position: sticky;
     top: 0;
-    background-color: #1a1a1a;
-    color: var(--text-light);
+    background-color: var(--bg-card-light);
+    color: var(--text-dark);
     padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
@@ -54,11 +65,12 @@
     flex-wrap: wrap;
     box-shadow: 0 0 12px var(--shadow-dark);
     z-index: 1000;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
   }
   body.dark header {
-    background-color: #e0e0e0;
-    color: #121212;
-    box-shadow: 0 0 12px rgba(0,0,0,0.15);
+    background-color: var(--bg-card-dark);
+    color: var(--text-light);
+    box-shadow: 0 0 12px rgba(0,0,0,0.6);
   }
   header h1 {
     margin: 0;
@@ -77,7 +89,7 @@
     user-select: none;
   }
   nav a {
-    color: var(--text-light);
+    color: var(--text-dark);
     text-decoration: none;
     font-weight: 600;
     padding: 0.5rem 0.9rem;
@@ -86,7 +98,7 @@
     font-size: 1rem;
   }
   body.dark nav a {
-    color: #121212;
+    color: var(--text-light);
   }
   nav a:hover,
   nav a:focus {
@@ -103,8 +115,8 @@
   }
   button#toggle-theme {
     background: transparent;
-    border: 2px solid var(--text-light);
-    color: var(--text-light);
+    border: 2px solid var(--text-dark);
+    color: var(--text-dark);
     font-weight: 700;
     padding: 0.35rem 1rem;
     cursor: pointer;
@@ -120,8 +132,8 @@
     will-change: transform;
   }
   body.dark button#toggle-theme {
-    border-color: #121212;
-    color: #121212;
+    border-color: var(--text-light);
+    color: var(--text-light);
   }
   button#toggle-theme:hover,
   button#toggle-theme:focus {
@@ -157,27 +169,27 @@
     scroll-margin-top: 70px;
   }
   body.dark main h2, body.dark main h3 {
-    color: #388e3c;
+    color: var(--primary-hover);
   }
   main p {
     margin-bottom: 1rem;
-    color: #ccc;
+    color: #444;
   }
   body.dark main p {
-    color: #333;
+    color: #ccc;
   }
   code, pre {
     font-family: 'Source Code Pro', monospace, monospace;
-    background-color: var(--code-bg);
-    border: 1px solid var(--code-border);
+    background-color: var(--code-bg-light);
+    border: 1px solid var(--code-border-light);
     border-radius: 6px;
     padding: 0.3rem 0.5rem;
     font-size: 0.95rem;
     user-select: text;
   }
   body.dark code, body.dark pre {
-    background-color: #eaeaea;
-    border-color: #ccc;
+    background-color: var(--code-bg-dark);
+    border-color: var(--code-border-dark);
   }
   pre {
     padding: 1rem;
@@ -188,10 +200,10 @@
   ul {
     padding-left: 1.3rem;
     margin-bottom: 1rem;
-    color: #ddd;
+    color: #666;
   }
   body.dark ul {
-    color: #444;
+    color: #ccc;
   }
   ul li {
     margin-bottom: 0.4rem;
@@ -200,32 +212,32 @@
     border-collapse: collapse;
     width: 100%;
     margin-bottom: 2rem;
-    color: #ddd;
+    color: var(--text-dark);
   }
   body.dark table {
-    color: #333;
+    color: var(--text-light);
   }
   th, td {
-    border: 1px solid var(--code-border);
+    border: 1px solid var(--code-border-light);
     padding: 0.8rem 1rem;
     text-align: left;
     vertical-align: top;
   }
   body.dark th, body.dark td {
-    border-color: #ccc;
+    border-color: var(--code-border-dark);
   }
   th {
-    background-color: var(--table-header-bg);
+    background-color: var(--table-header-bg-light);
     font-weight: 700;
   }
   body.dark th {
-    background-color: #d4e9d4;
+    background-color: var(--table-header-bg-dark);
   }
   tr:nth-child(even) {
-    background-color: var(--table-row-bg);
+    background-color: var(--table-row-bg-light);
   }
   body.dark tr:nth-child(even) {
-    background-color: #f0f9f0;
+    background-color: var(--table-row-bg-dark);
   }
   a.button-back {
     display: inline-block;
@@ -244,7 +256,7 @@
     background-color: var(--primary-hover);
     outline: none;
   }
-  /* Scroll suave para ancoras */
+  /* Scroll suave para âncoras */
   html {
     scroll-behavior: smooth;
   }
@@ -253,7 +265,7 @@
     top: 100px;
     right: 20px;
     max-width: 220px;
-    background-color: var(--bg-card);
+    background-color: var(--bg-card-dark);
     border-radius: 10px;
     padding: 1rem 1.2rem;
     box-shadow: 0 4px 12px var(--shadow-dark);
@@ -388,56 +400,54 @@
     <tbody>
       <tr><td><code>ssh</code></td><td>Acesso remoto seguro</td><td><code>ssh user@192.168.1.10</code></td></tr>
       <tr><td><code>rsync</code></td><td>Sincronização de arquivos</td><td><code>rsync -avz /origem /destino</code></td></tr>
-      <tr><td><code>iptables</code></td><td>Configuração de firewall</td><td><code>sudo iptables -L</code></td></tr>
-      <tr><td><code>systemctl</code></td><td>Gerenciamento de serviços systemd</td><td><code>sudo systemctl status nginx</code></td></tr>
-      <tr><td><code>journalctl</code></td><td>Visualiza logs do systemd</td><td><code>journalctl -u nginx</code></td></tr>
-      <tr><td><code>curl</code></td><td>Faz requisições HTTP</td><td><code>curl -I https://google.com</code></td></tr>
-      <tr><td><code>wget</code></td><td>Baixa arquivos da web</td><td><code>wget http://site.com/arquivo.zip</code></td></tr>
-      <tr><td><code>mount</code></td><td>Montagem de sistemas de arquivos</td><td><code>mount /dev/sdb1 /mnt/usb</code></td></tr>
-      <tr><td><code>umount</code></td><td>Desmonta sistemas de arquivos</td><td><code>umount /mnt/usb</code></td></tr>
+      <tr><td><code>iptables</code></td><td>Configura firewall</td><td><code>iptables -L</code></td></tr>
+      <tr><td><code>systemctl</code></td><td>Gerencia serviços do sistema</td><td><code>systemctl status apache2</code></td></tr>
+      <tr><td><code>journalctl</code></td><td>Visualiza logs do sistema</td><td><code>journalctl -xe</code></td></tr>
       <tr><td><code>netstat</code></td><td>Mostra conexões de rede</td><td><code>netstat -tulnp</code></td></tr>
+      <tr><td><code>tcpdump</code></td><td>Captura pacotes de rede</td><td><code>tcpdump -i eth0</code></td></tr>
+      <tr><td><code>mount</code></td><td>Montar sistemas de arquivos</td><td><code>mount /dev/sdb1 /mnt/usb</code></td></tr>
+      <tr><td><code>umount</code></td><td>Desmontar sistemas de arquivos</td><td><code>umount /mnt/usb</code></td></tr>
+      <tr><td><code>sudo</code></td><td>Executa comandos com privilégios de superusuário</td><td><code>sudo apt update</code></td></tr>
     </tbody>
   </table>
 
   <h2 id="ferramentas">Ferramentas Importantes</h2>
   <ul>
-    <li><strong>nmap:</strong> Scanner de rede para descoberta e auditoria.</li>
-    <li><strong>Wireshark:</strong> Analisador de pacotes de rede.</li>
-    <li><strong>tcpdump:</strong> Captura de pacotes via linha de comando.</li>
-    <li><strong>Metasploit:</strong> Framework para testes de penetração.</li>
-    <li><strong>Aircrack-ng:</strong> Análise e quebra de redes Wi-Fi.</li>
+    <li><strong>nmap:</strong> Scanner de rede para descobrir hosts e serviços.</li>
+    <li><strong>wireshark:</strong> Analisador de pacotes para monitoramento de rede.</li>
+    <li><strong>tcpdump:</strong> Captura e analisa pacotes via linha de comando.</li>
+    <li><strong>curl:</strong> Transfere dados de URLs.</li>
+    <li><strong>ssh:</strong> Acesso remoto seguro.</li>
   </ul>
 
   <h2 id="exemplos-praticos">Exemplos Práticos</h2>
-  <pre><code>sudo apt update
-sudo apt install nmap
-nmap -sS 192.168.1.0/24
-sudo tcpdump -i eth0
-</code></pre>
+  <p>Para listar arquivos ocultos em um diretório:</p>
+  <pre><code>ls -la /home/usuario</code></pre>
+  <p>Para copiar arquivos e preservar permissões:</p>
+  <pre><code>cp -a /origem/arquivo.txt /destino/</code></pre>
+  <p>Para monitorar processos em tempo real:</p>
+  <pre><code>top</code></pre>
 
   <h2 id="dicas">Dicas e Boas Práticas</h2>
   <ul>
-    <li>Mantenha seu sistema sempre atualizado.</li>
-    <li>Use usuários sem privilégios para tarefas diárias.</li>
-    <li>Configure firewall e monitore logs regularmente.</li>
-    <li>Faça backups periódicos e teste-os.</li>
-    <li>Use criptografia para dados sensíveis.</li>
+    <li>Use sempre privilégios mínimos necessários.</li>
+    <li>Faça backup antes de alterar arquivos importantes.</li>
+    <li>Use chaves SSH para autenticação segura.</li>
+    <li>Verifique permissões de arquivos regularmente.</li>
+    <li>Mantenha seu sistema atualizado.</li>
   </ul>
 
   <h2 id="ataques-pentest">Tipos de Ataques e Pentest</h2>
-  <p>Conheça os tipos mais comuns de ataques e como proteger seu ambiente:</p>
   <ul>
-    <li>Phishing</li>
-    <li>SQL Injection</li>
-    <li>Cross-Site Scripting (XSS)</li>
-    <li>Ataques de força bruta</li>
-    <li>Escaneamento de portas</li>
+    <li>Phishing, ataques de força bruta, injeção de comandos.</li>
+    <li>Escalada de privilégios e análise de vulnerabilidades.</li>
+    <li>Utilização de ferramentas como Metasploit e Nmap para pentest.</li>
   </ul>
 
   <h2 id="uso-ferramentas">Uso Ferramentas Kali Linux</h2>
-  <p>O Kali Linux oferece diversas ferramentas para segurança da informação, como Nmap, Metasploit e Wireshark, essenciais para análises e pentests.</p>
+  <p>No Kali Linux, ferramentas como nmap, wireshark e metasploit são fundamentais para testes de penetração e análise de redes.</p>
 
-  <a href="index.html" class="button-back" aria-label="Voltar à página inicial">Voltar ao Início</a>
+  <a href="index.html" class="button-back" aria-label="Voltar para página inicial">← Voltar ao Início</a>
 </main>
 
 <script>
@@ -458,6 +468,7 @@ sudo tcpdump -i eth0
     body.classList.add('dark');
     updateToggleButton(true);
   } else {
+    body.classList.remove('dark');
     updateToggleButton(false);
   }
 
