@@ -35,13 +35,27 @@
     transition: background-color var(--transition-speed), color var(--transition-speed);
     padding-bottom: 3rem;
   }
+  body.light {
+    --bg-dark: #fafafa;
+    --bg-card: #fff;
+    --text-light: #222;
+    --primary-color: #2e7d32;
+    --primary-hover: #1b5e20;
+    --shadow-dark: rgba(0,0,0,0.15);
+    --code-bg: #f5f5f5;
+    --code-border: #ccc;
+    --table-header-bg: #e0e0e0;
+    --table-row-bg: #fafafa;
+    background-color: #fafafa;
+    color: #222;
+  }
   @keyframes fadeIn {
     to { opacity: 1; }
   }
   header {
     position: sticky;
     top: 0;
-    background-color: #1a1a1a;
+    background-color: var(--bg-card);
     color: var(--text-light);
     padding: 1rem 2rem;
     display: flex;
@@ -50,6 +64,9 @@
     flex-wrap: wrap;
     box-shadow: 0 0 12px var(--shadow-dark);
     z-index: 1000;
+  }
+  header.light {
+    color: var(--text-light);
   }
   header h1 {
     margin: 0;
@@ -173,6 +190,9 @@
     margin-bottom: 2rem;
     color: #ddd;
   }
+  body.light table {
+    color: #222;
+  }
   th, td {
     border: 1px solid var(--code-border);
     padding: 0.8rem 1rem;
@@ -184,6 +204,12 @@
     font-weight: 700;
   }
   tr:nth-child(even) {
+    background-color: var(--table-row-bg);
+  }
+  body.light th {
+    background-color: var(--table-header-bg);
+  }
+  body.light tr:nth-child(even) {
     background-color: var(--table-row-bg);
   }
   a.button-back {
@@ -203,7 +229,7 @@
     background-color: var(--primary-hover);
     outline: none;
   }
-  /* Scroll suave para ancoras */
+  /* Scroll suave para âncoras */
   html {
     scroll-behavior: smooth;
   }
@@ -259,7 +285,7 @@
 </style>
 </head>
 <body>
-<header>
+<header id="header">
   <h1>Executar - Portal Suporte Técnico</h1>
   <nav>
     <a href="index.html">Página Inicial</a>
@@ -273,11 +299,11 @@
     <a href="linux.html">Linux</a>
     <a href="wireshark.html">Wireshark</a>
   </nav>
-  <button id="toggle-theme" aria-label="Alternar tema claro/escuro" title="Alternar tema claro/escuro" type="button">
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <button id="toggle-theme" aria-label="Alternar tema claro/escuro" title="Alternar tema claro/escuro" type="button" aria-pressed="false">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="20" height="20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
       <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
     </svg>
-    Modo Claro
+    Modo Escuro
   </button>
 </header>
 
@@ -286,7 +312,7 @@
   <ul>
     <li><a href="#o-que-e">O que é o Executar</a></li>
     <li><a href="#como-abrir">Como Abrir</a></li>
-    <li><a href="#comandos-comuns">Comandos Comuns</a></li>
+    <li><a href="#comandos-comuns">Comandos do Executar</a></li>
     <li><a href="#exemplos">Exemplos Práticos</a></li>
     <li><a href="#dicas">Dicas Extras</a></li>
   </ul>
@@ -303,90 +329,175 @@
     <li>Ou clique no menu iniciar, digite "Executar" e pressione Enter.</li>
   </ul>
 
-  <h2 id="comandos-comuns">Comandos Comuns no Executar</h2>
-  <p>Aqui está uma lista dos comandos mais usados, com descrições:</p>
+  <h2 id="comandos-comuns">Comandos do Executar (Organizados por Categoria)</h2>
+
+  <h3>Ferramentas do Sistema</h3>
   <table>
     <thead>
-      <tr>
-        <th>Comando</th>
-        <th>O que faz</th>
-        <th>Descrição</th>
-      </tr>
+      <tr><th>Comando</th><th>O que faz</th><th>Descrição</th></tr>
     </thead>
     <tbody>
-      <tr><td><code>cmd</code></td><td>Abre o Prompt de Comando</td><td>Janela do terminal CMD do Windows.</td></tr>
-      <tr><td><code>powershell</code></td><td>Abre o PowerShell</td><td>Janela do PowerShell para comandos avançados.</td></tr>
-      <tr><td><code>explorer</code></td><td>Abre o Explorador de Arquivos</td><td>Abre uma janela do gerenciador de arquivos.</td></tr>
-      <tr><td><code>control</code></td><td>Abre o Painel de Controle</td><td>Acesso às configurações do Windows.</td></tr>
-      <tr><td><code>services.msc</code></td><td>Abre o Gerenciador de Serviços</td><td>Para iniciar, parar e configurar serviços.</td></tr>
-      <tr><td><code>msconfig</code></td><td>Abre Configuração do Sistema</td><td>Configura inicialização e serviços.</td></tr>
-      <tr><td><code>regedit</code></td><td>Abre o Editor do Registro</td><td>Para editar o registro do Windows (cuidado!).</td></tr>
-      <tr><td><code>taskmgr</code></td><td>Abre o Gerenciador de Tarefas</td><td>Gerenciar processos e performance.</td></tr>
-      <tr><td><code>notepad</code></td><td>Abre o Bloco de Notas</td><td>Editor de texto simples.</td></tr>
-      <tr><td><code>mspaint</code></td><td>Abre o Paint</td><td>Editor de imagens básico.</td></tr>
-      <tr><td><code>eventvwr</code></td><td>Abre o Visualizador de Eventos</td><td>Ver logs e eventos do sistema.</td></tr>
-      <tr><td><code>dxdiag</code></td><td>Abre Diagnóstico DirectX</td><td>Informações de hardware e diagnóstico gráfico.</td></tr>
-      <tr><td><code>cleanmgr</code></td><td>Abre Limpeza de Disco</td><td>Ferramenta para liberar espaço.</td></tr>
+      <tr><td><code>cmd</code></td><td>Prompt de Comando</td><td>Terminal clássico do Windows para comandos.</td></tr>
+      <tr><td><code>powershell</code></td><td>PowerShell</td><td>Terminal avançado para scripts e automações.</td></tr>
+      <tr><td><code>taskmgr</code></td><td>Gerenciador de Tarefas</td><td>Visualiza e controla processos e desempenho.</td></tr>
+      <tr><td><code>regedit</code></td><td>Editor do Registro</td><td>Editar configurações avançadas do sistema.</td></tr>
+      <tr><td><code>eventvwr</code></td><td>Visualizador de Eventos</td><td>Logs do sistema e aplicativos.</td></tr>
+      <tr><td><code>services.msc</code></td><td>Gerenciador de Serviços</td><td>Controlar serviços em execução.</td></tr>
+      <tr><td><code>msconfig</code></td><td>Configuração do Sistema</td><td>Gerenciar inicialização e serviços.</td></tr>
+      <tr><td><code>perfmon.msc</code></td><td>Monitor de Desempenho</td><td>Análise detalhada dos recursos do PC.</td></tr>
+      <tr><td><code>cleanmgr</code></td><td>Limpeza de Disco</td><td>Libera espaço apagando arquivos temporários.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Configurações do Sistema</h3>
+  <table>
+    <thead>
+      <tr><th>Comando</th><th>O que faz</th><th>Descrição</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>control</code></td><td>Painel de Controle</td><td>Configurações gerais do Windows.</td></tr>
+      <tr><td><code>appwiz.cpl</code></td><td>Programas e Recursos</td><td>Desinstalar e alterar programas.</td></tr>
+      <tr><td><code>sysdm.cpl</code></td><td>Propriedades do Sistema</td><td>Informações do sistema e variáveis de ambiente.</td></tr>
+      <tr><td><code>inetcpl.cpl</code></td><td>Propriedades da Internet</td><td>Configurações do navegador Internet Explorer.</td></tr>
+      <tr><td><code>firewall.cpl</code></td><td>Firewall do Windows</td><td>Configurações do firewall.</td></tr>
+      <tr><td><code>hdwwiz.cpl</code></td><td>Adicionar Hardware</td><td>Assistente para instalação de hardware.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Rede e Internet</h3>
+  <table>
+    <thead>
+      <tr><th>Comando</th><th>O que faz</th><th>Descrição</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>ncpa.cpl</code></td><td>Conexões de Rede</td><td>Gerenciar conexões Ethernet e Wi-Fi.</td></tr>
+      <tr><td><code>rasphone</code></td><td>Assistente de Conexão Dial-Up</td><td>Gerenciar conexões remotas.</td></tr>
+      <tr><td><code>wf.msc</code></td><td>Firewall do Windows</td><td>Gerenciar regras de firewall avançadas.</td></tr>
+      <tr><td><code>ipconfig</code></td><td>Comando de Rede (no cmd)</td><td>Mostra e renova IP, máscara, gateway (via prompt).</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Impressoras e Dispositivos</h3>
+  <table>
+    <thead>
+      <tr><th>Comando</th><th>O que faz</th><th>Descrição</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>control printers</code></td><td>Dispositivos e Impressoras</td><td>Gerenciar impressoras e dispositivos conectados.</td></tr>
+      <tr><td><code>devmgmt.msc</code></td><td>Gerenciador de Dispositivos</td><td>Gerenciar hardware e drivers.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Segurança e Administração</h3>
+  <table>
+    <thead>
+      <tr><th>Comando</th><th>O que faz</th><th>Descrição</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>secpol.msc</code></td><td>Política de Segurança Local</td><td>Configurações avançadas de segurança.</td></tr>
+      <tr><td><code>gpedit.msc</code></td><td>Editor de Diretiva de Grupo</td><td>Configura políticas do sistema (Windows Pro/Enterprise).</td></tr>
+      <tr><td><code>lusrmgr.msc</code></td><td>Usuários e Grupos Locais</td><td>Gerenciar usuários e grupos (Windows Pro/Enterprise).</td></tr>
+      <tr><td><code>mrt</code></td><td>Remoção de Software Malicioso</td><td>Ferramenta oficial da Microsoft para remoção de malwares.</td></tr>
+      <tr><td><code>syskey</code></td><td>Proteção do Sistema</td><td>Configura a chave de segurança do Windows (avançado e raro).</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Utilitários e Acessibilidade</h3>
+  <table>
+    <thead>
+      <tr><th>Comando</th><th>O que faz</th><th>Descrição</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>notepad</code></td><td>Bloco de Notas</td><td>Editor de texto simples.</td></tr>
+      <tr><td><code>mspaint</code></td><td>Paint</td><td>Editor básico de imagens.</td></tr>
+      <tr><td><code>calc</code></td><td>Calculadora</td><td>Calculadora do Windows.</td></tr>
+      <tr><td><code>write</code></td><td>WordPad</td><td>Editor de texto avançado.</td></tr>
+      <tr><td><code>osk</code></td><td>Teclado Virtual</td><td>Teclado na tela para acessibilidade.</td></tr>
+      <tr><td><code>magnify</code></td><td>Lupa</td><td>Ampliação de tela.</td></tr>
+      <tr><td><code>snippingtool</code></td><td>Ferramenta de Captura</td><td>Captura de tela flexível.</td></tr>
+      <tr><td><code>winver</code></td><td>Informações do Windows</td><td>Mostra versão e build do Windows.</td></tr>
+      <tr><td><code>charmap</code></td><td>Mapa de Caracteres</td><td>Selecionar caracteres especiais para copiar.</td></tr>
+      <tr><td><code>mstsc</code></td><td>Área de Trabalho Remota</td><td>Conecta a outro PC remotamente.</td></tr>
+      <tr><td><code>dxdiag</code></td><td>Diagnóstico DirectX</td><td>Informações detalhadas de vídeo, áudio e DirectX.</td></tr>
+      <tr><td><code>powershell_ise</code></td><td>PowerShell ISE</td><td>Ambiente gráfico para scripts PowerShell.</td></tr>
     </tbody>
   </table>
 
   <h2 id="exemplos">Exemplos Práticos</h2>
-  <p><strong>Executar o Prompt de Comando como administrador:</strong></p>
-  <ol>
-    <li>Pressione <code>Win + R</code>.</li>
-    <li>Digite <code>cmd</code> e pressione <kbd>Ctrl + Shift + Enter</kbd> para abrir como administrador.</li>
-  </ol>
-
-  <p><strong>Abrir uma pasta específica:</strong></p>
-  <pre><code>explorer C:\Users\SeuUsuario\Documents</code></pre>
-
-  <p><strong>Abrir o Editor do Registro:</strong></p>
-  <pre><code>regedit</code></pre>
+  <p>Para abrir o Gerenciador de Tarefas rapidamente, pressione <code>Win + R</code>, digite <code>taskmgr</code> e pressione Enter.</p>
+  <p>Para editar o registro, use <code>Win + R</code> e digite <code>regedit</code>. Cuidado ao usar essa ferramenta.</p>
+  <p>Para acessar as conexões de rede, digite <code>ncpa.cpl</code> no Executar e pressione Enter.</p>
 
   <h2 id="dicas">Dicas Extras</h2>
   <ul>
-    <li>Você pode usar variáveis de ambiente no Executar, como <code>%appdata%</code>, <code>%temp%</code>, <code>%systemroot%</code>.</li>
-    <li>Use o botão de histórico no Executar para acessar comandos usados anteriormente.</li>
-    <li>É possível criar atalhos para comandos personalizados, facilitando o uso.</li>
+    <li>Use o <code>cmd</code> ou <code>powershell</code> para executar comandos avançados.</li>
+    <li>Tenha cuidado ao alterar o registro com <code>regedit</code>.</li>
+    <li>O <code>gpedit.msc</code> só está disponível nas versões Pro e Enterprise do Windows.</li>
+    <li>Use <code>cleanmgr</code> para liberar espaço em disco de forma segura.</li>
+    <li>Para ver a versão do Windows rapidamente, digite <code>winver</code>.</li>
   </ul>
 
-  <a href="index.html" class="button-back" aria-label="Voltar para página inicial">← Voltar para Página Inicial</a>
+  <a href="index.html" class="button-back" aria-label="Voltar para a página inicial">← Voltar para a Página Inicial</a>
 </main>
 
 <script>
-  const toggleBtn = document.getElementById('toggle-theme');
-  const body = document.body;
+  const toggleThemeBtn = document.getElementById('toggle-theme');
+  const bodyEl = document.body;
 
-  function updateToggleButton(isDark) {
+  function updateThemeButton(isDark) {
+    toggleThemeBtn.setAttribute('aria-pressed', isDark);
+    toggleThemeBtn.textContent = isDark ? 'Modo Claro' : 'Modo Escuro';
+    toggleThemeBtn.prepend(createIcon(isDark));
+  }
+
+  function createIcon(isDark) {
+    const ns = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(ns, "svg");
+    svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("width", "20");
+    svg.setAttribute("height", "20");
+    svg.setAttribute("aria-hidden", "true");
+    svg.setAttribute("focusable", "false");
+    svg.style.fill = "currentColor";
+    const path = document.createElementNS(ns, "path");
+
     if(isDark) {
-      toggleBtn.textContent = '';
-      toggleBtn.classList.add('dark');
-      toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg> Modo Claro`;
+      // Sun icon for light mode
+      path.setAttribute("d", "M12 4.5V3m0 18v-1.5m7.5-7.5H21m-18 0H3m15.364 6.364l1.414 1.414M6.222 6.222l1.414 1.414m12.728 0l-1.414 1.414M6.222 17.778l-1.414 1.414M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z");
     } else {
-      toggleBtn.textContent = '';
-      toggleBtn.classList.remove('dark');
-      toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path d="M12 3v2m6.364 1.636l-1.414 1.414M21 12h-2M17.364 17.364l-1.414-1.414M12 19v2M6.636 17.364l1.414-1.414M3 12H1m4.95-4.95l1.414 1.414" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg> Modo Escuro`;
+      // Moon icon for dark mode
+      path.setAttribute("d", "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z");
     }
+    path.setAttribute("stroke", "currentColor");
+    path.setAttribute("stroke-width", "2");
+    path.setAttribute("stroke-linecap", "round");
+    path.setAttribute("stroke-linejoin", "round");
+    svg.appendChild(path);
+    return svg;
   }
 
-  const savedTheme = localStorage.getItem('theme');
-  if(savedTheme === 'dark') {
-    body.classList.add('dark');
-    updateToggleButton(true);
-  } else {
-    updateToggleButton(false);
+  function toggleTheme() {
+    const isDark = bodyEl.classList.toggle('light') === false;
+    toggleThemeBtn.innerHTML = '';
+    toggleThemeBtn.appendChild(createIcon(isDark));
+    toggleThemeBtn.append(' ' + (isDark ? 'Modo Claro' : 'Modo Escuro'));
+    toggleThemeBtn.setAttribute('aria-pressed', isDark);
+    localStorage.setItem('darkMode', isDark ? 'true' : 'false');
   }
 
-  toggleBtn.addEventListener('click', () => {
-    body.classList.toggle('dark');
-    const isDark = body.classList.contains('dark');
-    updateToggleButton(isDark);
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  });
+  toggleThemeBtn.addEventListener('click', toggleTheme);
+
+  // Inicializa o tema de acordo com localStorage ou padrão
+  (function(){
+    const saved = localStorage.getItem('darkMode');
+    const isDark = saved === null ? true : saved === 'true';
+    if(!isDark) bodyEl.classList.add('light');
+    toggleThemeBtn.innerHTML = '';
+    toggleThemeBtn.appendChild(createIcon(isDark));
+    toggleThemeBtn.append(' ' + (isDark ? 'Modo Claro' : 'Modo Escuro'));
+    toggleThemeBtn.setAttribute('aria-pressed', isDark);
+  })();
 </script>
+
 </body>
 </html>
