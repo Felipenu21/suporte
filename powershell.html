@@ -422,6 +422,15 @@
       <li><a href="#sintaxes">Sintaxes e Flags</a></li>
       <li><a href="#exemplos">Exemplos Práticos</a></li>
       <li><a href="#suporte">Scripts para Suporte Técnico</a></li>
+      <li><a href="#automatizacao">Automatização Avançada</a></li>
+      <li><a href="#admin-sistema">Administração do Sistema</a></li>
+      <li><a href="#manipulacao-texto">Manipulação de Texto e Arquivos</a></li>
+      <li><a href="#eventos">Eventos e Logs do Sistema</a></li>
+      <li><a href="#seguranca">Segurança e Permissões</a></li>
+      <li><a href="#remoto">Administração Remota</a></li>
+      <li><a href="#depuracao">Depuração e Logs de Scripts</a></li>
+      <li><a href="#melhores-praticas">Melhores Práticas</a></li>
+      <li><a href="#recursos">Recursos e Referências</a></li>
       <li><a href="#conclusao">Conclusão</a></li>
     </ul>
   </aside>
@@ -498,175 +507,338 @@ Write-Output "Nome: $nome, Idade: $idade"</code></pre>
 
     <section id="controle-fluxo">
       <h2>Controle de Fluxo</h2>
-      <p>Condicionais, loops e controle lógico.</p>
+      <p>Condicionais e loops para lógica dinâmica.</p>
 
-      <h3>If / Else</h3>
-      <pre><code>$idade = 20
-if ($idade -ge 18) {
+      <h3>Condicional If</h3>
+      <pre><code>if ($idade -ge 18) {
   Write-Output "Maior de idade"
 } else {
   Write-Output "Menor de idade"
 }</code></pre>
 
-      <h3>Loops</h3>
-      <p><strong>ForEach</strong> e <strong>While</strong> são os mais comuns:</p>
-      <pre><code># ForEach
-$nomes = @("Ana", "Bruno", "Carlos")
-foreach ($nome in $nomes) {
-  Write-Output "Nome: $nome"
-}
+      <h3>Loop For</h3>
+      <pre><code>for ($i=1; $i -le 5; $i++) {
+  Write-Output "Número $i"
+}</code></pre>
 
-# While
-$i = 0
-while ($i -lt 3) {
-  Write-Output "Número: $i"
-  $i++
+      <h3>Loop Foreach</h3>
+      <pre><code>$lista = 1..5
+foreach ($item in $lista) {
+  Write-Output "Item: $item"
+}</code></pre>
+
+      <h3>Loop While</h3>
+      <pre><code>$contador = 0
+while ($contador -lt 5) {
+  Write-Output "Contador: $contador"
+  $contador++
 }</code></pre>
     </section>
 
     <section id="funcoes">
       <h2>Funções</h2>
-      <p>Reutilize código criando funções:</p>
-      <pre><code>function Saudacao($nome) {
+      <p>Agrupam comandos para reutilização com parâmetros.</p>
+      <pre><code>function Saudacao {
+  param($nome)
   Write-Output "Olá, $nome!"
 }
 
-Saudacao "Felipe"
-Saudacao "Maria"</code></pre>
+Saudacao -nome "Felipe"</code></pre>
     </section>
 
     <section id="modulos">
       <h2>Módulos e Pacotes</h2>
-      <p>PowerShell permite estender funcionalidades com módulos:</p>
-      <ul>
-        <li><code>Get-Module</code>: lista módulos carregados</li>
-        <li><code>Import-Module</code>: importa módulo</li>
-        <li><code>Install-Module</code>: instala módulo da galeria PowerShell</li>
-      </ul>
-      <pre><code>Get-Module -ListAvailable
-Import-Module -Name Pester
-Install-Module -Name Az -Scope CurrentUser</code></pre>
+      <p>Extensões que adicionam cmdlets e funcionalidades.</p>
+      <pre><code>Install-Module -Name PowerShellGet
+Import-Module -Name ActiveDirectory</code></pre>
     </section>
 
     <section id="erros">
       <h2>Tratamento de Erros</h2>
-      <p>Use <code>try</code>, <code>catch</code> e <code>finally</code> para controlar erros:</p>
+      <p>Captura e trata erros para scripts mais robustos.</p>
       <pre><code>try {
-  Remove-Item -Path "C:\inexistente.txt" -ErrorAction Stop
+  Get-Item "C:\arquivo_inexistente.txt"
 } catch {
-  Write-Output "Arquivo não encontrado: $_"
-} finally {
-  Write-Output "Finalizado"
+  Write-Warning "Arquivo não encontrado!"
 }</code></pre>
     </section>
 
     <section id="scripts">
       <h2>Scripts PowerShell</h2>
-      <p>Automatize tarefas criando arquivos <code>.ps1</code>.</p>
-      <h3>Exemplo básico</h3>
-      <pre><code># Lista processos com CPU > 50
-$processos = Get-Process | Where-Object { $_.CPU -gt 50 }
-foreach ($proc in $processos) {
-  Write-Output "Processo: $($proc.Name) - CPU: $($proc.CPU)"
-}</code></pre>
-
-      <h3>Salvar saída em arquivo</h3>
-      <pre><code>Get-Process | Out-File C:\Temp\processos.txt</code></pre>
+      <p>Salve comandos em arquivos <code>.ps1</code> para automação.</p>
+      <p>Execute scripts com:</p>
+      <pre><code>.\meuscript.ps1</code></pre>
+      <p>Recomenda-se executar scripts assinados e manter política de execução segura.</p>
     </section>
 
     <section id="sintaxes">
       <h2>Sintaxes e Flags Comuns</h2>
-      <p>Parâmetros úteis para controlar execução dos comandos:</p>
-      <ul>
-        <li><code>-Recurse</code>: inclui subdiretórios</li>
-        <li><code>-Force</code>: força ação mesmo em arquivos ocultos/somente leitura</li>
-        <li><code>-WhatIf</code>: simula ação sem executá-la</li>
-        <li><code>-Confirm</code>: pede confirmação antes da ação</li>
-        <li><code>-ErrorAction SilentlyContinue</code>: oculta mensagens de erro</li>
-        <li><code>-Verbose</code>: mostra informações detalhadas da execução</li>
-      </ul>
+      <table>
+        <thead>
+          <tr>
+            <th>Flag</th>
+            <th>Descrição</th>
+            <th>Exemplo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>-Verbose</code></td>
+            <td>Mostra mensagens detalhadas.</td>
+            <td><pre>Get-Process -Verbose</pre></td>
+          </tr>
+          <tr>
+            <td><code>-WhatIf</code></td>
+            <td>Simula a execução sem aplicar mudanças.</td>
+            <td><pre>Remove-Item arquivo.txt -WhatIf</pre></td>
+          </tr>
+          <tr>
+            <td><code>-Force</code></td>
+            <td>Força a execução ignorando bloqueios.</td>
+            <td><pre>Remove-Item arquivo.txt -Force</pre></td>
+          </tr>
+          <tr>
+            <td><code>-Confirm</code></td>
+            <td>Pede confirmação antes de executar.</td>
+            <td><pre>Remove-Item arquivo.txt -Confirm</pre></td>
+          </tr>
+        </tbody>
+      </table>
     </section>
 
     <section id="exemplos">
       <h2>Exemplos Práticos</h2>
-      <p>Algumas tarefas comuns no suporte técnico:</p>
+      <h3>Listar processos com mais de 100MB de RAM</h3>
+      <pre><code>Get-Process | Where-Object { $_.WorkingSet -gt 100MB } | Sort-Object WorkingSet -Descending</code></pre>
 
-      <h3>Backup simples de arquivos</h3>
-      <pre><code>Copy-Item C:\Dados\* D:\Backup\ -Recurse -Force</code></pre>
-
-      <h3>Limpar arquivos temporários</h3>
-      <pre><code>Remove-Item "C:\Windows\Temp\*" -Recurse -Force</code></pre>
-
-      <h3>Monitorar processos que usam muita CPU</h3>
-      <pre><code>Get-Process | Where-Object { $_.CPU -gt 100 } | Sort-Object CPU -Descending</code></pre>
-
-      <h3>Parar um serviço</h3>
-      <pre><code>Stop-Service -Name "wuauserv"</code></pre>
-
-      <h3>Iniciar um serviço</h3>
-      <pre><code>Start-Service -Name "spooler"</code></pre>
+      <h3>Backup automático de uma pasta</h3>
+      <pre><code>$origem = "C:\Documentos"
+$destino = "D:\Backup\Documentos_" + (Get-Date -Format yyyyMMdd)
+Copy-Item -Path $origem -Destination $destino -Recurse -Force</code></pre>
     </section>
 
     <section id="suporte">
-      <h2>Scripts Úteis para Suporte Técnico</h2>
-      <p>Automatize tarefas frequentes para agilizar o atendimento:</p>
+      <h2>Scripts para Suporte Técnico</h2>
+      <h3>Verificar status do serviço Windows Update</h3>
+      <pre><code>Get-Service -Name wuauserv | Select-Object Status, Name</code></pre>
+
+      <h3>Checar espaço em disco</h3>
+      <pre><code>Get-PSDrive -PSProvider FileSystem | Select-Object Name, Free, Used</code></pre>
+
+      <h3>Reiniciar serviço de spooler de impressão</h3>
+      <pre><code>Restart-Service -Name spooler</code></pre>
+    </section>
+
+    <section id="automatizacao">
+      <h2>Automatização Avançada</h2>
+      <p>PowerShell é ideal para automação, veja algumas técnicas e exemplos avançados.</p>
+
+      <h3>Uso de Pipeline</h3>
+      <p>Encadeie comandos para criar fluxos de dados eficientes.</p>
+      <pre><code>Get-Process | Where-Object { $_.CPU -gt 100 } | Sort-Object CPU -Descending | Select-Object -First 5</code></pre>
+
+      <h3>Filtros e Expressões Regulares</h3>
+      <pre><code># Filtra arquivos com extensão .log maiores que 1MB
+Get-ChildItem -Path C:\Logs -Filter *.log | Where-Object { $_.Length -gt 1MB }</code></pre>
+
+      <h3>Trabalhando com Objetos</h3>
+      <p>PowerShell manipula objetos, o que torna possível extrair propriedades e métodos facilmente.</p>
+      <pre><code>$proc = Get-Process -Name "notepad"
+$proc.Id
+$proc.WorkingSet</code></pre>
+    </section>
+
+    <section id="admin-sistema">
+      <h2>Administração do Sistema</h2>
+      <p>Comandos úteis para gerenciar serviços, processos, usuários e mais.</p>
+
+      <h3>Gerenciar Serviços</h3>
+      <pre><code># Parar serviço
+Stop-Service -Name "wuauserv"
+
+# Iniciar serviço
+Start-Service -Name "spooler"
+
+# Reiniciar serviço
+Restart-Service -Name "WinRM"</code></pre>
+
+      <h3>Gerenciar Usuários Locais</h3>
+      <pre><code># Listar usuários locais
+Get-LocalUser
+
+# Criar usuário
+New-LocalUser -Name "usuarioTeste" -Password (ConvertTo-SecureString "Senha@123" -AsPlainText -Force) -FullName "Usuário Teste"
+
+# Adicionar usuário a grupo
+Add-LocalGroupMember -Group "Administradores" -Member "usuarioTeste"</code></pre>
+
+      <h3>Monitorar Espaço em Disco</h3>
+      <pre><code>Get-PSDrive -PSProvider FileSystem | Select-Object Name, Free, Used, @{Name='UsedGB';Expression={"{0:N2}" -f ($_.Used/1GB)}}, @{Name='FreeGB';Expression={"{0:N2}" -f ($_.Free/1GB)}}</code></pre>
+    </section>
+
+    <section id="manipulacao-texto">
+      <h2>Manipulação de Texto e Arquivos</h2>
+      <p>Trabalhar com strings, arquivos e relatórios é comum no suporte técnico.</p>
+
+      <h3>Leitura e Escrita de Arquivos</h3>
+      <pre><code># Ler arquivo linha a linha
+Get-Content -Path "C:\Logs\log.txt"
+
+# Escrever em arquivo (substituir conteúdo)
+"Texto novo" | Out-File -FilePath "C:\Logs\log_novo.txt"
+
+# Adicionar texto ao arquivo existente
+"Nova linha" | Add-Content -Path "C:\Logs\log_novo.txt"</code></pre>
+
+      <h3>Substituir texto usando Regex</h3>
+      <pre><code>$texto = Get-Content "C:\Logs\log.txt" -Raw
+$textoModificado = $texto -replace '\berro\b', 'falha'
+$textoModificado | Set-Content "C:\Logs\log_corrigido.txt"</code></pre>
+
+      <h3>Extrair dados estruturados</h3>
+      <pre><code># Extrair IPs de um arquivo de log
+Select-String -Path "C:\Logs\log.txt" -Pattern '\b\d{1,3}(\.\d{1,3}){3}\b' -AllMatches | ForEach-Object {
+  $_.Matches | ForEach-Object { $_.Value }
+} | Sort-Object -Unique</code></pre>
+    </section>
+
+    <section id="eventos">
+      <h2>Eventos e Logs do Sistema</h2>
+      <p>PowerShell facilita a consulta de eventos do Windows para diagnóstico.</p>
+
+      <h3>Visualizar eventos recentes do sistema</h3>
+      <pre><code>Get-EventLog -LogName System -Newest 20 | Format-Table TimeGenerated, EntryType, Source, EventID, Message -AutoSize</code></pre>
+
+      <h3>Filtrar eventos de erro</h3>
+      <pre><code>Get-EventLog -LogName Application -EntryType Error -After (Get-Date).AddDays(-7)</code></pre>
+
+      <h3>Consultar logs com o novo cmdlet</h3>
+      <pre><code>Get-WinEvent -LogName Security -MaxEvents 50 | Format-List</code></pre>
+    </section>
+
+    <section id="seguranca">
+      <h2>Segurança e Permissões</h2>
+      <p>Trabalhar com segurança, permissões e execuções confiáveis.</p>
+
+      <h3>Verificar execução de scripts</h3>
+      <pre><code>Get-ExecutionPolicy</code></pre>
+
+      <h3>Alterar política de execução temporariamente</h3>
+      <pre><code>Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process</code></pre>
+
+      <h3>Executar script assinando digitalmente</h3>
+      <pre><code>Set-AuthenticodeSignature -FilePath "C:\Scripts\meuScript.ps1" -Certificate $certificado</code></pre>
+
+      <h3>Verificar permissões NTFS de uma pasta</h3>
+      <pre><code>Get-Acl -Path "C:\Pasta" | Format-List</code></pre>
+    </section>
+
+    <section id="remoto">
+      <h2>Administração Remota</h2>
+      <p>Controle máquinas remotas com PowerShell Remoting e outras técnicas.</p>
+
+      <h3>Habilitar PowerShell Remoting</h3>
+      <pre><code>Enable-PSRemoting -Force</code></pre>
+
+      <h3>Executar comando remoto</h3>
+      <pre><code>Invoke-Command -ComputerName servidor01 -ScriptBlock { Get-Process }</code></pre>
+
+      <h3>Abrir sessão remota interativa</h3>
+      <pre><code>Enter-PSSession -ComputerName servidor01</code></pre>
+
+      <h3>Copiar arquivo remotamente</h3>
+      <pre><code>Copy-Item -Path "C:\local\arquivo.txt" -Destination "\\servidor01\C$\Destino" -ToSession (New-PSSession -ComputerName servidor01)</code></pre>
+    </section>
+
+    <section id="depuracao">
+      <h2>Depuração e Logs de Scripts</h2>
+      <p>Boas práticas para criar scripts fáceis de manter e depurar.</p>
+
+      <h3>Habilitar modo Verbose e Debug</h3>
+      <pre><code>Write-Verbose "Mensagem detalhada" -Verbose
+Write-Debug "Mensagem de debug" -Debug</code></pre>
+
+      <h3>Exemplo de função com tratamento de verbose e debug</h3>
+      <pre><code>function Teste-Debug {
+  [CmdletBinding()]
+  param()
+  
+  Write-Verbose "Início da função" -Verbose
+  Write-Debug "Debugando valor X" -Debug
+
+  # Código aqui
+  Write-Output "Execução normal"
+}
+
+Teste-Debug -Verbose -Debug</code></pre>
+
+      <h3>Capturar erros para log</h3>
+      <pre><code>try {
+  # Código que pode falhar
+} catch {
+  $_ | Out-File -FilePath "C:\Logs\erros.log" -Append
+}</code></pre>
+    </section>
+
+    <section id="melhores-praticas">
+      <h2>Melhores Práticas para Scripts PowerShell</h2>
       <ul>
-        <li><strong>Verificar serviços essenciais rodando:</strong></li>
-        <pre><code>Get-Service -Name "wuauserv", "bits", "Spooler" | Where-Object {$_.Status -ne "Running"}</code></pre>
-        <li><strong>Enviar logs por email (requer SMTP configurado):</strong></li>
-        <pre><code>$smtpServer = "smtp.exemplo.com"
-$smtpFrom = "suporte@empresa.com"
-$smtpTo = "admin@empresa.com"
-$messageSubject = "Log do Sistema"
-$messageBody = Get-Content -Path "C:\Logs\log.txt" | Out-String
-Send-MailMessage -From $smtpFrom -To $smtpTo -Subject $messageSubject -Body $messageBody -SmtpServer $smtpServer</code></pre>
-        <li><strong>Agendar tarefa automatizada:</strong></li>
-        <pre><code>$action = New-ScheduledTaskAction -Execute 'PowerShell.exe' -Argument '-File C:\Scripts\backup.ps1'
-$trigger = New-ScheduledTaskTrigger -Daily -At 22:00
-Register-ScheduledTask -TaskName "Backup Diário" -Action $action -Trigger $trigger -Description "Backup automático diário às 22h"</code></pre>
+        <li>Utilize comentários explicativos para facilitar manutenção.</li>
+        <li>Use funções para modularizar o código.</li>
+        <li>Trate erros com blocos <code>try/catch</code>.</li>
+        <li>Use parâmetros e CmdletBinding para tornar scripts reutilizáveis.</li>
+        <li>Valide entradas e argumentos.</li>
+        <li>Evite comandos destrutivos sem confirmação (use <code>-WhatIf</code> e <code>-Confirm</code>).</li>
+        <li>Teste scripts em ambiente controlado antes de rodar em produção.</li>
+      </ul>
+    </section>
+
+    <section id="recursos">
+      <h2>Recursos e Referências</h2>
+      <ul>
+        <li><a href="https://learn.microsoft.com/pt-br/powershell/" target="_blank" rel="noopener">Documentação Oficial PowerShell</a></li>
+        <li><a href="https://powershell.org" target="_blank" rel="noopener">PowerShell.org</a></li>
+        <li><a href="https://github.com/PowerShell/PowerShell" target="_blank" rel="noopener">Repositório Oficial no GitHub</a></li>
+        <li><a href="https://ss64.com/ps/" target="_blank" rel="noopener">Guia rápido SS64 para PowerShell</a></li>
+        <li><a href="https://devblogs.microsoft.com/powershell/" target="_blank" rel="noopener">Blog oficial Microsoft PowerShell</a></li>
       </ul>
     </section>
 
     <section id="conclusao">
       <h2>Conclusão</h2>
-      <p>PowerShell é uma ferramenta essencial para profissionais de suporte técnico e administração de sistemas. Dominar seus comandos, scripts e recursos permite automatizar tarefas repetitivas, diagnosticar problemas com rapidez e melhorar a eficiência no trabalho.</p>
-      <p>Continue praticando e explorando seus recursos para se tornar um especialista.</p>
-
-      <a href="index.html" class="button-back" aria-label="Voltar à página inicial">Voltar ao início</a>
+      <p>Com esse guia você tem uma base sólida para usar PowerShell em suporte técnico, administração e automação. Continue praticando e explore a vasta documentação e comunidade para se tornar um expert.</p>
+      <p>Se quiser aprender mais ou receber novos conteúdos, fique à vontade para acessar as outras páginas do portal!</p>
     </section>
+
+    <a href="index.html" class="button-back" aria-label="Voltar à página inicial">Voltar ao início</a>
   </main>
 
   <script>
     const toggleBtn = document.getElementById('toggle-theme');
     const body = document.body;
 
-    // Pega o ícone SVG do botão para reutilizar
-    const svgIcon = toggleBtn.querySelector('svg');
-
-    // Função para atualizar texto e ícone do botão conforme o tema atual
-    function updateButtonText(isDark) {
-      toggleBtn.textContent = isDark ? 'Modo Claro' : 'Modo Escuro';
-      toggleBtn.appendChild(svgIcon);
-    }
-
-    // Ao carregar a página, aplica o tema salvo no localStorage (ou padrão escuro)
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') {
+    // Verifica tema salvo no localStorage
+    const temaSalvo = localStorage.getItem('tema');
+    if (temaSalvo === 'claro') {
       body.classList.remove('dark');
-      updateButtonText(false);
+      toggleBtn.textContent = 'Modo Escuro';
+      toggleBtn.classList.remove('dark');
     } else {
       body.classList.add('dark');
-      updateButtonText(true);
+      toggleBtn.textContent = 'Modo Claro';
+      toggleBtn.classList.add('dark');
     }
 
     toggleBtn.addEventListener('click', () => {
-      const isDark = body.classList.toggle('dark');
-      if (isDark) {
-        localStorage.setItem('theme', 'dark');
-        updateButtonText(true);
+      body.classList.toggle('dark');
+      if (body.classList.contains('dark')) {
+        toggleBtn.textContent = 'Modo Claro';
+        toggleBtn.classList.add('dark');
+        localStorage.setItem('tema', 'escuro');
       } else {
-        localStorage.setItem('theme', 'light');
-        updateButtonText(false);
+        toggleBtn.textContent = 'Modo Escuro';
+        toggleBtn.classList.remove('dark');
+        localStorage.setItem('tema', 'claro');
       }
     });
   </script>
